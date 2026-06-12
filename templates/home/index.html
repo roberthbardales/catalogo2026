@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio | Desarrollo Web{% endblock %}
+
+{% block content %}
+<section class="hero-card p-4 p-lg-5 rounded-4 text-white shadow-lg mb-4">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <span class="badge rounded-pill text-bg-light text-uppercase mb-3">Desarrollo de sistemas web</span>
+            <h1 class="display-5 fw-bold mb-3">Creamos sistemas web modernos con Django, Python y PostgreSQL.</h1>
+            <p class="lead mb-4">
+                Construimos soluciones simples y funcionales para tu negocio, con despliegue en Linux, DigitalOcean y Docker.
+            </p>
+            <div class="d-flex flex-column flex-sm-row gap-3">
+                <a class="btn btn-light btn-lg" href="{% url 'app_users:login' %}">Ver proyecto</a>
+                <a class="btn btn-outline-light btn-lg" href="{% url 'app_users:login' %}">Ingresar al panel</a>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="bg-white text-dark rounded-4 p-4 shadow-sm">
+                <h2 class="h5 fw-semibold mb-3">Tecnologías destacadas</h2>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">Django y Python para aplicaciones robustas</li>
+                    <li class="mb-2">PostgreSQL para gestión de datos</li>
+                    <li class="mb-2">Linux, DigitalOcean y Docker para despliegue</li>
+                    <li class="mb-0">PHP y WordPress para sitios y contenidos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

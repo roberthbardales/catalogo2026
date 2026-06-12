@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Reserva{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --web-primary: #2563eb;
+            --web-primary-dark: #1d4ed8;
+            --web-accent: #eaf2ff;
+            --web-ink: #0f172a;
+            --web-muted: #64748b;
+        }
+
+        body {
+            color: var(--web-ink);
+            background: #f8fafc;
+        }
+
+        .btn-primary {
+            --bs-btn-bg: var(--web-primary);
+            --bs-btn-border-color: var(--web-primary);
+            --bs-btn-hover-bg: var(--web-primary-dark);
+            --bs-btn-hover-border-color: var(--web-primary-dark);
+        }
+
+        .btn-outline-primary {
+            --bs-btn-color: var(--web-primary);
+            --bs-btn-border-color: var(--web-primary);
+            --bs-btn-hover-bg: var(--web-primary);
+            --bs-btn-hover-border-color: var(--web-primary);
+        }
+
+        .hero-card {
+            background:
+                radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 30%),
+                linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #2563eb 100%);
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.75rem;
+            background: var(--web-accent);
+            color: var(--web-primary);
+            font-weight: 800;
+        }
+
+        .text-muted {
+            color: var(--web-muted) !important;
+        }
+
+        .card {
+            border-color: rgba(37, 99, 235, 0.08);
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+    {% include 'include/header.html' %}
+
+    <main class="flex-grow-1 py-4">
+        <div class="container">
+            {% if messages %}
+                <div class="mb-3">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} mb-2" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    {% include 'include/footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
