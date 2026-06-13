@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Productos | Catálogo 2026{% endblock %}
+{% block meta_description %}Listado visual de productos tecnológicos para un catálogo administrativo en Bootstrap.{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <div class="section-kicker mb-2">Productos</div>
+        <h1 class="h3 fw-bold mb-0">Inventario tecnológico</h1>
+    </div>
+    <a class="btn btn-primary" href="{% url 'app_home:contact' %}">Solicitar stock</a>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 col-xl-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <span class="badge text-bg-success mb-3">Nuevo</span>
+                <h2 class="h5">Laptop Business Pro</h2>
+                <p class="text-muted">Procesador i7, 16GB RAM, SSD 1TB.</p>
+                <div class="fw-bold">Administración</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <span class="badge text-bg-primary mb-3">Stock</span>
+                <h2 class="h5">Monitor 27" QHD</h2>
+                <p class="text-muted">Ideal para oficina, diseño y monitoreo.</p>
+                <div class="fw-bold">Equipamiento</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <span class="badge text-bg-warning mb-3">Oferta</span>
+                <h2 class="h5">Kit Teclado y Mouse</h2>
+                <p class="text-muted">Periféricos inalámbricos para oficina.</p>
+                <div class="fw-bold">Accesorios</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <span class="badge text-bg-dark mb-3">Premium</span>
+                <h2 class="h5">UPS 1200VA</h2>
+                <p class="text-muted">Protección y respaldo para equipos críticos.</p>
+                <div class="fw-bold">Energía</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

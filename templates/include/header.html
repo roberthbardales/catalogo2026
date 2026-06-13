@@ -1,40 +1,33 @@
 <header class="bg-white border-bottom shadow-sm">
     <nav class="navbar navbar-expand-lg navbar-light py-3">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/">
-                <span class="brand-mark">RB</span>
-                <span>Sistema Web con Usuarios</span>
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="{% url 'app_home:index' %}">
+                <span class="brand-mark">C2</span>
+                <span>Catálogo 2026</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                    <li class="nav-item">
-                        <a class="nav-link px-lg-3" href="/">Inicio</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link px-lg-3" href="{% url 'app_home:index' %}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3" href="{% url 'app_home:about' %}">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3" href="{% url 'app_home:products' %}">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3" href="{% url 'app_home:categories' %}">Categorías</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3" href="{% url 'app_home:brands' %}">Marcas</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3" href="{% url 'app_home:warranty' %}">Garantía</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3" href="{% url 'app_home:contact' %}">Contacto</a></li>
 
                     {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="btn btn-outline-secondary btn-sm ms-lg-2" href="{% url 'app_users:user-update' %}">Cambiar contraseña</a>
+                        <a class="btn btn-outline-primary btn-sm ms-lg-2" href="{% url 'app_users:dashboard' %}">Dashboard</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-primary btn-sm ms-lg-2" href="{% url 'app_users:dashboard' %}">Perfil</a>
-                    </li>
-                    {% if request.user.is_superuser or request.user.occupation == '0' %}
-                    <li class="nav-item">
-                        <a class="btn btn-outline-dark btn-sm ms-lg-2" href="{% url 'app_users:user-list' %}">Usuarios</a>
-                    </li>
-                    {% endif %}
                     <li class="nav-item">
                         <a class="btn btn-danger btn-sm ms-lg-2" href="{% url 'app_users:logout' %}">Salir</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-outline-primary ms-lg-2" href="{% url 'app_users:login' %}">Ingresar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-primary ms-lg-2" href="{% url 'app_users:register' %}">Registrarse</a>
+                        <a class="btn btn-outline-primary ms-lg-2" href="{% url 'app_users:login' %}">Admin</a>
                     </li>
                     {% endif %}
                 </ul>

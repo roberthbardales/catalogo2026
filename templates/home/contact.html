@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Contacto y ubicación | Catálogo 2026{% endblock %}
+{% block meta_description %}Información de contacto y ubicación para la web administrativa de catálogo tecnológico.{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body p-4 p-lg-5">
+                <div class="section-kicker mb-2">Contacto</div>
+                <h1 class="h3 fw-bold mb-3">Atención comercial y administrativa</h1>
+                <p class="text-muted mb-4">Estamos disponibles para consultas sobre inventario, garantía y disponibilidad de productos.</p>
+                <div class="mb-3"><strong>Correo:</strong> ventas@catalogo2026.local</div>
+                <div class="mb-3"><strong>Teléfono:</strong> +51 999 000 000</div>
+                <div class="mb-0"><strong>Horario:</strong> Lunes a viernes, 9:00 a 18:00</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body p-4 p-lg-5">
+                <div class="section-kicker mb-2">Ubicación</div>
+                <h2 class="h4 fw-bold mb-3">Oficina administrativa</h2>
+                <p class="text-muted mb-4">Referencia de ubicación para atención, recojo y coordinación logística.</p>
+                <div class="ratio ratio-16x9 rounded-4 overflow-hidden border">
+                    <iframe
+                        title="Ubicación de Catálogo 2026"
+                        src="https://www.google.com/maps?q=Lima%20Peru&output=embed"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
