@@ -4,9 +4,11 @@
         <div class="section-kicker mb-2">Panel</div>
         <h1 class="h5 fw-bold mb-3">Opciones</h1>
         <div class="list-group list-group-flush">
-            <a href="{% url 'app_users:dashboard' %}" class="list-group-item list-group-item-action {% if url_name == 'dashboard' and section != 'products' %}active{% endif %}">Perfil</a>
+            <a href="{% url 'app_users:dashboard' %}" class="list-group-item list-group-item-action {% if section != 'products' %}{% if url_name == 'dashboard' or url_name == 'user-update' or url_name == 'user-list' or url_name == 'user-edit' or url_name == 'user-toggle-active' %}active{% endif %}{% endif %}">Perfil</a>
             {% if user.is_superuser or user.occupation == '0' %}
-            <a href="{% url 'app_users:dashboard' %}?section=products" class="list-group-item list-group-item-action {% if section == 'products' %}active{% endif %}">Productos</a>
+            <a href="{% url 'app_users:dashboard' %}?section=products" class="list-group-item list-group-item-action {% if url_name == 'product-list' or url_name == 'product-create' or url_name == 'product-detail' or url_name == 'product-update' or url_name == 'product-delete' or section == 'products' %}active{% endif %}">Productos</a>
+            <a href="{% url 'app_products:category-list' %}" class="list-group-item list-group-item-action {% if url_name == 'category-list' or url_name == 'category-create' or url_name == 'category-update' or url_name == 'category-delete' %}active{% endif %}">Categorías</a>
+            <a href="{% url 'app_products:brand-list' %}" class="list-group-item list-group-item-action {% if url_name == 'brand-list' or url_name == 'brand-create' or url_name == 'brand-update' or url_name == 'brand-delete' %}active{% endif %}">Marcas</a>
             {% endif %}
         </div>
         <div class="d-grid gap-2 mt-3">

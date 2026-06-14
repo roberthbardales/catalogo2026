@@ -1,6 +1,6 @@
 {% extends 'users/base_panel.html' %}
 
-{% block title %}Eliminar producto | Catálogo 2026{% endblock %}
+{% block title %}Eliminar marca | Catálogo 2026{% endblock %}
 
 {% block panel_content %}
 <div class="row justify-content-center">
@@ -9,12 +9,12 @@
             <div class="card-body p-4 p-lg-5">
                 <div class="section-kicker mb-2">Eliminar</div>
                 <h1 class="h4 fw-bold mb-3">¿Eliminar {{ object.name }}?</h1>
-                <p class="text-muted">Esta acción eliminará el producto del catálogo.</p>
+                <p class="text-muted">Esta acción eliminará la marca del catálogo.</p>
                 <form method="post">
                     {% csrf_token %}
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-danger">Sí, eliminar</button>
-                        <a href="{% url 'app_products:product-list' %}" class="btn btn-outline-secondary">Cancelar</a>
+                        <a href="{% url 'app_products:brand-list' %}" class="btn btn-outline-secondary">Cancelar</a>
                     </div>
                 </form>
             </div>

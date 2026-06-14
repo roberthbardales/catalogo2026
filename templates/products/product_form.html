@@ -1,8 +1,8 @@
-{% extends 'products/base_products.html' %}
+{% extends 'users/base_panel.html' %}
 
 {% block title %}Producto | Catálogo 2026{% endblock %}
 
-{% block content %}
+{% block panel_content %}
 <div class="row justify-content-center">
     <div class="col-lg-8">
         <div class="card shadow-sm border-0">
@@ -71,6 +71,64 @@
                                 <label class="form-check-label">Activo</label>
                             </div>
                         </div>
+                    </div>
+
+                    <hr class="my-4">
+                    <h5 class="fw-bold mb-3">Galería de imágenes</h5>
+                    {{ image_formset.management_form }}
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Texto alternativo</th>
+                                    <th style="width:80px">Orden</th>
+                                    <th style="width:60px">Activo</th>
+                                    <th style="width:60px">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for f in image_formset.forms %}
+                                <tr>
+                                    {{ f.id }}
+                                    <td>{{ f.image }}{{ f.image.errors }}</td>
+                                    <td>{{ f.alt_text }}{{ f.alt_text.errors }}</td>
+                                    <td>{{ f.order }}{{ f.order.errors }}</td>
+                                    <td class="text-center">{{ f.is_active }}</td>
+                                    <td class="text-center">{{ f.DELETE }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <hr class="my-4">
+                    <h5 class="fw-bold mb-3">Especificaciones técnicas</h5>
+                    {{ spec_formset.management_form }}
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Clave</th>
+                                    <th>Valor</th>
+                                    <th style="width:80px">Orden</th>
+                                    <th style="width:60px">Activo</th>
+                                    <th style="width:60px">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for f in spec_formset.forms %}
+                                <tr>
+                                    {{ f.id }}
+                                    <td>{{ f.key }}{{ f.key.errors }}</td>
+                                    <td>{{ f.value }}{{ f.value.errors }}</td>
+                                    <td>{{ f.order }}{{ f.order.errors }}</td>
+                                    <td class="text-center">{{ f.is_active }}</td>
+                                    <td class="text-center">{{ f.DELETE }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">

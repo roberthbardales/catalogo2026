@@ -1,8 +1,8 @@
-{% extends 'products/base_products.html' %}
+{% extends 'users/base_panel.html' %}
 
 {% block title %}{{ product.name }} | Catálogo 2026{% endblock %}
 
-{% block content %}
+{% block panel_content %}
 <div class="row g-4">
     <div class="col-lg-8">
         <div class="card shadow-sm border-0">
@@ -20,6 +20,43 @@
                 </div>
             </div>
         </div>
+
+        {% with images=product.images.all %}
+        {% if images %}
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-body p-4 p-lg-5">
+                <h5 class="fw-bold mb-3">Galería de imágenes</h5>
+                <div class="row g-3">
+                    {% for img in images %}
+                    <div class="col-4 col-md-3">
+                        <img src="{{ img.image.url }}" class="img-fluid rounded-3" alt="{{ img.alt_text|default:product.name }}">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% with specs=product.specifications.all %}
+        {% if specs %}
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-body p-4 p-lg-5">
+                <h5 class="fw-bold mb-3">Especificaciones técnicas</h5>
+                <table class="table table-bordered mb-0">
+                    <tbody>
+                        {% for spec in specs %}
+                        <tr>
+                            <th class="w-25 bg-light">{{ spec.key }}</th>
+                            <td>{{ spec.value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+        {% endwith %}
     </div>
     <div class="col-lg-4">
         <div class="card shadow-sm border-0 mb-3">
