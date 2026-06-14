@@ -9,6 +9,7 @@ from django.views.generic.edit import FormView
 from .forms import LoginForm, UpdatePasswordForm, UserRegisterForm, UserUpdateForm
 from .mixins import AdministradorPermisoMixin
 from .models import User
+from applications.products.models import Product
 
 
 # --- Helper reutilizable ---
@@ -95,6 +96,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['user'] = self.request.user
+        ctx['products'] = Product.objects.select_related('category', 'brand').prefetch_related('tags').order_by('name')[:10]
         return ctx
 
 

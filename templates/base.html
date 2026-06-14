@@ -81,8 +81,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-    {% include 'include/header.html' %}
-
+    {% block header %}{% endblock %}
     <main class="flex-grow-1 py-4">
         <div class="container">
             {% if messages %}
@@ -98,8 +97,7 @@
             {% block content %}{% endblock %}
         </div>
     </main>
-
-    {% include 'include/footer.html' %}
+    {% block footer %}{% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     {% block extra_js %}{% endblock %}
 </body>

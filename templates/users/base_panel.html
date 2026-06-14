@@ -1,0 +1,12 @@
+{% extends 'users/base_users.html' %}
+
+{% block content %}
+<div class="row g-4">
+    <aside class="col-lg-3">
+        {% include 'include/panel_sidebar.html' %}
+    </aside>
+    <section class="col-lg-9">
+        {% block panel_content %}{% endblock %}
+    </section>
+</div>
+{% endblock %}
