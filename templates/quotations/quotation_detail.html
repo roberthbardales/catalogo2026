@@ -1,0 +1,106 @@
+{% extends 'users/base_panel.html' %}
+
+{% block title %}Cotización #{{ quotation.pk }} | Catálogo 2026{% endblock %}
+
+{% block panel_content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+    <div>
+        <div class="section-kicker mb-2">Cotización</div>
+        <h1 class="h3 fw-bold mb-0">Cotización #{{ quotation.pk }}</h1>
+    </div>
+    <a href="{% url 'app_quotations:quotation-list' %}" class="btn btn-outline-secondary">Volver al listado</a>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4 p-lg-5">
+                <h5 class="fw-bold mb-3">Datos del cliente</h5>
+                <table class="table table-bordered mb-0">
+                    <tbody>
+                        <tr><th class="w-25 bg-light">Nombre</th><td>{{ quotation.customer_name }}</td></tr>
+                        <tr><th class="w-25 bg-light">Email</th><td>{{ quotation.customer_email }}</td></tr>
+                        <tr><th class="w-25 bg-light">Teléfono</th><td>{{ quotation.customer_phone }}</td></tr>
+                        {% if quotation.notes %}
+                        <tr><th class="w-25 bg-light">Notas</th><td>{{ quotation.notes }}</td></tr>
+                        {% endif %}
+                        <tr><th class="w-25 bg-light">Fecha</th><td>{{ quotation.created|date:"d/m/Y H:i" }}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-body p-4 p-lg-5">
+                <h5 class="fw-bold mb-3">Productos solicitados</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Producto</th>
+                                <th>SKU</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-end">P. Unitario</th>
+                                <th class="text-end">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in quotation.items.all %}
+                            <tr>
+                                <td>{{ item.product_name }}</td>
+                                <td>{{ item.product_sku }}</td>
+                                <td class="text-center">{{ item.quantity }}</td>
+                                <td class="text-end">S/ {{ item.unit_price }}</td>
+                                <td class="text-end fw-semibold">S/ {{ item.subtotal }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-light fw-bold">
+                                <td colspan="4" class="text-end">Total</td>
+                                <td class="text-end">
+                                    S/ {{ total }}
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4 p-lg-5">
+                <h5 class="fw-bold mb-3">Estado actual</h5>
+                <div class="mb-4">
+                    {% if quotation.status == 'P' %}
+                        <span class="badge bg-warning text-dark fs-6">Pendiente</span>
+                    {% elif quotation.status == 'A' %}
+                        <span class="badge bg-success fs-6">Aprobada</span>
+                    {% elif quotation.status == 'R' %}
+                        <span class="badge bg-danger fs-6">Rechazada</span>
+                    {% elif quotation.status == 'C' %}
+                        <span class="badge bg-info fs-6">Completada</span>
+                    {% endif %}
+                </div>
+
+                <hr>
+
+                <h6 class="fw-bold mb-3">Cambiar estado</h6>
+                <form method="post" action="{% url 'app_quotations:quotation-update-status' quotation.pk %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <select name="status" class="form-select">
+                            {% for code, label in status_choices %}
+                            <option value="{{ code }}" {% if quotation.status == code %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Actualizar estado</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

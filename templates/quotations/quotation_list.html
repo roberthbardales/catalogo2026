@@ -1,0 +1,104 @@
+{% extends 'users/base_panel.html' %}
+
+{% block title %}Cotizaciones | Catálogo 2026{% endblock %}
+
+{% block panel_content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+    <div>
+        <div class="section-kicker mb-2">Panel</div>
+        <h1 class="h3 fw-bold mb-0">Solicitudes de cotización</h1>
+    </div>
+</div>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-auto">
+        <select name="status" class="form-select" onchange="this.form.submit()">
+            <option value="">Todos los estados</option>
+            {% for code, label in status_choices %}
+            <option value="{{ code }}" {% if current_status == code %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    {% if current_status %}
+    <div class="col-auto">
+        <a href="{% url 'app_quotations:quotation-list' %}" class="btn btn-outline-secondary">Limpiar</a>
+    </div>
+    {% endif %}
+</form>
+
+{% if quotations %}
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>#</th>
+                <th>Cliente</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Items</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in quotations %}
+            <tr>
+                <td class="fw-semibold">{{ q.pk }}</td>
+                <td>{{ q.customer_name }}</td>
+                <td>{{ q.customer_email }}</td>
+                <td>{{ q.customer_phone }}</td>
+                <td>{{ q.items.count }}</td>
+                <td>
+                    {% if q.status == 'P' %}
+                        <span class="badge bg-warning text-dark">Pendiente</span>
+                    {% elif q.status == 'A' %}
+                        <span class="badge bg-success">Aprobada</span>
+                    {% elif q.status == 'R' %}
+                        <span class="badge bg-danger">Rechazada</span>
+                    {% elif q.status == 'C' %}
+                        <span class="badge bg-info">Completada</span>
+                    {% endif %}
+                </td>
+                <td class="text-muted small">{{ q.created|date:"d/m/Y H:i" }}</td>
+                <td>
+                    <a href="{% url 'app_quotations:quotation-detail' q.pk %}" class="btn btn-sm btn-outline-primary">Ver</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if is_paginated %}
+<nav aria-label="Navegación de cotizaciones">
+    <ul class="pagination justify-content-center flex-wrap mb-0">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1{% if current_status %}&status={{ current_status }}{% endif %}">Primero</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if current_status %}&status={{ current_status }}{% endif %}">Anterior</a></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if num >= page_obj.number|add:'-3' and num <= page_obj.number|add:'3' %}
+                <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}{% if current_status %}&status={{ current_status }}{% endif %}">{{ num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% if current_status %}&status={{ current_status }}{% endif %}">Siguiente</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if current_status %}&status={{ current_status }}{% endif %}">Último</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="card shadow-sm border-0">
+    <div class="card-body p-5 text-center text-muted">
+        No hay solicitudes de cotización registradas.
+    </div>
+</div>
+{% endif %}
+{% endblock %}

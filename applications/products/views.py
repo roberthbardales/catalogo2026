@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db import transaction
+from django.db import models, transaction
+from django.db.models import Count
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
@@ -12,6 +13,8 @@ from .forms import (
     ProductImageFormSet,
     TechnicalSpecificationFormSet,
 )
+from applications.inventory.models import StockMovement
+
 from .models import Brand, Category, Product
 
 
@@ -22,7 +25,35 @@ class ProductListView(AdministradorPermisoMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Product.objects.select_related('category', 'brand').prefetch_related('tags').order_by('name')
+        qs = Product.objects.select_related('category', 'brand').prefetch_related('tags').order_by('name')
+        q = self.request.GET.get('q', '').strip()
+        if q:
+            qs = qs.filter(
+                models.Q(name__icontains=q)
+                | models.Q(sku__icontains=q)
+                | models.Q(short_description__icontains=q)
+                | models.Q(description__icontains=q)
+                | models.Q(category__name__icontains=q)
+                | models.Q(brand__name__icontains=q)
+            )
+        category_id = self.request.GET.get('category', '').strip()
+        if category_id and category_id.isdigit():
+            qs = qs.filter(category_id=int(category_id))
+        brand_id = self.request.GET.get('brand', '').strip()
+        if brand_id and brand_id.isdigit():
+            qs = qs.filter(brand_id=int(brand_id))
+        return qs
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['q'] = self.request.GET.get('q', '')
+        ctx['categories'] = Category.objects.filter(is_active=True).annotate(
+            product_count=Count('products', filter=models.Q(products__is_active=True))
+        ).order_by('name')
+        ctx['brands'] = Brand.objects.filter(is_active=True).order_by('name')
+        ctx['current_category'] = self.request.GET.get('category', '')
+        ctx['current_brand'] = self.request.GET.get('brand', '')
+        return ctx
 
 
 class ProductDetailView(AdministradorPermisoMixin, DetailView):
@@ -33,7 +64,16 @@ class ProductDetailView(AdministradorPermisoMixin, DetailView):
     slug_url_kwarg = 'slug'
 
     def get_object(self):
-        return super().get_queryset().select_related('category', 'brand').prefetch_related('images', 'specifications').get(slug=self.kwargs['slug'])
+        return super().get_queryset().select_related('category', 'brand').prefetch_related(
+            'images', 'specifications',
+        ).get(slug=self.kwargs['slug'])
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['recent_movements'] = StockMovement.objects.filter(
+            product=self.object
+        ).select_related('created_by').order_by('-created')[:10]
+        return ctx
 
 
 class ProductCreateView(AdministradorPermisoMixin, CreateView):

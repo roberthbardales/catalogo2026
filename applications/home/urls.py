@@ -12,4 +12,5 @@ urlpatterns = [
     path('marcas/', views.BrandsView.as_view(), name='brands'),
     path('garantia/', views.WarrantyView.as_view(), name='warranty'),
     path('contacto/', views.ContactView.as_view(), name='contact'),
+    path('api/productos/', views.ProductSearchAPIView.as_view(), name='product-search-api'),
 ]

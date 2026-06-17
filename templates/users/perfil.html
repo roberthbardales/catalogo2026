@@ -1,0 +1,98 @@
+{% extends 'users/base_panel.html' %}
+
+{% block title %}Perfil | Catálogo 2026{% endblock %}
+
+{% block panel_content %}
+{% with section=request.GET.section|default:'perfil' %}
+    {% if section == 'password' %}
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <div class="section-kicker mb-2">Seguridad</div>
+                <h1 class="h3 fw-bold mb-0">Cambiar contraseña</h1>
+            </div>
+        </div>
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4 p-lg-5">
+                <p class="text-muted mb-4">Ingresa a esta sección para actualizar tu clave de acceso de forma segura.</p>
+                <a href="{% url 'app_users:user-update' %}" class="btn btn-primary">Ir a cambiar contraseña</a>
+            </div>
+        </div>
+    {% elif section == 'usuarios' %}
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <div class="section-kicker mb-2">Administración</div>
+                <h1 class="h3 fw-bold mb-0">Usuarios</h1>
+            </div>
+        </div>
+        {% if user.is_superuser or user.occupation == '0' %}
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-lg-5">
+                    <p class="text-muted mb-4">Gestiona accesos y estados del sistema.</p>
+                    <a href="{% url 'app_users:user-list' %}" class="btn btn-outline-primary">Abrir listado completo</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="alert alert-warning mb-0">No tienes permisos para ver la sección de usuarios.</div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <div class="section-kicker mb-2">Perfil</div>
+                <h1 class="h3 fw-bold mb-0">Información del usuario</h1>
+            </div>
+        </div>
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4 p-lg-5">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="bg-light rounded-4 p-3 h-100">
+                            <div class="text-muted small">Nombre completo</div>
+                            <div class="fw-semibold">{{ user.first_name }} {{ user.last_name }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-light rounded-4 p-3 h-100">
+                            <div class="text-muted small">Correo electrónico</div>
+                            <div class="fw-semibold">{{ user.email }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-light rounded-4 p-3 h-100">
+                            <div class="text-muted small">Celular</div>
+                            <div class="fw-semibold">{{ user.phone|default:"Sin registrar" }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-light rounded-4 p-3 h-100">
+                            <div class="text-muted small">Rol</div>
+                            <div class="fw-semibold">{{ user.get_occupation_display|default:"Sin registrar" }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-light rounded-4 p-3 h-100">
+                            <div class="text-muted small">Género</div>
+                            <div class="fw-semibold">{{ user.get_gender_display|default:"Sin registrar" }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-light rounded-4 p-3 h-100">
+                            <div class="text-muted small">Estado</div>
+                            <div class="fw-semibold">{% if user.is_active %}Activo{% else %}Inactivo{% endif %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-wrap gap-2 mt-4">
+            {% if user.is_superuser or user.occupation == '0' %}
+            <a href="{% url 'app_users:user-update' %}" class="btn btn-outline-primary">Cambiar Contraseña</a>
+            <a href="{% url 'app_users:user-list' %}" class="btn btn-outline-primary">Lista Usuarios</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endwith %}
+{% endblock %}

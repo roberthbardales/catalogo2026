@@ -71,7 +71,7 @@ class Product(TimeStampedModel):
     sku = models.CharField(max_length=80, unique=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField(default=0)
-    image_main = models.ImageField(upload_to='products/main/', blank=True, null=True)
+    image_main = models.ImageField(upload_to='products/', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='products')
     tags = models.ManyToManyField(ProductTag, blank=True, related_name='products')
@@ -93,7 +93,7 @@ class Product(TimeStampedModel):
 
 class ProductImage(TimeStampedModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='products/gallery/')
+    image = models.ImageField(upload_to='products/')
     alt_text = models.CharField(max_length=150, blank=True)
     order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)

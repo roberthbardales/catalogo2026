@@ -1,14 +1,58 @@
-<footer class="bg-white border-top mt-auto py-4">
-    <div class="container">
-        <div class="row g-3 align-items-center">
-            <div class="col-md-6">
-                <div class="fw-semibold">Catálogo 2026</div>
-                <div class="text-muted small">Panel administrativo para productos tecnológicos</div>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <div class="text-muted small">ventas@catalogo2026.local</div>
-                <div class="text-muted small">© {% now "Y" %} Catálogo 2026</div>
-            </div>
+<footer class="footer-custom">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 footer-section">
+        <h5>Catálogo 2026</h5>
+        <p>
+          Plataforma de catálogo de productos tecnológicos. Gestiona tu inventario, cotizaciones y mucho más.
+        </p>
+      </div>
+      <div class="col-lg-2 col-md-6 footer-section">
+        <h5>Enlaces</h5>
+        <ul class="footer-links">
+          <li>
+            <a href="{% url 'app_home:index' %}"><i class="fas fa-home"></i>Inicio</a>
+          </li>
+          <li>
+            <a href="{% url 'app_home:products' %}"><i class="fas fa-box"></i>Productos</a>
+          </li>
+          <li>
+            <a href="{% url 'app_home:about' %}"><i class="fas fa-info-circle"></i>Nosotros</a>
+          </li>
+          <li>
+            <a href="{% url 'app_home:contact' %}"><i class="fas fa-envelope"></i>Contacto</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6 footer-section">
+        <h5>Contacto</h5>
+        <div class="footer-contact">
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>ventas@catalogo2026.local</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone"></i>
+            <span>+51 999 999 999</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Lima, Perú</span>
+          </div>
         </div>
+      </div>
+      <div class="col-lg-3 col-md-6 footer-section">
+        <h5>Sígueme</h5>
+        <p>Conéctate con nosotros en redes sociales</p>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/" class="social-link">Facebook</a>
+          <a href="https://wa.me/" class="social-link">WhatsApp</a>
+        </div>
+      </div>
     </div>
+    <div class="footer-bottom">
+      <p>Django & Bootstrap</p>
+      <p>© {% now "Y" %} Catálogo 2026</p>
+    </div>
+  </div>
 </footer>

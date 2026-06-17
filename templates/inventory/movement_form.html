@@ -1,0 +1,65 @@
+{% extends 'users/base_panel.html' %}
+
+{% block title %}Nuevo movimiento | Catálogo 2026{% endblock %}
+
+{% block panel_content %}
+<div class="mb-4">
+    <div class="section-kicker mb-2">Inventario</div>
+    <h1 class="h3 fw-bold mb-0">Registrar movimiento de stock</h1>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4 p-lg-5">
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label for="{{ form.product.id_for_label }}" class="form-label fw-semibold">{{ form.product.label }}</label>
+                    {{ form.product }}
+                    {% if form.product.errors %}
+                    <div class="text-danger small mt-1">{{ form.product.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    <label for="{{ form.movement_type.id_for_label }}" class="form-label fw-semibold">{{ form.movement_type.label }}</label>
+                    {{ form.movement_type }}
+                    {% if form.movement_type.errors %}
+                    <div class="text-danger small mt-1">{{ form.movement_type.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    <label for="{{ form.quantity.id_for_label }}" class="form-label fw-semibold">{{ form.quantity.label }}</label>
+                    {{ form.quantity }}
+                    {% if form.quantity.errors %}
+                    <div class="text-danger small mt-1">{{ form.quantity.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-12">
+                    <label for="{{ form.note.id_for_label }}" class="form-label fw-semibold">{{ form.note.label }}</label>
+                    {{ form.note }}
+                    {% if form.note.errors %}
+                    <div class="text-danger small mt-1">{{ form.note.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary">Guardar movimiento</button>
+                <a href="{% url 'app_inventory:movement-list' %}" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

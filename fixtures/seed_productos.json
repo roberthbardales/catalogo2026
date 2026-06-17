@@ -1,0 +1,2252 @@
+[
+{
+  "model": "products.category",
+  "pk": 1,
+  "fields": {
+    "created": "2026-06-14T18:24:41.392Z",
+    "modified": "2026-06-14T18:24:41.392Z",
+    "name": "Laptops",
+    "slug": "laptops",
+    "description": "Laptops y notebooks",
+    "is_active": true
+  }
+},
+{
+  "model": "products.category",
+  "pk": 2,
+  "fields": {
+    "created": "2026-06-14T18:24:41.415Z",
+    "modified": "2026-06-14T18:24:41.415Z",
+    "name": "Audífonos",
+    "slug": "audifonos",
+    "description": "Audífonos y auriculares",
+    "is_active": true
+  }
+},
+{
+  "model": "products.category",
+  "pk": 3,
+  "fields": {
+    "created": "2026-06-14T18:24:41.419Z",
+    "modified": "2026-06-14T18:24:41.419Z",
+    "name": "Periféricos",
+    "slug": "perifericos",
+    "description": "Teclados, mice y accesorios",
+    "is_active": true
+  }
+},
+{
+  "model": "products.category",
+  "pk": 4,
+  "fields": {
+    "created": "2026-06-14T18:24:41.422Z",
+    "modified": "2026-06-14T21:45:25.036Z",
+    "name": "Accesorios",
+    "slug": "accesorios",
+    "description": "Accesorios diversos",
+    "is_active": true
+  }
+},
+{
+  "model": "products.category",
+  "pk": 5,
+  "fields": {
+    "created": "2026-06-14T18:24:41.424Z",
+    "modified": "2026-06-14T18:24:41.424Z",
+    "name": "Almacenamiento",
+    "slug": "almacenamiento",
+    "description": "Discos duros, SSDs y memorias",
+    "is_active": true
+  }
+},
+{
+  "model": "products.category",
+  "pk": 6,
+  "fields": {
+    "created": "2026-06-14T18:24:41.426Z",
+    "modified": "2026-06-14T18:24:41.426Z",
+    "name": "Monitores",
+    "slug": "monitores",
+    "description": "Monitores y pantallas",
+    "is_active": true
+  }
+},
+{
+  "model": "products.category",
+  "pk": 7,
+  "fields": {
+    "created": "2026-06-14T18:24:41.429Z",
+    "modified": "2026-06-14T18:24:41.429Z",
+    "name": "Tablets",
+    "slug": "tablets",
+    "description": "Tablets y lectores",
+    "is_active": true
+  }
+},
+{
+  "model": "products.category",
+  "pk": 8,
+  "fields": {
+    "created": "2026-06-14T18:24:41.431Z",
+    "modified": "2026-06-14T18:24:41.431Z",
+    "name": "Cargadores y Cables",
+    "slug": "cargadores-y-cables",
+    "description": "Cargadores, cables y adaptadores",
+    "is_active": true
+  }
+},
+{
+  "model": "products.category",
+  "pk": 9,
+  "fields": {
+    "created": "2026-06-14T18:24:41.433Z",
+    "modified": "2026-06-14T18:24:41.433Z",
+    "name": "Componentes",
+    "slug": "componentes",
+    "description": "Componentes de PC",
+    "is_active": true
+  }
+},
+{
+  "model": "products.category",
+  "pk": 10,
+  "fields": {
+    "created": "2026-06-14T18:24:41.434Z",
+    "modified": "2026-06-14T18:24:41.434Z",
+    "name": "Parlantes y Audio",
+    "slug": "parlantes-y-audio",
+    "description": "Parlantes y equipos de audio",
+    "is_active": true
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 11,
+  "fields": {
+    "created": "2026-06-14T18:29:32.605Z",
+    "modified": "2026-06-14T18:29:32.605Z",
+    "name": "Samsung",
+    "slug": "samsung",
+    "logo": "",
+    "description": "Marca Samsung",
+    "is_active": true
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 12,
+  "fields": {
+    "created": "2026-06-14T18:29:32.608Z",
+    "modified": "2026-06-14T21:45:30.766Z",
+    "name": "Apple",
+    "slug": "apple",
+    "logo": "",
+    "description": "Marca Apple",
+    "is_active": false
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 13,
+  "fields": {
+    "created": "2026-06-14T18:29:32.610Z",
+    "modified": "2026-06-14T18:29:32.610Z",
+    "name": "Sony",
+    "slug": "sony",
+    "logo": "",
+    "description": "Marca Sony",
+    "is_active": true
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 14,
+  "fields": {
+    "created": "2026-06-14T18:29:32.612Z",
+    "modified": "2026-06-14T18:29:32.612Z",
+    "name": "LG",
+    "slug": "lg",
+    "logo": "",
+    "description": "Marca LG",
+    "is_active": true
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 15,
+  "fields": {
+    "created": "2026-06-14T18:29:32.613Z",
+    "modified": "2026-06-14T18:29:32.613Z",
+    "name": "Dell",
+    "slug": "dell",
+    "logo": "",
+    "description": "Marca Dell",
+    "is_active": true
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 16,
+  "fields": {
+    "created": "2026-06-14T18:29:32.615Z",
+    "modified": "2026-06-14T18:29:32.615Z",
+    "name": "HP",
+    "slug": "hp",
+    "logo": "",
+    "description": "Marca HP",
+    "is_active": true
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 17,
+  "fields": {
+    "created": "2026-06-14T18:29:32.617Z",
+    "modified": "2026-06-14T18:29:32.617Z",
+    "name": "Lenovo",
+    "slug": "lenovo",
+    "logo": "",
+    "description": "Marca Lenovo",
+    "is_active": true
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 18,
+  "fields": {
+    "created": "2026-06-14T18:29:32.619Z",
+    "modified": "2026-06-14T18:29:32.619Z",
+    "name": "ASUS",
+    "slug": "asus",
+    "logo": "",
+    "description": "Marca ASUS",
+    "is_active": true
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 19,
+  "fields": {
+    "created": "2026-06-14T18:29:32.620Z",
+    "modified": "2026-06-14T18:29:32.620Z",
+    "name": "Microsoft",
+    "slug": "microsoft",
+    "logo": "",
+    "description": "Marca Microsoft",
+    "is_active": true
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 20,
+  "fields": {
+    "created": "2026-06-14T18:29:32.622Z",
+    "modified": "2026-06-14T18:29:32.622Z",
+    "name": "Logitech",
+    "slug": "logitech",
+    "logo": "",
+    "description": "Marca Logitech",
+    "is_active": true
+  }
+},
+{
+  "model": "products.product",
+  "pk": 101,
+  "fields": {
+    "created": "2026-06-14T18:29:32.628Z",
+    "modified": "2026-06-15T23:41:28.401Z",
+    "name": "Laptop Lenovo ProBook 17014\"",
+    "slug": "laptop-lenovo-probook-17014",
+    "description": "Laptop Lenovo ProBook 17014\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Lenovo laptops modelo 170.",
+    "sku": "LAP-001",
+    "price": "33373.00",
+    "stock": 94,
+    "image_main": "products/10.jpg",
+    "category": 1,
+    "brand": 17,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 102,
+  "fields": {
+    "created": "2026-06-14T18:29:32.642Z",
+    "modified": "2026-06-15T23:41:35.821Z",
+    "name": "Laptop Samsung Slim 36815\"",
+    "slug": "laptop-samsung-slim-36815",
+    "description": "Laptop Samsung Slim 36815\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung laptops modelo 368.",
+    "sku": "LAP-002",
+    "price": "45122.00",
+    "stock": 10,
+    "image_main": "products/10.jpg",
+    "category": 1,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 103,
+  "fields": {
+    "created": "2026-06-14T18:29:32.644Z",
+    "modified": "2026-06-15T23:41:35.823Z",
+    "name": "Laptop Logitech Workstation 70417\"",
+    "slug": "laptop-logitech-workstation-70417",
+    "description": "Laptop Logitech Workstation 70417\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Logitech laptops modelo 704.",
+    "sku": "LAP-003",
+    "price": "38754.00",
+    "stock": 30,
+    "image_main": "products/100.jpg",
+    "category": 1,
+    "brand": 20,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 104,
+  "fields": {
+    "created": "2026-06-14T18:29:32.646Z",
+    "modified": "2026-06-15T23:41:35.824Z",
+    "name": "Laptop Microsoft Edge 82314\"",
+    "slug": "laptop-microsoft-edge-82314",
+    "description": "Laptop Microsoft Edge 82314\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Microsoft laptops modelo 823.",
+    "sku": "LAP-004",
+    "price": "16097.00",
+    "stock": 29,
+    "image_main": "products/1001.jpg",
+    "category": 1,
+    "brand": 19,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 105,
+  "fields": {
+    "created": "2026-06-14T18:29:32.648Z",
+    "modified": "2026-06-15T23:41:35.825Z",
+    "name": "Laptop ASUS Edge 15414\"",
+    "slug": "laptop-asus-edge-15414",
+    "description": "Laptop ASUS Edge 15414\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "ASUS laptops modelo 154.",
+    "sku": "LAP-005",
+    "price": "15275.00",
+    "stock": 54,
+    "image_main": "products/1002.jpg",
+    "category": 1,
+    "brand": 18,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 106,
+  "fields": {
+    "created": "2026-06-14T18:29:32.650Z",
+    "modified": "2026-06-15T23:41:35.826Z",
+    "name": "Laptop ASUS Business 30913\"",
+    "slug": "laptop-asus-business-30913",
+    "description": "Laptop ASUS Business 30913\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "ASUS laptops modelo 309.",
+    "sku": "LAP-006",
+    "price": "26673.00",
+    "stock": 0,
+    "image_main": "products/1005.jpg",
+    "category": 1,
+    "brand": 18,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 107,
+  "fields": {
+    "created": "2026-06-14T18:29:32.652Z",
+    "modified": "2026-06-15T23:41:35.827Z",
+    "name": "Laptop HP Go 32711\"",
+    "slug": "laptop-hp-go-32711",
+    "description": "Laptop HP Go 32711\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "HP laptops modelo 327.",
+    "sku": "LAP-007",
+    "price": "34220.00",
+    "stock": 92,
+    "image_main": "products/1006.jpg",
+    "category": 1,
+    "brand": 16,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 108,
+  "fields": {
+    "created": "2026-06-14T18:29:32.654Z",
+    "modified": "2026-06-15T23:41:35.828Z",
+    "name": "Laptop Sony Business 16513\"",
+    "slug": "laptop-sony-business-16513",
+    "description": "Laptop Sony Business 16513\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony laptops modelo 165.",
+    "sku": "LAP-008",
+    "price": "28412.00",
+    "stock": 54,
+    "image_main": "products/1007.jpg",
+    "category": 1,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 109,
+  "fields": {
+    "created": "2026-06-14T18:29:32.655Z",
+    "modified": "2026-06-15T23:41:35.829Z",
+    "name": "Laptop Sony Edge 97614\"",
+    "slug": "laptop-sony-edge-97614",
+    "description": "Laptop Sony Edge 97614\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony laptops modelo 976.",
+    "sku": "LAP-009",
+    "price": "31229.00",
+    "stock": 10,
+    "image_main": "products/11.jpg",
+    "category": 1,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 110,
+  "fields": {
+    "created": "2026-06-14T18:29:32.657Z",
+    "modified": "2026-06-15T23:41:35.830Z",
+    "name": "Laptop Apple Gamer 93617\"",
+    "slug": "laptop-apple-gamer-93617",
+    "description": "Laptop Apple Gamer 93617\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Apple laptops modelo 936.",
+    "sku": "LAP-010",
+    "price": "16409.00",
+    "stock": 93,
+    "image_main": "products/200.jpg",
+    "category": 1,
+    "brand": 12,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 111,
+  "fields": {
+    "created": "2026-06-14T18:29:32.658Z",
+    "modified": "2026-06-15T23:41:35.831Z",
+    "name": "Audífonos Sony Wireless 924",
+    "slug": "audifonos-sony-wireless-924",
+    "description": "Audífonos Sony Wireless 924 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony audífonos modelo 924.",
+    "sku": "AUD-001",
+    "price": "36621.00",
+    "stock": 30,
+    "image_main": "products/300.jpg",
+    "category": 2,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 112,
+  "fields": {
+    "created": "2026-06-14T18:29:32.660Z",
+    "modified": "2026-06-15T23:41:35.833Z",
+    "name": "Auriculares Sony Bluetooth 413",
+    "slug": "auriculares-sony-bluetooth-413",
+    "description": "Auriculares Sony Bluetooth 413 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony audífonos modelo 413.",
+    "sku": "AUD-002",
+    "price": "7738.00",
+    "stock": 32,
+    "image_main": "products/400.jpg",
+    "category": 2,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 113,
+  "fields": {
+    "created": "2026-06-14T18:29:32.661Z",
+    "modified": "2026-06-15T23:41:35.833Z",
+    "name": "Audífonos Dell Pro 281",
+    "slug": "audifonos-dell-pro-281",
+    "description": "Audífonos Dell Pro 281 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Dell audífonos modelo 281.",
+    "sku": "AUD-003",
+    "price": "43410.00",
+    "stock": 66,
+    "image_main": "products/500.jpg",
+    "category": 2,
+    "brand": 15,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 114,
+  "fields": {
+    "created": "2026-06-14T18:29:32.663Z",
+    "modified": "2026-06-15T23:41:35.834Z",
+    "name": "Audífonos Microsoft Cancelación Ruido 742",
+    "slug": "audifonos-microsoft-cancelacion-ruido-742",
+    "description": "Audífonos Microsoft Cancelación Ruido 742 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Microsoft audífonos modelo 742.",
+    "sku": "AUD-004",
+    "price": "20471.00",
+    "stock": 71,
+    "image_main": "products/600.jpg",
+    "category": 2,
+    "brand": 19,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 115,
+  "fields": {
+    "created": "2026-06-14T18:29:32.664Z",
+    "modified": "2026-06-15T23:41:35.845Z",
+    "name": "Auriculares LG In-Ear 571",
+    "slug": "auriculares-lg-in-ear-571",
+    "description": "Auriculares LG In-Ear 571 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG audífonos modelo 571.",
+    "sku": "AUD-005",
+    "price": "8482.00",
+    "stock": 91,
+    "image_main": "products/7.jpg",
+    "category": 2,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 116,
+  "fields": {
+    "created": "2026-06-14T18:29:32.666Z",
+    "modified": "2026-06-15T23:41:35.846Z",
+    "name": "Headset LG Gamer 777",
+    "slug": "headset-lg-gamer-777",
+    "description": "Headset LG Gamer 777 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG audífonos modelo 777.",
+    "sku": "AUD-006",
+    "price": "41568.00",
+    "stock": 39,
+    "image_main": "products/700.jpg",
+    "category": 2,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 117,
+  "fields": {
+    "created": "2026-06-14T18:29:32.667Z",
+    "modified": "2026-06-15T23:41:35.848Z",
+    "name": "Auriculares LG Hi-Fi 576",
+    "slug": "auriculares-lg-hi-fi-576",
+    "description": "Auriculares LG Hi-Fi 576 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG audífonos modelo 576.",
+    "sku": "AUD-007",
+    "price": "9821.00",
+    "stock": 49,
+    "image_main": "products/8.jpg",
+    "category": 2,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 118,
+  "fields": {
+    "created": "2026-06-14T18:29:32.669Z",
+    "modified": "2026-06-15T23:41:35.849Z",
+    "name": "Headset Samsung Gamer 755",
+    "slug": "headset-samsung-gamer-755",
+    "description": "Headset Samsung Gamer 755 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung audífonos modelo 755.",
+    "sku": "AUD-008",
+    "price": "14521.00",
+    "stock": 32,
+    "image_main": "products/800.jpg",
+    "category": 2,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 119,
+  "fields": {
+    "created": "2026-06-14T18:29:32.670Z",
+    "modified": "2026-06-15T23:41:35.850Z",
+    "name": "Auriculares Logitech Bluetooth 632",
+    "slug": "auriculares-logitech-bluetooth-632",
+    "description": "Auriculares Logitech Bluetooth 632 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Logitech audífonos modelo 632.",
+    "sku": "AUD-009",
+    "price": "34252.00",
+    "stock": 82,
+    "image_main": "products/9.jpg",
+    "category": 2,
+    "brand": 20,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 120,
+  "fields": {
+    "created": "2026-06-14T18:29:32.672Z",
+    "modified": "2026-06-14T18:29:32.672Z",
+    "name": "Headset Dell Gamer 544",
+    "slug": "headset-dell-gamer-544",
+    "description": "Headset Dell Gamer 544 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Dell audífonos modelo 544.",
+    "sku": "AUD-010",
+    "price": "6700.00",
+    "stock": 75,
+    "image_main": "",
+    "category": 2,
+    "brand": 15,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 121,
+  "fields": {
+    "created": "2026-06-14T18:29:32.673Z",
+    "modified": "2026-06-14T18:29:32.673Z",
+    "name": "Teclado Microsoft Inalámbrico 661",
+    "slug": "teclado-microsoft-inalambrico-661",
+    "description": "Teclado Microsoft Inalámbrico 661 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Microsoft periféricos modelo 661.",
+    "sku": "PER-001",
+    "price": "10148.00",
+    "stock": 65,
+    "image_main": "",
+    "category": 3,
+    "brand": 19,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 122,
+  "fields": {
+    "created": "2026-06-14T18:29:32.675Z",
+    "modified": "2026-06-14T18:29:32.675Z",
+    "name": "Teclado Lenovo Ergonómico 983",
+    "slug": "teclado-lenovo-ergonomico-983",
+    "description": "Teclado Lenovo Ergonómico 983 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Lenovo periféricos modelo 983.",
+    "sku": "PER-002",
+    "price": "2614.00",
+    "stock": 27,
+    "image_main": "",
+    "category": 3,
+    "brand": 17,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 123,
+  "fields": {
+    "created": "2026-06-14T18:29:32.676Z",
+    "modified": "2026-06-14T18:29:32.676Z",
+    "name": "Teclado Lenovo Inalámbrico 174",
+    "slug": "teclado-lenovo-inalambrico-174",
+    "description": "Teclado Lenovo Inalámbrico 174 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Lenovo periféricos modelo 174.",
+    "sku": "PER-003",
+    "price": "30671.00",
+    "stock": 33,
+    "image_main": "",
+    "category": 3,
+    "brand": 17,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 124,
+  "fields": {
+    "created": "2026-06-14T18:29:32.678Z",
+    "modified": "2026-06-14T18:29:32.678Z",
+    "name": "Mouse Apple Bluetooth 282",
+    "slug": "mouse-apple-bluetooth-282",
+    "description": "Mouse Apple Bluetooth 282 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Apple periféricos modelo 282.",
+    "sku": "PER-004",
+    "price": "27227.00",
+    "stock": 76,
+    "image_main": "",
+    "category": 3,
+    "brand": 12,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 125,
+  "fields": {
+    "created": "2026-06-14T18:29:32.680Z",
+    "modified": "2026-06-14T18:29:32.680Z",
+    "name": "Mouse Microsoft Gamer 834",
+    "slug": "mouse-microsoft-gamer-834",
+    "description": "Mouse Microsoft Gamer 834 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Microsoft periféricos modelo 834.",
+    "sku": "PER-005",
+    "price": "12221.00",
+    "stock": 69,
+    "image_main": "",
+    "category": 3,
+    "brand": 19,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 126,
+  "fields": {
+    "created": "2026-06-14T18:29:32.682Z",
+    "modified": "2026-06-14T18:29:32.682Z",
+    "name": "Combo Teclado+Mouse Apple 914",
+    "slug": "combo-tecladomouse-apple-914",
+    "description": "Combo Teclado+Mouse Apple 914 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Apple periféricos modelo 914.",
+    "sku": "PER-006",
+    "price": "16306.00",
+    "stock": 28,
+    "image_main": "",
+    "category": 3,
+    "brand": 12,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 127,
+  "fields": {
+    "created": "2026-06-14T18:29:32.684Z",
+    "modified": "2026-06-14T18:29:32.684Z",
+    "name": "Teclado HP Ergonómico 846",
+    "slug": "teclado-hp-ergonomico-846",
+    "description": "Teclado HP Ergonómico 846 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "HP periféricos modelo 846.",
+    "sku": "PER-007",
+    "price": "42663.00",
+    "stock": 96,
+    "image_main": "",
+    "category": 3,
+    "brand": 16,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 128,
+  "fields": {
+    "created": "2026-06-14T18:29:32.686Z",
+    "modified": "2026-06-14T23:35:48.652Z",
+    "name": "Webcam Microsoft HD 600",
+    "slug": "webcam-microsoft-hd-600",
+    "description": "Webcam Microsoft HD 600 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Microsoft periféricos modelo 600.",
+    "sku": "PER-008",
+    "price": "29401.00",
+    "stock": 17,
+    "image_main": "",
+    "category": 3,
+    "brand": 19,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 129,
+  "fields": {
+    "created": "2026-06-14T18:29:32.688Z",
+    "modified": "2026-06-14T18:29:32.688Z",
+    "name": "Teclado Sony Ergonómico 543",
+    "slug": "teclado-sony-ergonomico-543",
+    "description": "Teclado Sony Ergonómico 543 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony periféricos modelo 543.",
+    "sku": "PER-009",
+    "price": "44816.00",
+    "stock": 79,
+    "image_main": "",
+    "category": 3,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 130,
+  "fields": {
+    "created": "2026-06-14T18:29:32.690Z",
+    "modified": "2026-06-14T18:29:32.690Z",
+    "name": "Mousepad Samsung XL 877",
+    "slug": "mousepad-samsung-xl-877",
+    "description": "Mousepad Samsung XL 877 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung periféricos modelo 877.",
+    "sku": "PER-010",
+    "price": "24617.00",
+    "stock": 41,
+    "image_main": "",
+    "category": 3,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 131,
+  "fields": {
+    "created": "2026-06-14T18:29:32.692Z",
+    "modified": "2026-06-14T18:29:32.692Z",
+    "name": "Organizador cables Sony 897",
+    "slug": "organizador-cables-sony-897",
+    "description": "Organizador cables Sony 897 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony accesorios modelo 897.",
+    "sku": "ACC-001",
+    "price": "48196.00",
+    "stock": 82,
+    "image_main": "",
+    "category": 4,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 132,
+  "fields": {
+    "created": "2026-06-14T18:29:32.694Z",
+    "modified": "2026-06-14T22:22:26.780Z",
+    "name": "Adaptador ASUS USB-C 391",
+    "slug": "adaptador-asus-usb-c-391",
+    "description": "Adaptador ASUS USB-C 391 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "ASUS accesorios modelo 391.",
+    "sku": "ACC-002",
+    "price": "12569.00",
+    "stock": 44,
+    "image_main": "",
+    "category": 4,
+    "brand": 18,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 133,
+  "fields": {
+    "created": "2026-06-14T18:29:32.695Z",
+    "modified": "2026-06-14T18:29:32.695Z",
+    "name": "Soporte laptop Dell Ajustable 200",
+    "slug": "soporte-laptop-dell-ajustable-200",
+    "description": "Soporte laptop Dell Ajustable 200 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Dell accesorios modelo 200.",
+    "sku": "ACC-003",
+    "price": "49542.00",
+    "stock": 59,
+    "image_main": "",
+    "category": 4,
+    "brand": 15,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 134,
+  "fields": {
+    "created": "2026-06-14T18:29:32.697Z",
+    "modified": "2026-06-14T18:29:32.697Z",
+    "name": "Organizador cables Lenovo 905",
+    "slug": "organizador-cables-lenovo-905",
+    "description": "Organizador cables Lenovo 905 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Lenovo accesorios modelo 905.",
+    "sku": "ACC-004",
+    "price": "5945.00",
+    "stock": 67,
+    "image_main": "",
+    "category": 4,
+    "brand": 17,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 135,
+  "fields": {
+    "created": "2026-06-14T18:29:32.698Z",
+    "modified": "2026-06-14T18:29:32.698Z",
+    "name": "Hub USB LG 7 puertos 173",
+    "slug": "hub-usb-lg-7-puertos-173",
+    "description": "Hub USB LG 7 puertos 173 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG accesorios modelo 173.",
+    "sku": "ACC-005",
+    "price": "26101.00",
+    "stock": 44,
+    "image_main": "",
+    "category": 4,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 136,
+  "fields": {
+    "created": "2026-06-14T18:29:32.700Z",
+    "modified": "2026-06-14T18:29:32.700Z",
+    "name": "Adaptador Dell USB-C 688",
+    "slug": "adaptador-dell-usb-c-688",
+    "description": "Adaptador Dell USB-C 688 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Dell accesorios modelo 688.",
+    "sku": "ACC-006",
+    "price": "2008.00",
+    "stock": 86,
+    "image_main": "",
+    "category": 4,
+    "brand": 15,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 137,
+  "fields": {
+    "created": "2026-06-14T18:29:32.702Z",
+    "modified": "2026-06-14T18:29:32.702Z",
+    "name": "Hub USB Lenovo 7 puertos 451",
+    "slug": "hub-usb-lenovo-7-puertos-451",
+    "description": "Hub USB Lenovo 7 puertos 451 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Lenovo accesorios modelo 451.",
+    "sku": "ACC-007",
+    "price": "11292.00",
+    "stock": 91,
+    "image_main": "",
+    "category": 4,
+    "brand": 17,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 138,
+  "fields": {
+    "created": "2026-06-14T18:29:32.703Z",
+    "modified": "2026-06-14T18:29:32.703Z",
+    "name": "Adaptador Lenovo USB-C 809",
+    "slug": "adaptador-lenovo-usb-c-809",
+    "description": "Adaptador Lenovo USB-C 809 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Lenovo accesorios modelo 809.",
+    "sku": "ACC-008",
+    "price": "8123.00",
+    "stock": 79,
+    "image_main": "",
+    "category": 4,
+    "brand": 17,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 139,
+  "fields": {
+    "created": "2026-06-14T18:29:32.705Z",
+    "modified": "2026-06-14T18:29:32.705Z",
+    "name": "Soporte monitor Microsoft 752",
+    "slug": "soporte-monitor-microsoft-752",
+    "description": "Soporte monitor Microsoft 752 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Microsoft accesorios modelo 752.",
+    "sku": "ACC-009",
+    "price": "47781.00",
+    "stock": 45,
+    "image_main": "",
+    "category": 4,
+    "brand": 19,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 140,
+  "fields": {
+    "created": "2026-06-14T18:29:32.706Z",
+    "modified": "2026-06-14T18:29:32.706Z",
+    "name": "Adaptador Samsung USB-C 302",
+    "slug": "adaptador-samsung-usb-c-302",
+    "description": "Adaptador Samsung USB-C 302 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung accesorios modelo 302.",
+    "sku": "ACC-010",
+    "price": "18273.00",
+    "stock": 47,
+    "image_main": "",
+    "category": 4,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 141,
+  "fields": {
+    "created": "2026-06-14T18:29:32.707Z",
+    "modified": "2026-06-14T18:29:32.707Z",
+    "name": "Tarjeta SD Dell 128GB 240",
+    "slug": "tarjeta-sd-dell-128gb-240",
+    "description": "Tarjeta SD Dell 128GB 240 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Dell almacenamiento modelo 240.",
+    "sku": "ALM-001",
+    "price": "3807.00",
+    "stock": 84,
+    "image_main": "",
+    "category": 5,
+    "brand": 15,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 142,
+  "fields": {
+    "created": "2026-06-14T18:29:32.709Z",
+    "modified": "2026-06-14T18:29:32.709Z",
+    "name": "SSD Samsung 480GB 993",
+    "slug": "ssd-samsung-480gb-993",
+    "description": "SSD Samsung 480GB 993 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung almacenamiento modelo 993.",
+    "sku": "ALM-002",
+    "price": "43590.00",
+    "stock": 78,
+    "image_main": "",
+    "category": 5,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 143,
+  "fields": {
+    "created": "2026-06-14T18:29:32.711Z",
+    "modified": "2026-06-14T18:29:32.711Z",
+    "name": "Memoria USB ASUS 64GB 573",
+    "slug": "memoria-usb-asus-64gb-573",
+    "description": "Memoria USB ASUS 64GB 573 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "ASUS almacenamiento modelo 573.",
+    "sku": "ALM-003",
+    "price": "4064.00",
+    "stock": 79,
+    "image_main": "",
+    "category": 5,
+    "brand": 18,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 144,
+  "fields": {
+    "created": "2026-06-14T18:29:32.713Z",
+    "modified": "2026-06-14T18:29:32.713Z",
+    "name": "Disco Duro HP 1TB 921",
+    "slug": "disco-duro-hp-1tb-921",
+    "description": "Disco Duro HP 1TB 921 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "HP almacenamiento modelo 921.",
+    "sku": "ALM-004",
+    "price": "28935.00",
+    "stock": 61,
+    "image_main": "",
+    "category": 5,
+    "brand": 16,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 145,
+  "fields": {
+    "created": "2026-06-14T18:29:32.714Z",
+    "modified": "2026-06-14T18:29:32.714Z",
+    "name": "SSD Samsung NVMe 1TB 806",
+    "slug": "ssd-samsung-nvme-1tb-806",
+    "description": "SSD Samsung NVMe 1TB 806 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung almacenamiento modelo 806.",
+    "sku": "ALM-005",
+    "price": "44721.00",
+    "stock": 67,
+    "image_main": "",
+    "category": 5,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 146,
+  "fields": {
+    "created": "2026-06-14T18:29:32.716Z",
+    "modified": "2026-06-14T18:29:32.716Z",
+    "name": "SSD LG 1TB 468",
+    "slug": "ssd-lg-1tb-468",
+    "description": "SSD LG 1TB 468 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG almacenamiento modelo 468.",
+    "sku": "ALM-006",
+    "price": "28605.00",
+    "stock": 93,
+    "image_main": "",
+    "category": 5,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 147,
+  "fields": {
+    "created": "2026-06-14T18:29:32.718Z",
+    "modified": "2026-06-14T18:29:32.718Z",
+    "name": "Memoria USB LG 128GB 196",
+    "slug": "memoria-usb-lg-128gb-196",
+    "description": "Memoria USB LG 128GB 196 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG almacenamiento modelo 196.",
+    "sku": "ALM-007",
+    "price": "46516.00",
+    "stock": 68,
+    "image_main": "",
+    "category": 5,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 148,
+  "fields": {
+    "created": "2026-06-14T18:29:32.719Z",
+    "modified": "2026-06-14T18:29:32.719Z",
+    "name": "Memoria USB Logitech 64GB 132",
+    "slug": "memoria-usb-logitech-64gb-132",
+    "description": "Memoria USB Logitech 64GB 132 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Logitech almacenamiento modelo 132.",
+    "sku": "ALM-008",
+    "price": "18412.00",
+    "stock": 65,
+    "image_main": "",
+    "category": 5,
+    "brand": 20,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 149,
+  "fields": {
+    "created": "2026-06-14T18:29:32.721Z",
+    "modified": "2026-06-14T18:29:32.721Z",
+    "name": "SSD ASUS 480GB 474",
+    "slug": "ssd-asus-480gb-474",
+    "description": "SSD ASUS 480GB 474 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "ASUS almacenamiento modelo 474.",
+    "sku": "ALM-009",
+    "price": "45830.00",
+    "stock": 40,
+    "image_main": "",
+    "category": 5,
+    "brand": 18,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 150,
+  "fields": {
+    "created": "2026-06-14T18:29:32.722Z",
+    "modified": "2026-06-14T18:29:32.722Z",
+    "name": "Disco Duro Dell 1TB 478",
+    "slug": "disco-duro-dell-1tb-478",
+    "description": "Disco Duro Dell 1TB 478 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Dell almacenamiento modelo 478.",
+    "sku": "ALM-010",
+    "price": "48483.00",
+    "stock": 54,
+    "image_main": "",
+    "category": 5,
+    "brand": 15,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 151,
+  "fields": {
+    "created": "2026-06-14T18:29:32.724Z",
+    "modified": "2026-06-14T18:29:32.724Z",
+    "name": "Monitor Apple 34\" Ultrawide 211",
+    "slug": "monitor-apple-34-ultrawide-211",
+    "description": "Monitor Apple 34\" Ultrawide 211 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Apple monitores modelo 211.",
+    "sku": "MON-001",
+    "price": "18530.00",
+    "stock": 30,
+    "image_main": "",
+    "category": 6,
+    "brand": 12,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 152,
+  "fields": {
+    "created": "2026-06-14T18:29:32.725Z",
+    "modified": "2026-06-14T18:29:32.725Z",
+    "name": "Monitor Apple 22\" Full HD 358",
+    "slug": "monitor-apple-22-full-hd-358",
+    "description": "Monitor Apple 22\" Full HD 358 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Apple monitores modelo 358.",
+    "sku": "MON-002",
+    "price": "22406.00",
+    "stock": 39,
+    "image_main": "",
+    "category": 6,
+    "brand": 12,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 153,
+  "fields": {
+    "created": "2026-06-14T18:29:32.727Z",
+    "modified": "2026-06-14T18:29:32.727Z",
+    "name": "Monitor Dell 32\" Curvo 258",
+    "slug": "monitor-dell-32-curvo-258",
+    "description": "Monitor Dell 32\" Curvo 258 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Dell monitores modelo 258.",
+    "sku": "MON-003",
+    "price": "19242.00",
+    "stock": 33,
+    "image_main": "",
+    "category": 6,
+    "brand": 15,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 154,
+  "fields": {
+    "created": "2026-06-14T18:29:32.729Z",
+    "modified": "2026-06-14T18:29:32.729Z",
+    "name": "Monitor Microsoft 28\" 4K 417",
+    "slug": "monitor-microsoft-28-4k-417",
+    "description": "Monitor Microsoft 28\" 4K 417 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Microsoft monitores modelo 417.",
+    "sku": "MON-004",
+    "price": "35220.00",
+    "stock": 100,
+    "image_main": "",
+    "category": 6,
+    "brand": 19,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 155,
+  "fields": {
+    "created": "2026-06-14T18:29:32.730Z",
+    "modified": "2026-06-14T18:29:32.730Z",
+    "name": "Monitor LG 21\" Office 228",
+    "slug": "monitor-lg-21-office-228",
+    "description": "Monitor LG 21\" Office 228 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG monitores modelo 228.",
+    "sku": "MON-005",
+    "price": "37915.00",
+    "stock": 74,
+    "image_main": "",
+    "category": 6,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 156,
+  "fields": {
+    "created": "2026-06-14T18:29:32.732Z",
+    "modified": "2026-06-14T18:29:32.732Z",
+    "name": "Monitor Sony 28\" 4K 999",
+    "slug": "monitor-sony-28-4k-999",
+    "description": "Monitor Sony 28\" 4K 999 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony monitores modelo 999.",
+    "sku": "MON-006",
+    "price": "35404.00",
+    "stock": 100,
+    "image_main": "",
+    "category": 6,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 157,
+  "fields": {
+    "created": "2026-06-14T18:29:32.733Z",
+    "modified": "2026-06-14T18:29:32.733Z",
+    "name": "Monitor LG 24\" IPS 150",
+    "slug": "monitor-lg-24-ips-150",
+    "description": "Monitor LG 24\" IPS 150 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG monitores modelo 150.",
+    "sku": "MON-007",
+    "price": "3881.00",
+    "stock": 20,
+    "image_main": "",
+    "category": 6,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 158,
+  "fields": {
+    "created": "2026-06-14T18:29:32.735Z",
+    "modified": "2026-06-14T18:29:32.735Z",
+    "name": "Monitor ASUS 28\" 4K 125",
+    "slug": "monitor-asus-28-4k-125",
+    "description": "Monitor ASUS 28\" 4K 125 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "ASUS monitores modelo 125.",
+    "sku": "MON-008",
+    "price": "23682.00",
+    "stock": 9,
+    "image_main": "",
+    "category": 6,
+    "brand": 18,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 159,
+  "fields": {
+    "created": "2026-06-14T18:29:32.737Z",
+    "modified": "2026-06-14T18:29:32.737Z",
+    "name": "Monitor Sony 22\" Full HD 270",
+    "slug": "monitor-sony-22-full-hd-270",
+    "description": "Monitor Sony 22\" Full HD 270 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony monitores modelo 270.",
+    "sku": "MON-009",
+    "price": "8206.00",
+    "stock": 87,
+    "image_main": "",
+    "category": 6,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 160,
+  "fields": {
+    "created": "2026-06-14T18:29:32.738Z",
+    "modified": "2026-06-14T18:29:32.738Z",
+    "name": "Monitor Samsung 28\" 4K 854",
+    "slug": "monitor-samsung-28-4k-854",
+    "description": "Monitor Samsung 28\" 4K 854 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung monitores modelo 854.",
+    "sku": "MON-010",
+    "price": "5110.00",
+    "stock": 34,
+    "image_main": "",
+    "category": 6,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 161,
+  "fields": {
+    "created": "2026-06-14T18:29:32.740Z",
+    "modified": "2026-06-14T18:29:32.740Z",
+    "name": "Tablet Samsung 11\" Pro 348",
+    "slug": "tablet-samsung-11-pro-348",
+    "description": "Tablet Samsung 11\" Pro 348 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung tablets modelo 348.",
+    "sku": "TAB-001",
+    "price": "41688.00",
+    "stock": 32,
+    "image_main": "",
+    "category": 7,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 162,
+  "fields": {
+    "created": "2026-06-14T18:29:32.742Z",
+    "modified": "2026-06-14T18:29:32.742Z",
+    "name": "Tablet Samsung 10\" 4G 760",
+    "slug": "tablet-samsung-10-4g-760",
+    "description": "Tablet Samsung 10\" 4G 760 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung tablets modelo 760.",
+    "sku": "TAB-002",
+    "price": "16422.00",
+    "stock": 68,
+    "image_main": "",
+    "category": 7,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 163,
+  "fields": {
+    "created": "2026-06-14T18:29:32.744Z",
+    "modified": "2026-06-14T18:29:32.744Z",
+    "name": "Tablet Dell 12\" Ultra 955",
+    "slug": "tablet-dell-12-ultra-955",
+    "description": "Tablet Dell 12\" Ultra 955 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Dell tablets modelo 955.",
+    "sku": "TAB-003",
+    "price": "42190.00",
+    "stock": 78,
+    "image_main": "",
+    "category": 7,
+    "brand": 15,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 164,
+  "fields": {
+    "created": "2026-06-14T18:29:32.746Z",
+    "modified": "2026-06-14T18:29:32.746Z",
+    "name": "E-Reader Samsung 6\" 605",
+    "slug": "e-reader-samsung-6-605",
+    "description": "E-Reader Samsung 6\" 605 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung tablets modelo 605.",
+    "sku": "TAB-004",
+    "price": "31657.00",
+    "stock": 96,
+    "image_main": "",
+    "category": 7,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 165,
+  "fields": {
+    "created": "2026-06-14T18:29:32.748Z",
+    "modified": "2026-06-14T18:29:32.748Z",
+    "name": "Tablet ASUS 8\" WiFi 527",
+    "slug": "tablet-asus-8-wifi-527",
+    "description": "Tablet ASUS 8\" WiFi 527 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "ASUS tablets modelo 527.",
+    "sku": "TAB-005",
+    "price": "27705.00",
+    "stock": 15,
+    "image_main": "",
+    "category": 7,
+    "brand": 18,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 166,
+  "fields": {
+    "created": "2026-06-14T18:29:32.749Z",
+    "modified": "2026-06-14T18:29:32.749Z",
+    "name": "Tablet Sony 10\" HD 889",
+    "slug": "tablet-sony-10-hd-889",
+    "description": "Tablet Sony 10\" HD 889 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony tablets modelo 889.",
+    "sku": "TAB-006",
+    "price": "1665.00",
+    "stock": 38,
+    "image_main": "",
+    "category": 7,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 167,
+  "fields": {
+    "created": "2026-06-14T18:29:32.751Z",
+    "modified": "2026-06-14T18:29:32.751Z",
+    "name": "Tablet Microsoft 10\" HD 808",
+    "slug": "tablet-microsoft-10-hd-808",
+    "description": "Tablet Microsoft 10\" HD 808 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Microsoft tablets modelo 808.",
+    "sku": "TAB-007",
+    "price": "28266.00",
+    "stock": 29,
+    "image_main": "",
+    "category": 7,
+    "brand": 19,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 168,
+  "fields": {
+    "created": "2026-06-14T18:29:32.753Z",
+    "modified": "2026-06-14T18:29:32.753Z",
+    "name": "Tablet LG 10\" 4G 884",
+    "slug": "tablet-lg-10-4g-884",
+    "description": "Tablet LG 10\" 4G 884 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG tablets modelo 884.",
+    "sku": "TAB-008",
+    "price": "35988.00",
+    "stock": 55,
+    "image_main": "",
+    "category": 7,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 169,
+  "fields": {
+    "created": "2026-06-14T18:29:32.755Z",
+    "modified": "2026-06-14T18:29:32.755Z",
+    "name": "Tablet Sony 10\" 4G 144",
+    "slug": "tablet-sony-10-4g-144",
+    "description": "Tablet Sony 10\" 4G 144 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony tablets modelo 144.",
+    "sku": "TAB-009",
+    "price": "29332.00",
+    "stock": 9,
+    "image_main": "",
+    "category": 7,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 170,
+  "fields": {
+    "created": "2026-06-14T18:29:32.756Z",
+    "modified": "2026-06-14T18:29:32.756Z",
+    "name": "Tablet Sony 9\" Kids 431",
+    "slug": "tablet-sony-9-kids-431",
+    "description": "Tablet Sony 9\" Kids 431 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony tablets modelo 431.",
+    "sku": "TAB-010",
+    "price": "14622.00",
+    "stock": 1,
+    "image_main": "",
+    "category": 7,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 171,
+  "fields": {
+    "created": "2026-06-14T18:29:32.758Z",
+    "modified": "2026-06-14T18:29:32.758Z",
+    "name": "Cable USB-C Sony 2m 195",
+    "slug": "cable-usb-c-sony-2m-195",
+    "description": "Cable USB-C Sony 2m 195 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony cargadores y cables modelo 195.",
+    "sku": "CAB-001",
+    "price": "4503.00",
+    "stock": 25,
+    "image_main": "",
+    "category": 8,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 172,
+  "fields": {
+    "created": "2026-06-14T18:29:32.760Z",
+    "modified": "2026-06-14T18:29:32.760Z",
+    "name": "Cargador USB-C HP 30W 911",
+    "slug": "cargador-usb-c-hp-30w-911",
+    "description": "Cargador USB-C HP 30W 911 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "HP cargadores y cables modelo 911.",
+    "sku": "CAB-002",
+    "price": "18246.00",
+    "stock": 18,
+    "image_main": "",
+    "category": 8,
+    "brand": 16,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 173,
+  "fields": {
+    "created": "2026-06-14T18:29:32.761Z",
+    "modified": "2026-06-14T18:29:32.761Z",
+    "name": "Cable HDMI Lenovo 3m 981",
+    "slug": "cable-hdmi-lenovo-3m-981",
+    "description": "Cable HDMI Lenovo 3m 981 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Lenovo cargadores y cables modelo 981.",
+    "sku": "CAB-003",
+    "price": "26458.00",
+    "stock": 45,
+    "image_main": "",
+    "category": 8,
+    "brand": 17,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 174,
+  "fields": {
+    "created": "2026-06-14T18:29:32.763Z",
+    "modified": "2026-06-14T18:29:32.763Z",
+    "name": "Adaptador corriente Microsoft 558",
+    "slug": "adaptador-corriente-microsoft-558",
+    "description": "Adaptador corriente Microsoft 558 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Microsoft cargadores y cables modelo 558.",
+    "sku": "CAB-004",
+    "price": "28554.00",
+    "stock": 59,
+    "image_main": "",
+    "category": 8,
+    "brand": 19,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 175,
+  "fields": {
+    "created": "2026-06-14T18:29:32.764Z",
+    "modified": "2026-06-14T18:29:32.764Z",
+    "name": "Cable HDMI HP 1.5m 968",
+    "slug": "cable-hdmi-hp-15m-968",
+    "description": "Cable HDMI HP 1.5m 968 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "HP cargadores y cables modelo 968.",
+    "sku": "CAB-005",
+    "price": "23477.00",
+    "stock": 36,
+    "image_main": "",
+    "category": 8,
+    "brand": 16,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 176,
+  "fields": {
+    "created": "2026-06-14T18:29:32.766Z",
+    "modified": "2026-06-14T18:29:32.766Z",
+    "name": "Cargador inalámbrico LG 800",
+    "slug": "cargador-inalambrico-lg-800",
+    "description": "Cargador inalámbrico LG 800 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG cargadores y cables modelo 800.",
+    "sku": "CAB-006",
+    "price": "48299.00",
+    "stock": 36,
+    "image_main": "",
+    "category": 8,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 177,
+  "fields": {
+    "created": "2026-06-14T18:29:32.768Z",
+    "modified": "2026-06-14T18:29:32.768Z",
+    "name": "Adaptador corriente Dell 915",
+    "slug": "adaptador-corriente-dell-915",
+    "description": "Adaptador corriente Dell 915 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Dell cargadores y cables modelo 915.",
+    "sku": "CAB-007",
+    "price": "21406.00",
+    "stock": 69,
+    "image_main": "",
+    "category": 8,
+    "brand": 15,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 178,
+  "fields": {
+    "created": "2026-06-14T18:29:32.769Z",
+    "modified": "2026-06-14T18:29:32.769Z",
+    "name": "Cargador USB-C LG 65W 749",
+    "slug": "cargador-usb-c-lg-65w-749",
+    "description": "Cargador USB-C LG 65W 749 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG cargadores y cables modelo 749.",
+    "sku": "CAB-008",
+    "price": "1876.00",
+    "stock": 81,
+    "image_main": "",
+    "category": 8,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 179,
+  "fields": {
+    "created": "2026-06-14T18:29:32.771Z",
+    "modified": "2026-06-14T18:29:32.771Z",
+    "name": "Adaptador corriente Dell 220",
+    "slug": "adaptador-corriente-dell-220",
+    "description": "Adaptador corriente Dell 220 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Dell cargadores y cables modelo 220.",
+    "sku": "CAB-009",
+    "price": "46460.00",
+    "stock": 81,
+    "image_main": "",
+    "category": 8,
+    "brand": 15,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 180,
+  "fields": {
+    "created": "2026-06-14T18:29:32.772Z",
+    "modified": "2026-06-14T18:29:32.772Z",
+    "name": "Cargador USB-C ASUS 65W 778",
+    "slug": "cargador-usb-c-asus-65w-778",
+    "description": "Cargador USB-C ASUS 65W 778 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "ASUS cargadores y cables modelo 778.",
+    "sku": "CAB-010",
+    "price": "5049.00",
+    "stock": 76,
+    "image_main": "",
+    "category": 8,
+    "brand": 18,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 181,
+  "fields": {
+    "created": "2026-06-14T18:29:32.774Z",
+    "modified": "2026-06-14T18:29:32.774Z",
+    "name": "Case PC Sony ATX 591",
+    "slug": "case-pc-sony-atx-591",
+    "description": "Case PC Sony ATX 591 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony componentes modelo 591.",
+    "sku": "COM-001",
+    "price": "26515.00",
+    "stock": 68,
+    "image_main": "",
+    "category": 9,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 182,
+  "fields": {
+    "created": "2026-06-14T18:29:32.775Z",
+    "modified": "2026-06-14T18:29:32.775Z",
+    "name": "Procesador LG Core 559",
+    "slug": "procesador-lg-core-559",
+    "description": "Procesador LG Core 559 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG componentes modelo 559.",
+    "sku": "COM-002",
+    "price": "46370.00",
+    "stock": 88,
+    "image_main": "",
+    "category": 9,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 183,
+  "fields": {
+    "created": "2026-06-14T18:29:32.777Z",
+    "modified": "2026-06-14T18:29:32.777Z",
+    "name": "Tarjeta gráfica Logitech 405",
+    "slug": "tarjeta-grafica-logitech-405",
+    "description": "Tarjeta gráfica Logitech 405 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Logitech componentes modelo 405.",
+    "sku": "COM-003",
+    "price": "27932.00",
+    "stock": 36,
+    "image_main": "",
+    "category": 9,
+    "brand": 20,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 184,
+  "fields": {
+    "created": "2026-06-14T18:29:32.780Z",
+    "modified": "2026-06-14T18:29:32.780Z",
+    "name": "Memoria RAM Samsung 16GB DDR4 848",
+    "slug": "memoria-ram-samsung-16gb-ddr4-848",
+    "description": "Memoria RAM Samsung 16GB DDR4 848 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung componentes modelo 848.",
+    "sku": "COM-004",
+    "price": "1922.00",
+    "stock": 33,
+    "image_main": "",
+    "category": 9,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 185,
+  "fields": {
+    "created": "2026-06-14T18:29:32.782Z",
+    "modified": "2026-06-14T18:29:32.782Z",
+    "name": "Procesador HP Core 591",
+    "slug": "procesador-hp-core-591",
+    "description": "Procesador HP Core 591 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "HP componentes modelo 591.",
+    "sku": "COM-005",
+    "price": "5233.00",
+    "stock": 42,
+    "image_main": "",
+    "category": 9,
+    "brand": 16,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 186,
+  "fields": {
+    "created": "2026-06-14T18:29:32.784Z",
+    "modified": "2026-06-14T18:29:32.784Z",
+    "name": "Ventilador case Apple 120mm 304",
+    "slug": "ventilador-case-apple-120mm-304",
+    "description": "Ventilador case Apple 120mm 304 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Apple componentes modelo 304.",
+    "sku": "COM-006",
+    "price": "27668.00",
+    "stock": 1,
+    "image_main": "",
+    "category": 9,
+    "brand": 12,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 187,
+  "fields": {
+    "created": "2026-06-14T18:29:32.785Z",
+    "modified": "2026-06-14T18:29:32.785Z",
+    "name": "Tarjeta gráfica Logitech 664",
+    "slug": "tarjeta-grafica-logitech-664",
+    "description": "Tarjeta gráfica Logitech 664 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Logitech componentes modelo 664.",
+    "sku": "COM-007",
+    "price": "41950.00",
+    "stock": 0,
+    "image_main": "",
+    "category": 9,
+    "brand": 20,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 188,
+  "fields": {
+    "created": "2026-06-14T18:29:32.787Z",
+    "modified": "2026-06-14T18:29:32.787Z",
+    "name": "Procesador HP Core 489",
+    "slug": "procesador-hp-core-489",
+    "description": "Procesador HP Core 489 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "HP componentes modelo 489.",
+    "sku": "COM-008",
+    "price": "5244.00",
+    "stock": 55,
+    "image_main": "",
+    "category": 9,
+    "brand": 16,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 189,
+  "fields": {
+    "created": "2026-06-14T18:29:32.788Z",
+    "modified": "2026-06-14T18:29:32.788Z",
+    "name": "Disipador CPU Sony 304",
+    "slug": "disipador-cpu-sony-304",
+    "description": "Disipador CPU Sony 304 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony componentes modelo 304.",
+    "sku": "COM-009",
+    "price": "18784.00",
+    "stock": 57,
+    "image_main": "",
+    "category": 9,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 190,
+  "fields": {
+    "created": "2026-06-14T18:29:32.791Z",
+    "modified": "2026-06-14T18:29:32.791Z",
+    "name": "Disipador CPU Samsung 630",
+    "slug": "disipador-cpu-samsung-630",
+    "description": "Disipador CPU Samsung 630 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung componentes modelo 630.",
+    "sku": "COM-010",
+    "price": "5203.00",
+    "stock": 61,
+    "image_main": "",
+    "category": 9,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 191,
+  "fields": {
+    "created": "2026-06-14T18:29:32.793Z",
+    "modified": "2026-06-14T18:29:32.793Z",
+    "name": "Micrófono Apple USB 141",
+    "slug": "microfono-apple-usb-141",
+    "description": "Micrófono Apple USB 141 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Apple parlantes y audio modelo 141.",
+    "sku": "PAR-001",
+    "price": "14437.00",
+    "stock": 73,
+    "image_main": "",
+    "category": 10,
+    "brand": 12,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 192,
+  "fields": {
+    "created": "2026-06-14T18:29:32.795Z",
+    "modified": "2026-06-14T18:29:32.795Z",
+    "name": "Parlante HP 2.1 992",
+    "slug": "parlante-hp-21-992",
+    "description": "Parlante HP 2.1 992 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "HP parlantes y audio modelo 992.",
+    "sku": "PAR-002",
+    "price": "25311.00",
+    "stock": 1,
+    "image_main": "",
+    "category": 10,
+    "brand": 16,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 193,
+  "fields": {
+    "created": "2026-06-14T18:29:32.797Z",
+    "modified": "2026-06-14T18:29:32.797Z",
+    "name": "Subwoofer Samsung 497\"",
+    "slug": "subwoofer-samsung-497",
+    "description": "Subwoofer Samsung 497\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Samsung parlantes y audio modelo 497.",
+    "sku": "PAR-003",
+    "price": "9820.00",
+    "stock": 75,
+    "image_main": "",
+    "category": 10,
+    "brand": 11,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 194,
+  "fields": {
+    "created": "2026-06-14T18:29:32.799Z",
+    "modified": "2026-06-14T18:29:32.799Z",
+    "name": "Parlante Microsoft Bluetooth 5.0 161",
+    "slug": "parlante-microsoft-bluetooth-50-161",
+    "description": "Parlante Microsoft Bluetooth 5.0 161 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Microsoft parlantes y audio modelo 161.",
+    "sku": "PAR-004",
+    "price": "26075.00",
+    "stock": 7,
+    "image_main": "",
+    "category": 10,
+    "brand": 19,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 195,
+  "fields": {
+    "created": "2026-06-14T18:29:32.801Z",
+    "modified": "2026-06-14T18:29:32.801Z",
+    "name": "Micrófono Logitech Condenser 506",
+    "slug": "microfono-logitech-condenser-506",
+    "description": "Micrófono Logitech Condenser 506 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Logitech parlantes y audio modelo 506.",
+    "sku": "PAR-005",
+    "price": "19006.00",
+    "stock": 16,
+    "image_main": "",
+    "category": 10,
+    "brand": 20,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 196,
+  "fields": {
+    "created": "2026-06-14T18:29:32.803Z",
+    "modified": "2026-06-14T18:29:32.803Z",
+    "name": "Subwoofer Dell 530\"",
+    "slug": "subwoofer-dell-530",
+    "description": "Subwoofer Dell 530\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Dell parlantes y audio modelo 530.",
+    "sku": "PAR-006",
+    "price": "39204.00",
+    "stock": 35,
+    "image_main": "",
+    "category": 10,
+    "brand": 15,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 197,
+  "fields": {
+    "created": "2026-06-14T18:29:32.804Z",
+    "modified": "2026-06-14T18:29:32.804Z",
+    "name": "Kit audio ASUS 5.1 180",
+    "slug": "kit-audio-asus-51-180",
+    "description": "Kit audio ASUS 5.1 180 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "ASUS parlantes y audio modelo 180.",
+    "sku": "PAR-007",
+    "price": "12205.00",
+    "stock": 70,
+    "image_main": "",
+    "category": 10,
+    "brand": 18,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 198,
+  "fields": {
+    "created": "2026-06-14T18:29:32.806Z",
+    "modified": "2026-06-14T18:29:32.806Z",
+    "name": "Barra sonido LG 413\"",
+    "slug": "barra-sonido-lg-413",
+    "description": "Barra sonido LG 413\" — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "LG parlantes y audio modelo 413.",
+    "sku": "PAR-008",
+    "price": "33503.00",
+    "stock": 42,
+    "image_main": "",
+    "category": 10,
+    "brand": 14,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 199,
+  "fields": {
+    "created": "2026-06-14T18:29:32.808Z",
+    "modified": "2026-06-14T18:29:32.808Z",
+    "name": "Parlante Sony USB 841",
+    "slug": "parlante-sony-usb-841",
+    "description": "Parlante Sony USB 841 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "Sony parlantes y audio modelo 841.",
+    "sku": "PAR-009",
+    "price": "27631.00",
+    "stock": 93,
+    "image_main": "",
+    "category": 10,
+    "brand": 13,
+    "is_active": true,
+    "tags": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 200,
+  "fields": {
+    "created": "2026-06-14T18:29:32.809Z",
+    "modified": "2026-06-14T18:29:32.809Z",
+    "name": "Parlante ASUS USB 861",
+    "slug": "parlante-asus-usb-861",
+    "description": "Parlante ASUS USB 861 — Producto de alta calidad ideal para tus necesidades diarias.",
+    "short_description": "ASUS parlantes y audio modelo 861.",
+    "sku": "PAR-010",
+    "price": "26762.00",
+    "stock": 37,
+    "image_main": "",
+    "category": 10,
+    "brand": 18,
+    "is_active": true,
+    "tags": []
+  }
+}
+]

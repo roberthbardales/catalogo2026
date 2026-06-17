@@ -51,7 +51,7 @@ class UserRegisterView(FormView):
 class LoginUser(FormView):
     template_name = 'users/login.html'
     form_class = LoginForm
-    success_url = reverse_lazy('app_users:dashboard')
+    success_url = reverse_lazy('app_users:perfil')
 
     def form_valid(self, form):
         user = authenticate(
@@ -89,8 +89,8 @@ class UpdatePasswordView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-class DashboardView(LoginRequiredMixin, TemplateView):
-    template_name = 'users/dashboard.html'
+class PerfilView(LoginRequiredMixin, TemplateView):
+    template_name = 'users/perfil.html'
     login_url = reverse_lazy('app_users:login')
 
     def get_context_data(self, **kwargs):

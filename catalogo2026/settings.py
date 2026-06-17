@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'applications.home',
     'applications.products',
     'applications.inventory',
+    'applications.quotations',
 ]
 
 # --------------------------------------------------
@@ -166,5 +167,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 
 LOGIN_URL = 'app_users:login'
-LOGIN_REDIRECT_URL = 'app_users:dashboard'
+LOGIN_REDIRECT_URL = 'app_users:perfil'
 LOGOUT_REDIRECT_URL = 'app_users:login'

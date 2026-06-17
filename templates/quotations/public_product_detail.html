@@ -1,0 +1,113 @@
+{% extends 'home/base_home.html' %}
+
+{% block title %}{{ product.name }} | Catálogo 2026{% endblock %}
+
+{% block meta_description %}Solicita cotización de {{ product.name }} — {{ product.category.name }}.{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-7">
+        {% if product.image_main %}
+        <div class="card shadow-sm border-0 mb-4">
+            <img src="{{ product.image_main.url }}" class="card-img-top" alt="{{ product.name }}">
+        </div>
+        {% endif %}
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4 p-lg-5">
+                <div class="section-kicker mb-2">{{ product.category.name }}</div>
+                <h1 class="h3 fw-bold mb-2">{{ product.name }}</h1>
+                <p class="text-muted mb-4">SKU: {{ product.sku }} | Marca: {{ product.brand.name }}</p>
+                <p>{{ product.description|default:"Sin descripción" }}</p>
+
+                <div class="row g-3 mt-4">
+                    <div class="col-md-4">
+                        <div class="bg-light rounded-4 p-3 text-center">
+                            <div class="section-kicker mb-1">Precio</div>
+                            <div class="h5 fw-bold mb-0">S/ {{ product.price }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="bg-light rounded-4 p-3 text-center">
+                            <div class="section-kicker mb-1">Stock</div>
+                            <div class="h5 fw-bold mb-0 {% if product.stock > 0 %}text-success{% else %}text-danger{% endif %}">
+                                {{ product.stock|default:"Sin stock" }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="bg-light rounded-4 p-3 text-center">
+                            <div class="section-kicker mb-1">Marca</div>
+                            <div class="h6 fw-bold mb-0">{{ product.brand.name }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% with specs=product.specifications.all %}
+        {% if specs %}
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-body p-4 p-lg-5">
+                <h5 class="fw-bold mb-3">Especificaciones técnicas</h5>
+                <table class="table table-bordered mb-0">
+                    <tbody>
+                        {% for spec in specs %}
+                        <tr>
+                            <th class="w-25 bg-light">{{ spec.key }}</th>
+                            <td>{{ spec.value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card shadow-sm border-0 sticky-lg-top" style="top: 1rem;">
+            <div class="card-body p-4 p-lg-5">
+                <div class="section-kicker mb-2">Cotización</div>
+                <h5 class="fw-bold mb-3">Solicitar cotización</h5>
+
+                <form method="post" action="{% url 'app_quotations:quotation-create' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.pk }}">
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Cantidad</label>
+                        <input type="number" name="quantity" class="form-control" min="1" value="1" required>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Nombre completo</label>
+                        <input type="text" name="customer_name" class="form-control" placeholder="Ej: Juan Pérez" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Correo electrónico</label>
+                        <input type="email" name="customer_email" class="form-control" placeholder="Ej: juan@ejemplo.com" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Teléfono</label>
+                        <input type="text" name="customer_phone" class="form-control" placeholder="Ej: 999 888 777" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Notas <span class="text-muted">(opcional)</span></label>
+                        <textarea name="notes" class="form-control" rows="3" placeholder="Comentarios adicionales..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        Enviar cotización
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

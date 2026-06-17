@@ -1,69 +1,101 @@
 {% extends 'home/base_home.html' %}
 
-{% block title %}Inicio | Catálogo 2026{% endblock %}
-{% block meta_description %}Panel principal del catálogo administrativo de tecnología: productos, categorías, marcas, garantía y contacto.{% endblock %}
+{% block title %}Catálogo 2026 — Tecnología para ti{% endblock %}
+{% block meta_description %}Catálogo de productos tecnológicos: laptops, audífonos, periféricos, accesorios y más. Cotiza en línea y recibe atención personalizada.{% endblock %}
 
 {% block content %}
-<section class="hero-card p-4 p-lg-5 rounded-4 text-white shadow-lg mb-4">
-    <div class="row align-items-center g-4">
-        <div class="col-lg-7">
-            <span class="badge rounded-pill text-bg-light text-uppercase mb-3">Administración de catálogo</span>
-            <h1 class="display-5 fw-bold mb-3">Gestiona productos tecnológicos desde una plataforma clara, rápida y escalable.</h1>
-            <p class="lead mb-4">
-                Centraliza inventario, marcas, categorías, garantía y atención al cliente en una sola web administrativa.
-            </p>
-            <div class="d-flex flex-column flex-sm-row gap-3">
-                <a class="btn btn-light btn-lg" href="{% url 'app_users:login' %}">Ingresar al panel</a>
-                <a class="btn btn-outline-light btn-lg" href="{% url 'app_home:products' %}">Ver catálogo</a>
-            </div>
+
+{% if featured_products %}
+<section class="mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <div class="section-kicker mb-1">Destacados</div>
+            <h2 class="h4 fw-bold mb-0">Productos destacados</h2>
         </div>
-        <div class="col-lg-5">
-            <div class="bg-white text-dark rounded-4 p-4 shadow-sm">
-                <h2 class="h5 fw-semibold mb-3">Módulos principales</h2>
-                <ul class="list-unstyled mb-0">
-                    <li class="mb-2">Productos tecnológicos con fichas claras</li>
-                    <li class="mb-2">Clasificación por categorías y marcas</li>
-                    <li class="mb-2">Soporte de garantía y postventa</li>
-                    <li class="mb-0">Contacto y ubicación para atención comercial</li>
-                </ul>
-            </div>
-        </div>
+        <a href="{% url 'app_home:products' %}" class="btn btn-outline-primary btn-sm">Ver todos</a>
     </div>
-    <div class="row g-3 mt-4">
-        <div class="col-md-3"><div class="bg-white bg-opacity-10 rounded-4 p-3">+120 productos registrados</div></div>
-        <div class="col-md-3"><div class="bg-white bg-opacity-10 rounded-4 p-3">14 categorías activas</div></div>
-        <div class="col-md-3"><div class="bg-white bg-opacity-10 rounded-4 p-3">25 marcas asociadas</div></div>
-        <div class="col-md-3"><div class="bg-white bg-opacity-10 rounded-4 p-3">Soporte 24/7</div></div>
+    <div class="row g-4">
+        {% for product in featured_products %}
+        <div class="col-md-6 col-xl-3">
+            <div class="card h-100 shadow-sm">
+                {% if product.image_main %}
+                <img src="{{ product.image_main.url }}" class="card-img-top" alt="{{ product.name }}" style="width: 100%; max-height: 180px; object-fit: contain; background: #f8f9fa;">
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="badge bg-primary">{{ product.category.name }}</span>
+                        {% if product.stock == 0 %}
+                        <span class="badge bg-danger">Sin stock</span>
+                        {% elif product.stock <= 5 %}
+                        <span class="badge bg-warning text-dark">Stock bajo</span>
+                        {% endif %}
+                    </div>
+                    <h3 class="h6 fw-bold mb-1">{{ product.name }}</h3>
+                    <p class="text-muted small mb-2 flex-grow-1">{{ product.short_description|default:product.description|truncatechars:80 }}</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="fw-bold">S/ {{ product.price }}</span>
+                        <span class="text-muted small">{{ product.brand.name }}</span>
+                    </div>
+                    <a href="{% url 'app_quotations:public-product-detail' product.slug %}" class="btn btn-outline-primary btn-sm w-100">
+                        Cotizar
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </section>
+{% endif %}
+
+{% if categories %}
+<section class="row g-4 mb-4">
+    <div class="col-12">
+        <div class="section-kicker mb-1">Categorías</div>
+        <h2 class="h4 fw-bold mb-3">Explora por categoría</h2>
+    </div>
+    {% for cat in categories %}
+    <div class="col-md-4 col-lg-2">
+        <div class="card h-100 shadow-sm text-center">
+            <div class="card-body p-4">
+                <div class="fs-1 mb-2">
+                    {% cycle '💻' '🎧' '🖱️' '🔌' '💾' '📱' as icon %}
+                    {{ icon }}
+                </div>
+                <h3 class="h6 fw-bold mb-1">{{ cat.name }}</h3>
+                <p class="text-muted small mb-0">{{ cat.description|truncatechars:30 }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endif %}
 
 <section class="row g-4 mb-4">
     <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <div class="section-kicker mb-2">Inventario</div>
-                <h2 class="h5">Control de productos</h2>
-                <p class="text-muted mb-0">Administra laptops, accesorios, componentes y periféricos con información ordenada.</p>
+        <div class="card h-100 shadow-sm border-0 bg-dark text-white">
+            <div class="card-body p-4">
+                <h3 class="h5 fw-bold mb-2">Calidad garantizada</h3>
+                <p class="text-white-50 mb-0">Productos originales con cobertura y soporte postventa.</p>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <div class="section-kicker mb-2">Ventas</div>
-                <h2 class="h5">Catálogo listo para comercializar</h2>
-                <p class="text-muted mb-0">Presenta productos destacados y facilita la navegación por secciones de negocio.</p>
+        <div class="card h-100 shadow-sm border-0 bg-dark text-white">
+            <div class="card-body p-4">
+                <h3 class="h5 fw-bold mb-2">Cotiza sin compromiso</h3>
+                <p class="text-white-50 mb-0">Solicita tu cotización en línea y te respondemos al instante.</p>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <div class="section-kicker mb-2">Servicio</div>
-                <h2 class="h5">Atención y garantía</h2>
-                <p class="text-muted mb-0">Incluye canales de contacto, ubicación y políticas de garantía para soporte al cliente.</p>
+        <div class="card h-100 shadow-sm border-0 bg-dark text-white">
+            <div class="card-body p-4">
+                <h3 class="h5 fw-bold mb-2">Atención personalizada</h3>
+                <p class="text-white-50 mb-0">Comunícate por WhatsApp o déjanos tus datos y te contactamos.</p>
             </div>
         </div>
     </div>
 </section>
+
+
 {% endblock %}

@@ -1,7 +1,12 @@
 {% extends 'home/base_home.html' %}
+{% load static %}
 
 {% block title %}Productos | Catálogo 2026{% endblock %}
-{% block meta_description %}Listado visual de productos tecnológicos para un catálogo administrativo en Bootstrap.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/product-card.css' %}">
+{% endblock %}
+{% block meta_description %}Listado visual de productos tecnológicos disponibles para cotización.{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -9,49 +14,138 @@
         <div class="section-kicker mb-2">Productos</div>
         <h1 class="h3 fw-bold mb-0">Inventario tecnológico</h1>
     </div>
-    <a class="btn btn-primary" href="{% url 'app_home:contact' %}">Solicitar stock</a>
+    <a class="btn btn-primary" href="{% url 'app_home:contact' %}">Contactar</a>
 </div>
 
 <div class="row g-4">
-    <div class="col-md-6 col-xl-3">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <span class="badge text-bg-success mb-3">Nuevo</span>
-                <h2 class="h5">Laptop Business Pro</h2>
-                <p class="text-muted">Procesador i7, 16GB RAM, SSD 1TB.</p>
-                <div class="fw-bold">Administración</div>
+
+    {# --- Category sidebar --- #}
+    <aside class="col-lg-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-3">
+                <h5 class="fw-bold mb-3">Categorías</h5>
+                <div class="list-group list-group-flush">
+                    <a href="{% url 'app_home:products' %}{% if q %}?q={{ q }}{% endif %}"
+                       class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {% if not current_category %}active{% endif %}">
+                        Todas
+                        <span class="badge bg-secondary rounded-pill">{{ categories|length }}</span>
+                    </a>
+                    {% for cat in categories %}
+                    <a href="{% url 'app_home:products' %}?category={{ cat.id }}{% if q %}&q={{ q }}{% endif %}"
+                       class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {% if current_category|slugify == cat.id|slugify %}active{% endif %}">
+                        {{ cat.name }}
+                        <span class="badge bg-secondary rounded-pill">{{ cat.product_count }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6 col-xl-3">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <span class="badge text-bg-primary mb-3">Stock</span>
-                <h2 class="h5">Monitor 27" QHD</h2>
-                <p class="text-muted">Ideal para oficina, diseño y monitoreo.</p>
-                <div class="fw-bold">Equipamiento</div>
+    </aside>
+
+    {# --- Products area --- #}
+    <section class="col-lg-9">
+
+        {# Search #}
+        <form method="get" class="mb-4">
+            <div class="row g-2">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Buscar productos..." value="{{ q }}">
+                        <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    {% if q or current_category %}
+                    <a href="{% url 'app_home:products' %}" class="btn btn-outline-secondary w-100">Limpiar</a>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+
+        {# Product grid #}
+        {% if products %}
+        <div class="row g-4">
+            {% for product in products %}
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 shadow-sm product-card">
+                    {% if product.image_main %}
+                    <a href="{% url 'app_quotations:public-product-detail' product.slug %}">
+                        <img src="{{ product.image_main.url }}" class="card-img-top" alt="{{ product.name }}" style="width: 100%; max-height: 180px; object-fit: contain; background: #f8f9fa;">
+                    </a>
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="badge bg-primary">{{ product.brand.name }}</span>
+                            {% if product.stock == 0 %}
+                            <span class="badge bg-danger">Sin stock</span>
+                            {% elif product.stock <= 5 %}
+                            <span class="badge bg-warning text-dark">Stock bajo</span>
+                            {% endif %}
+                        </div>
+                        <h2 class="h6 fw-bold mb-1"><a href="{% url 'app_quotations:public-product-detail' product.slug %}" class="text-decoration-none text-reset product-name">{{ product.name }}</a></h2>
+                        <p class="text-muted small mb-2 flex-grow-1">{{ product.short_description|default:product.description|truncatechars:80 }}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="fw-bold">S/ {{ product.price }}</span>
+                            <span class="text-muted small">{{ product.category.name }}</span>
+                        </div>
+                        <a href="{% url 'app_quotations:public-product-detail' product.slug %}" class="btn btn-outline-primary btn-sm w-100">
+                            Cotizar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {# Pagination #}
+        {% if is_paginated %}
+        <nav aria-label="Paginación" class="mt-4">
+            <ul class="pagination justify-content-center mb-0">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1{% if q %}&q={{ q }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">&laquo;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">Anterior</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}{% if q %}&q={{ q }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">Siguiente</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if q %}&q={{ q }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">&raquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+        {% else %}
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-5 text-center text-muted">
+                No hay productos disponibles en este momento.
             </div>
         </div>
-    </div>
-    <div class="col-md-6 col-xl-3">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <span class="badge text-bg-warning mb-3">Oferta</span>
-                <h2 class="h5">Kit Teclado y Mouse</h2>
-                <p class="text-muted">Periféricos inalámbricos para oficina.</p>
-                <div class="fw-bold">Accesorios</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-xl-3">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <span class="badge text-bg-dark mb-3">Premium</span>
-                <h2 class="h5">UPS 1200VA</h2>
-                <p class="text-muted">Protección y respaldo para equipos críticos.</p>
-                <div class="fw-bold">Energía</div>
-            </div>
-        </div>
-    </div>
+        {% endif %}
+
+    </section>
 </div>
 {% endblock %}
