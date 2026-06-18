@@ -23,7 +23,10 @@
                     <div class="col-md-4">
                         <div class="bg-light rounded-4 p-3 text-center">
                             <div class="section-kicker mb-1">Precio</div>
-                            <div class="h5 fw-bold mb-0">S/ {{ product.price }}</div>
+                            <div class="h5 fw-bold mb-0{% if product.on_sale %} text-danger{% endif %}">S/ {{ product.effective_price }}</div>
+                            {% if product.on_sale %}
+                            <div class="text-decoration-line-through text-muted small">S/ {{ product.price }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -84,17 +87,17 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Nombre completo</label>
-                        <input type="text" name="customer_name" class="form-control" placeholder="Ej: Juan Pérez" required>
+                        <input type="text" name="customer_name" class="form-control" placeholder="" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Correo electrónico</label>
-                        <input type="email" name="customer_email" class="form-control" placeholder="Ej: juan@ejemplo.com" required>
+                        <input type="email" name="customer_email" class="form-control" placeholder="" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Teléfono</label>
-                        <input type="text" name="customer_phone" class="form-control" placeholder="Ej: 999 888 777" required>
+                        <input type="text" name="customer_phone" class="form-control" placeholder="" required>
                     </div>
 
                     <div class="mb-4">
@@ -106,8 +109,54 @@
                         Enviar cotización
                     </button>
                 </form>
+
+                <hr class="my-4">
+
+                <a href="https://wa.me/51999888777?text=Hola%2C%20quisiera%20cotizar%20{{ product.name|urlencode }}%20(SKU%3A%20{{ product.sku|urlencode }})"
+                   class="btn btn-success btn-lg w-100"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <i class="fab fa-whatsapp me-2"></i>Consultar por WhatsApp
+                </a>
             </div>
         </div>
     </div>
 </div>
+
+{% if show_modal %}
+<div class="modal fade" id="sentModal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center pt-0 pb-4">
+                <div class="mb-3 text-success" style="font-size:4rem;line-height:1;"><i class="fas fa-check-circle"></i></div>
+                <h4 class="fw-bold mb-2">Cotización enviada</h4>
+                <p class="text-muted mb-0">Los datos se han enviado correctamente.<br>Nos pondremos en contacto pronto.</p>
+            </div>
+            <div class="modal-footer justify-content-center border-0 pt-0 pb-4">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <a href="{% url 'app_home:index' %}" class="btn btn-primary">Volver al inicio</a>
+                <a href="{% url 'app_home:products' %}" class="btn btn-outline-primary">Seguir viendo productos</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% block extra_js %}
+{% if show_modal %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var modalEl = document.getElementById('sentModal');
+    if (modalEl) {
+        var modal = new bootstrap.Modal(modalEl);
+        modal.show();
+    }
+});
+</script>
+{% endif %}
+{% endblock %}
+
 {% endblock %}

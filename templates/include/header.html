@@ -9,7 +9,7 @@
                 <div class="position-relative mx-3 flex-grow-1 d-none d-lg-block" style="max-width: 400px;">
                     <div class="input-group">
                         <input type="text" id="product-search" class="form-control border-end-0" placeholder="Buscar productos..." autocomplete="off">
-                        <span class="input-group-text bg-white">🔍</span>
+                        <span class="input-group-text bg-white"><i class="fas fa-search text-muted"></i></span>
                     </div>
                     <div id="search-results" class="position-absolute w-100 mt-1 d-none" style="z-index: 1050;"></div>
                 </div>
@@ -19,14 +19,14 @@
             </div>
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
-                    <li class="nav-item"><a class="nav-link px-lg-2" href="">Cotizacion</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-2{% if request.resolver_match.url_name == 'quotation-build' %} active{% endif %}" href="{% url 'app_quotations:quotation-build' %}">Cotización</a></li>
                     <!-- <li class="nav-item"><a class="nav-link px-lg-2" href="{% url 'app_home:index' %}">Inicio</a></li> -->
-                    <li class="nav-item"><a class="nav-link px-lg-2" href="{% url 'app_home:about' %}">Nosotros</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-2" href="{% url 'app_home:products' %}">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-2{% if request.resolver_match.url_name == 'about' %} active{% endif %}" href="{% url 'app_home:about' %}">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-2{% if request.resolver_match.url_name == 'products' %} active{% endif %}" href="{% url 'app_home:products' %}">Productos</a></li>
                     <!-- <li class="nav-item"><a class="nav-link px-lg-2" href="{% url 'app_home:categories' %}">Categorías</a></li> -->
                     <!-- <li class="nav-item"><a class="nav-link px-lg-2" href="{% url 'app_home:brands' %}">Marcas</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-2" href="{% url 'app_home:warranty' %}">Garantía</a></li> -->
-                    <li class="nav-item"><a class="nav-link px-lg-2" href="{% url 'app_home:contact' %}">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-2{% if request.resolver_match.url_name == 'contact' %} active{% endif %}" href="{% url 'app_home:contact' %}">Contacto</a></li>
 
                     {% if request.user.is_authenticated %}
                     <li class="nav-item">
@@ -37,7 +37,7 @@
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-outline-primary ms-lg-2" href="{% url 'app_users:login' %}">Admin</a>
+                        <a class="btn btn-outline-primary ms-lg-2" href="{% url 'app_users:login' %}">Ingresar</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -61,12 +61,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('product-search');
     const container = document.getElementById('search-results');
 
+    let searchTimeout;
     input.addEventListener('input', function () {
+        clearTimeout(searchTimeout);
         const q = this.value.trim();
         if (q.length === 0) {
             container.classList.add('d-none');
             return;
         }
+        searchTimeout = setTimeout(function () {
         fetch('/api/productos/?q=' + encodeURIComponent(q))
             .then(function (r) { return r.json(); })
             .then(function (data) {
@@ -89,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 container.classList.remove('d-none');
             });
+        }, 300);
     });
 
     document.addEventListener('click', function (e) {

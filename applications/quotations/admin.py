@@ -11,8 +11,8 @@ class QuotationItemInline(admin.TabularInline):
 
 @admin.register(QuotationRequest)
 class QuotationRequestAdmin(admin.ModelAdmin):
-    list_display = ['id', 'customer_name', 'customer_email', 'status', 'created']
-    list_filter = ['status', 'created']
+    list_display = ['id', 'customer_name', 'customer_email', 'created']
+    list_filter = ['created']
     search_fields = ['customer_name', 'customer_email', 'customer_phone']
     readonly_fields = ['customer_name', 'customer_email', 'customer_phone', 'notes', 'created', 'modified']
     inlines = [QuotationItemInline]

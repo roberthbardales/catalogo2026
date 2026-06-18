@@ -5,23 +5,10 @@ from applications.products.models import Product
 
 
 class QuotationRequest(TimeStampedModel):
-    PENDIENTE = 'P'
-    APROBADA = 'A'
-    RECHAZADA = 'R'
-    COMPLETADA = 'C'
-
-    STATUS_CHOICES = [
-        (PENDIENTE, 'Pendiente'),
-        (APROBADA, 'Aprobada'),
-        (RECHAZADA, 'Rechazada'),
-        (COMPLETADA, 'Completada'),
-    ]
-
     customer_name = models.CharField('Nombre', max_length=120)
     customer_email = models.EmailField('Correo electrónico')
     customer_phone = models.CharField('Teléfono', max_length=15)
     notes = models.TextField('Notas', blank=True)
-    status = models.CharField('Estado', max_length=1, choices=STATUS_CHOICES, default=PENDIENTE)
 
     class Meta:
         verbose_name = 'Solicitud de cotización'

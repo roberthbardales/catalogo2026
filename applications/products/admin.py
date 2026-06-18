@@ -46,7 +46,7 @@ class TechnicalSpecificationInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'sku', 'brand', 'category', 'price', 'stock', 'is_active')
+    list_display = ('name', 'sku', 'brand', 'category', 'price', 'sale_price', 'stock', 'is_active')
     list_filter = ('is_active', 'brand', 'category', 'tags')
     search_fields = ('name', 'sku', 'description', 'short_description')
     prepopulated_fields = {'slug': ('name',)}

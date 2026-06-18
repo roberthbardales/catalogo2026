@@ -1,9 +1,54 @@
 {% extends 'home/base_home.html' %}
+{% load static %}
 
 {% block title %}Catálogo 2026 — Tecnología para ti{% endblock %}
 {% block meta_description %}Catálogo de productos tecnológicos: laptops, audífonos, periféricos, accesorios y más. Cotiza en línea y recibe atención personalizada.{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/product-card.css' %}">
+{% endblock %}
+
 {% block content %}
+
+<!-- Hero Carousel -->
+<div id="heroCarousel" class="carousel slide mb-4 rounded-3 overflow-hidden" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner" style="max-height: 400px;">
+        <div class="carousel-item active">
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&h=400&q=80" class="d-block w-100" alt="Laptops y tecnología" style="height: 400px; object-fit: cover;">
+            <div class="carousel-caption d-none d-md-block text-start" style="bottom: 60px; left: 10%;">
+                <h2 class="display-6 fw-bold">Tecnología de punta</h2>
+                <p class="lead">Descubre los últimos lanzamientos en laptops, audífonos y más.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&h=400&q=80" class="d-block w-100" alt="Gadgets y periféricos" style="height: 400px; object-fit: cover;">
+            <div class="carousel-caption d-none d-md-block text-start" style="bottom: 60px; left: 10%;">
+                <h2 class="display-6 fw-bold">Productos originales</h2>
+                <p class="lead">Calidad garantizada con cobertura y soporte postventa.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&h=400&q=80" class="d-block w-100" alt="Audífonos y audio" style="height: 400px; object-fit: cover;">
+            <div class="carousel-caption d-none d-md-block text-start" style="bottom: 60px; left: 10%;">
+                <h2 class="display-6 fw-bold">Cotiza sin compromiso</h2>
+                <p class="lead">Solicita tu presupuesto en línea y te respondemos al instante.</p>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+</div>
 
 {% if featured_products %}
 <section class="mb-4">
@@ -24,16 +69,24 @@
                 <div class="card-body d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <span class="badge bg-primary">{{ product.category.name }}</span>
+                        <span>
+                        {% if product.on_sale %}
+                        <span class="badge bg-danger">Oferta</span>
+                        {% endif %}
                         {% if product.stock == 0 %}
                         <span class="badge bg-danger">Sin stock</span>
                         {% elif product.stock <= 5 %}
                         <span class="badge bg-warning text-dark">Stock bajo</span>
                         {% endif %}
+                        </span>
                     </div>
                     <h3 class="h6 fw-bold mb-1">{{ product.name }}</h3>
                     <p class="text-muted small mb-2 flex-grow-1">{{ product.short_description|default:product.description|truncatechars:80 }}</p>
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="fw-bold">S/ {{ product.price }}</span>
+                        <span class="fw-bold">S/ {{ product.effective_price }}</span>
+                        {% if product.on_sale %}
+                        <span class="text-decoration-line-through text-muted small">S/ {{ product.price }}</span>
+                        {% endif %}
                         <span class="text-muted small">{{ product.brand.name }}</span>
                     </div>
                     <a href="{% url 'app_quotations:public-product-detail' product.slug %}" class="btn btn-outline-primary btn-sm w-100">

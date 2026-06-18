@@ -36,9 +36,14 @@
                             {{ form.category.errors }}
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Precio</label>
+                            <label class="form-label">Precio normal</label>
                             {{ form.price }}
                             {{ form.price.errors }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Precio oferta <span class="text-muted">(opcional)</span></label>
+                            {{ form.sale_price }}
+                            {{ form.sale_price.errors }}
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Stock</label>

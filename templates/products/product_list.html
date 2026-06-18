@@ -90,7 +90,7 @@
                             <td>{{ product.sku }}</td>
                             <td>{{ product.category }}</td>
                             <td>{{ product.brand }}</td>
-                            <td class="text-end">S/ {{ product.price }}</td>
+                            <td class="text-end">S/ {{ product.effective_price }}{% if product.on_sale %}<br><span class="text-decoration-line-through text-muted small">S/ {{ product.price }}</span>{% endif %}</td>
                             <td class="text-center">{{ product.stock }}</td>
                             <td>
                                 {% if product.is_active %}

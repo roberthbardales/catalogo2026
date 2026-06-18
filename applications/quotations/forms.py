@@ -1,6 +1,24 @@
 from django import forms
 
 
+class QuotationCartForm(forms.Form):
+    customer_name = forms.CharField(
+        max_length=120,
+        widget=forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Nombre completo'})
+    )
+    customer_email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Correo electrónico'})
+    )
+    customer_phone = forms.CharField(
+        max_length=15,
+        widget=forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Teléfono'})
+    )
+    notes = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'class': 'form-control form-control-sm', 'rows': 2, 'placeholder': 'Notas (opcional)'})
+    )
+
+
 class PublicQuotationForm(forms.Form):
     product_id = forms.IntegerField(widget=forms.HiddenInput())
     quantity = forms.IntegerField(

@@ -1,5 +1,6 @@
 .product-card {
     transition: all 0.3s ease;
+    overflow: hidden;
 }
 
 .product-card:hover {
@@ -10,4 +11,117 @@
 
 .product-card:hover .product-name {
     color: var(--bs-primary) !important;
+}
+
+.product-card img.card-img-top {
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover img.card-img-top {
+    transform: scale(1.1);
+}
+
+/* Hero Carousel */
+#heroCarousel .carousel-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 100%);
+    pointer-events: none;
+}
+
+#heroCarousel .carousel-caption {
+    max-width: 500px;
+}
+
+#heroCarousel .carousel-caption h2 {
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+#heroCarousel .carousel-caption p {
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* Footer */
+.footer-custom {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 3rem 0 1.5rem;
+}
+
+.footer-custom h5 {
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+}
+
+.footer-custom p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.6rem;
+}
+
+.footer-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-links a:hover {
+    color: var(--web-primary, #0f766e);
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.footer-contact-item i {
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+    color: var(--web-primary, #0f766e);
+}
+
+.footer-custom hr {
+    border-color: rgba(255,255,255,0.1);
+    margin: 2rem 0;
+}
+
+.footer-bottom p {
+    margin-bottom: 0.25rem;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.footer-section {
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+    .footer-section {
+        margin-bottom: 0;
+    }
 }

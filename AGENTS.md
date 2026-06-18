@@ -1,4 +1,4 @@
-# Proyecto: Catálogo 2026 — Estado al 17/06/2026
+# Proyecto: Catálogo 2026 — Estado al 18/06/2026
 
 ## Estructura de templates
 
@@ -34,7 +34,7 @@ base.html  (header/footer blocks vacíos)
 ├── home/base_home.html     → rellena header/footer blocks
 ├── products/base_products.html → rellena header/footer blocks
 └── users/base_users.html   → rellena header/footer blocks
-    └── users/base_panel.html  → layout row (sidebar 3 + content 9)
+    └── users/base_panel.html  → layout row (sidebar 2 + content 10)
         ├── perfil.html          → panel_content (secciones: perfil, usuarios)
         ├── cambiar_password.html → panel_content (formulario)
         ├── lista_usuarios.html  → panel_content (tabla)
@@ -75,7 +75,72 @@ El ítem activo se detecta automáticamente vía `request.resolver_match.url_nam
   - Botones: Primero, Anterior, números (±3), Siguiente, Último
   - Preserva `?q=` al navegar entre páginas
 
+## Precio de oferta (sale_price)
+
+- Modelo `Product` tiene campo `sale_price` (opcional, `DecimalField`)
+- Propiedad `on_sale`: `True` si `sale_price` tiene valor
+- Propiedad `effective_price`: retorna `sale_price` si existe, sino `price`
+- Se usa en cotizaciones (email), carrito, cards y detalle de producto
+- Se configura desde el formulario de edición (`product_form.html`) y admin
+
 ## Últimos cambios
+
+### 18/06/2026 — sale_price (precio de oferta) + mejoras UI
+- Agregado campo `sale_price` al modelo `Product` (DecimalField opcional) con propiedades `on_sale` y `effective_price`
+- Migración `0003_product_sale_price` creada y aplicada
+- Actualizado `ProductForm` y `product_form.html` para incluir campo "Precio oferta"
+- Actualizado `admin.py` para mostrar `sale_price` en `list_display`
+- Cards de producto (`home/products.html`): badge "Oferta" rojo superpuesto sobre la imagen, precio original tachado, eliminada categoría
+- `home/index.html`: precio de oferta con tachado y badge "Oferta"
+- `public_product_detail.html`: precio de oferta en rojo + original tachado
+- `quotation_build.html`: carrito usa `effective_price`
+- `products/product_list.html` y `products/product_detail.html`: admin muestra `effective_price`
+- `QuotationCreateFromCartView` y `CreateQuotationView` envía email con `effective_price` (unit_price, subtotal, total)
+
+### 18/06/2026 — Email SMTP, eliminado status de cotizaciones, modal de confirmación
+- Agregada configuración SMTP Gmail en `settings.py` + `.env` para envío de correos
+- Eliminado campo `status` de `QuotationRequest` (modelo, vistas, URLs, admin, templates, migración `0002`)
+- `QuotationCreateFromCartView` y `CreateQuotationView` ahora envían email con datos del cliente + tabla de productos a `customer_email` y `roberthbardales@gmail.com` (CC)
+- Eliminado `/cotizacion/gracias/` (`thanks.html`, `QuotationThanksView`, URL)
+- Agregado modal Bootstrap de confirmación al enviar cotización (redirige con `?sent=1` y muestra modal ✅)
+- Reemplazado emoji 🔍 por `fa-search` de FontAwesome en el buscador del header
+- Reducido margen del breadcrumb en `home/products.html` (`mb-4` → `mb-1`)
+
+### 18/06/2026 — Carrusel hero, footer con datos reales, WhatsApp avanzado, mejoras varias
+
+### 18/06/2026 — Email SMTP, eliminado status de cotizaciones, modal de confirmación
+- Agregada configuración SMTP Gmail en `settings.py` + `.env` para envío de correos
+- Eliminado campo `status` de `QuotationRequest` (modelo, vistas, URLs, admin, templates, migración `0002`)
+- `QuotationCreateFromCartView` y `CreateQuotationView` ahora envían email con datos del cliente + tabla de productos a `customer_email` y `roberthbardales@gmail.com` (CC)
+- Eliminado `/cotizacion/gracias/` (`thanks.html`, `QuotationThanksView`, URL)
+- Agregado modal Bootstrap de confirmación al enviar cotización (redirige con `?sent=1` y muestra modal ✅)
+- Reemplazado emoji 🔍 por `fa-search` de FontAwesome en el buscador del header
+- Reducido margen del breadcrumb en `home/products.html` (`mb-4` → `mb-1`)
+
+### 18/06/2026 — Carrusel hero, footer con datos reales, WhatsApp avanzado, mejoras varias
+- Agregado carrusel Bootstrap con 3 slides (Unsplash) al inicio de `home/index.html`, intervalo 3s, overlay oscuro, captions
+- Footer actualizado con datos de Solutions Mech Perú: descripción, atención (2 emails + 2 teléfonos), ubicación. Copyright: "© 2026 Solutions Mech Perú · Catálogo 2026"
+- Eliminadas secciones Compañía y Enlaces del footer
+- Agregado `<hr>` + centrado en footer-bottom
+- Agregado FontAwesome 6.5.1 CDN en `base.html` (íconos en footer y WhatsApp ahora visibles)
+- Agregados estilos CSS completos para footer en `static/css/product-card.css` (fondo oscuro, tipografía, hover, responsive)
+- Arreglado enlace "Cotización" roto en `header.html` (`href=""` → `app_home:products`)
+- Agregado debounce (300ms) en buscador AJAX del header para evitar llamadas redundantes
+- Creado cotizador rápido con carrito en sesión (`/cotizar/`):
+  - `QuotationBuildView` — muestra carrito y formulario de envío
+  - `QuotationCartToggleView` — AJAX agrega/remueve productos del carrito en sesión
+  - `QuotationCreateFromCartView` — procesa formulario y crea `QuotationRequest` + `QuotationItem` por cada producto
+  - `QuotationCartForm` — formulario con nombre, email, teléfono, notas
+  - Template `quotations/quotation_build.html` — panel único con lista de productos + formulario
+  - Botón "Seguir agregando" linkea a `app_home:products`
+- Botón "Agregar" en `home/products.html` ahora hace AJAX POST al carrito de sesión (feedback visual "✓ Agregado" por 2s)
+- Botones en cards de `home/products.html`: "Cotizar" (WhatsApp) + "Agregar" (carrito)
+- Enlace "Cotización" del header redirigido a `app_quotations:quotation-build`
+- WhatsApp por producto: botón verde "Consultar por WhatsApp" en `public_product_detail.html` con nombre + SKU en mensaje
+- WhatsApp por producto: icono WhatsApp en cada card de `home/products.html` con nombre del producto
+- Rediseñado WhatsApp flotante: tooltip "¿Necesitas ayuda?" al hover, animación pulse, badge "Cotiza aquí" intermitente, popup con 3 opciones (Consultar precio, Soporte técnico, Información general) que se abre al hacer clic
+- Actualizada página `home/about.html` con contenido real de Solutions Mech Perú
+- Reducido ancho del panel sidebar: `col-lg-3` → `col-lg-2` en `base_panel.html`
 
 ### 17/06/2026 — Footer rediseñado + sidebar categorías + buscador en header + hover cards
 - Rediseñado `templates/include/footer.html`: estructura 4 columnas (descripción, enlaces, contacto, sígueme) sin estilos inline ni clases de color

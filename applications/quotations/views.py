@@ -1,16 +1,160 @@
+from django.conf import settings
 from django.contrib import messages
-from django.db.models import Prefetch
-from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
+from django.db.models import Count, Prefetch, Q
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, FormView, ListView, TemplateView, View
 
-from applications.products.models import Product
+from applications.products.models import Brand, Category, Product
 from applications.users.mixins import AdministradorPermisoMixin
 from applications.inventory.models import StockMovement
 
-from .forms import PublicQuotationForm
+from .forms import PublicQuotationForm, QuotationCartForm
 from .models import QuotationItem, QuotationRequest
+
+
+# =============================================================================
+# COTIZADOR RÁPIDO (carrito en sesión)
+# =============================================================================
+
+class QuotationBuildView(TemplateView):
+    """Página del cotizador: muestra el carrito y formulario de envío"""
+    template_name = 'quotations/quotation_build.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        cart = self.request.session.get('quotation_cart', {})
+        cart_items = []
+        if cart:
+            products = Product.objects.filter(
+                pk__in=[int(k) for k in cart.keys()], is_active=True
+            ).select_related('brand')
+            for p in products:
+                qty = cart.get(str(p.pk), 0)
+                if qty > 0:
+                    cart_items.append({
+                        'product': p,
+                        'quantity': qty,
+                        'subtotal': qty * p.effective_price,
+                    })
+        ctx['cart_items'] = cart_items
+        ctx['cart_total'] = sum(item['subtotal'] for item in cart_items)
+        ctx['cart_count'] = sum(item['quantity'] for item in cart_items)
+        ctx['show_modal'] = self.request.GET.get('sent') == '1'
+        return ctx
+
+
+class QuotationCartToggleView(View):
+    """AJAX: agrega o quita un producto del carrito en sesión"""
+
+    def post(self, request, pk):
+        product_id = str(pk)
+        action = request.POST.get('action', 'add')
+        cart = request.session.get('quotation_cart', {})
+
+        if action == 'add':
+            cart[product_id] = cart.get(product_id, 0) + 1
+        elif action == 'decrement':
+            current = cart.get(product_id, 0)
+            if current <= 1:
+                cart.pop(product_id, None)
+            else:
+                cart[product_id] = current - 1
+        elif action == 'remove':
+            cart.pop(product_id, None)
+        elif action == 'set':
+            qty = int(request.POST.get('quantity', 1))
+            if qty > 0:
+                cart[product_id] = qty
+            else:
+                cart.pop(product_id, None)
+
+        request.session['quotation_cart'] = cart
+
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': True, 'count': sum(cart.values())})
+
+        return HttpResponseRedirect(reverse('app_quotations:quotation-build'))
+
+
+class QuotationCreateFromCartView(FormView):
+    """Procesa el formulario del cotizador y crea la cotización con todos los productos del carrito"""
+    form_class = QuotationCartForm
+    http_method_names = ['post']
+
+    def form_valid(self, form):
+        cart = self.request.session.get('quotation_cart', {})
+        if not cart:
+            messages.error(self.request, 'No hay productos en la cotización.')
+            return HttpResponseRedirect(reverse('app_quotations:quotation-build'))
+
+        quotation = QuotationRequest.objects.create(
+            customer_name=form.cleaned_data['customer_name'],
+            customer_email=form.cleaned_data['customer_email'],
+            customer_phone=form.cleaned_data['customer_phone'],
+            notes=form.cleaned_data['notes'],
+        )
+
+        products = Product.objects.filter(
+            pk__in=[int(k) for k in cart.keys()], is_active=True
+        )
+        for product in products:
+            qty = cart.get(str(product.pk), 0)
+            if qty > 0:
+                up = product.effective_price
+                QuotationItem.objects.create(
+                    quotation=quotation,
+                    product=product,
+                    product_name=product.name,
+                    product_sku=product.sku,
+                    quantity=qty,
+                    unit_price=up,
+                    subtotal=qty * up,
+                )
+
+        total = sum(qty * product.effective_price for product in products for qty in [cart.get(str(product.pk), 0)] if qty > 0)
+        rows_html = ''.join(
+            f'<tr><td>{p.name}</td><td>{p.sku}</td><td style="text-align:center">{cart.get(str(p.pk), 0)}</td>'
+            f'<td style="text-align:right">S/ {p.effective_price:.2f}</td>'
+            f'<td style="text-align:right">S/ {cart.get(str(p.pk), 0) * p.effective_price:.2f}</td></tr>'
+            for p in products if cart.get(str(p.pk), 0) > 0
+        )
+        html = f"""
+        <h2>Nueva cotización</h2>
+        <p><strong>Cliente:</strong> {quotation.customer_name}<br>
+        <strong>Email:</strong> {quotation.customer_email}<br>
+        <strong>Teléfono:</strong> {quotation.customer_phone}</p>
+        <p><strong>Notas:</strong><br>{quotation.notes or '—'}</p>
+        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%">
+        <thead style="background:#eee"><tr>
+        <th>Producto</th><th>SKU</th><th>Cant</th><th>P.U.</th><th>Subtotal</th>
+        </tr></thead>
+        <tbody>{rows_html}</tbody>
+        <tfoot><tr style="font-weight:bold">
+        <td colspan="4" style="text-align:right">Total</td>
+        <td style="text-align:right">S/ {total:.2f}</td>
+        </tr></tfoot>
+        </table>
+        """
+        send_mail(
+            subject=f'Nueva cotización — {quotation.customer_name}',
+            message='',
+            html_message=html,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[quotation.customer_email, 'roberthbardales@gmail.com'],
+            fail_silently=False,
+        )
+
+        del self.request.session['quotation_cart']
+        return HttpResponseRedirect(reverse('app_quotations:quotation-build') + '?sent=1')
+
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for err in errors:
+                messages.error(self.request, f'{err}')
+        return HttpResponseRedirect(reverse('app_quotations:quotation-build'))
 
 
 # =============================================================================
@@ -30,6 +174,7 @@ class PublicProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['form'] = PublicQuotationForm(initial={'product_id': self.object.pk, 'quantity': 1})
+        ctx['show_modal'] = self.request.GET.get('sent') == '1'
         return ctx
 
 
@@ -47,21 +192,46 @@ class CreateQuotationView(FormView):
             notes=form.cleaned_data['notes'],
         )
 
+        up = product.effective_price
         QuotationItem.objects.create(
             quotation=quotation,
             product=product,
             product_name=product.name,
             product_sku=product.sku,
             quantity=form.cleaned_data['quantity'],
-            unit_price=product.price,
-            subtotal=form.cleaned_data['quantity'] * product.price,
+            unit_price=up,
+            subtotal=form.cleaned_data['quantity'] * up,
         )
 
-        messages.success(
-            self.request,
-            'Cotización enviada correctamente. Nos pondremos en contacto pronto.'
+        html = f"""
+        <h2>Nueva cotización</h2>
+        <p><strong>Cliente:</strong> {quotation.customer_name}<br>
+        <strong>Email:</strong> {quotation.customer_email}<br>
+        <strong>Teléfono:</strong> {quotation.customer_phone}</p>
+        <p><strong>Notas:</strong><br>{quotation.notes or '—'}</p>
+        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%">
+        <thead style="background:#eee"><tr>
+        <th>Producto</th><th>SKU</th><th>Cant</th><th>P.U.</th><th>Subtotal</th>
+        </tr></thead>
+        <tbody>
+        <tr><td>{product.name}</td><td>{product.sku}</td><td style="text-align:center">{form.cleaned_data['quantity']}</td>
+        <td style="text-align:right">S/ {up:.2f}</td>
+        <td style="text-align:right">S/ {form.cleaned_data['quantity'] * up:.2f}</td></tr>
+        </tbody>
+        </table>
+        """
+        send_mail(
+            subject=f'Nueva cotización — {quotation.customer_name}',
+            message='',
+            html_message=html,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[quotation.customer_email, 'roberthbardales@gmail.com'],
+            fail_silently=False,
         )
-        return HttpResponseRedirect(reverse('app_quotations:quotation-thanks'))
+
+        return HttpResponseRedirect(
+            reverse('app_quotations:public-product-detail', kwargs={'slug': product.slug}) + '?sent=1'
+        )
 
     def form_invalid(self, form):
         product_id = self.request.POST.get('product_id')
@@ -78,10 +248,6 @@ class CreateQuotationView(FormView):
         return HttpResponseRedirect(reverse('app_home:index'))
 
 
-class QuotationThanksView(TemplateView):
-    template_name = 'quotations/thanks.html'
-
-
 # =============================================================================
 # VISTAS ADMIN
 # =============================================================================
@@ -93,19 +259,9 @@ class QuotationListView(AdministradorPermisoMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        qs = QuotationRequest.objects.all().prefetch_related(
+        return QuotationRequest.objects.all().prefetch_related(
             Prefetch('items', queryset=QuotationItem.objects.select_related('product'))
         )
-        status = self.request.GET.get('status', '')
-        if status in dict(QuotationRequest.STATUS_CHOICES):
-            qs = qs.filter(status=status)
-        return qs
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx['current_status'] = self.request.GET.get('status', '')
-        ctx['status_choices'] = QuotationRequest.STATUS_CHOICES
-        return ctx
 
 
 class QuotationDetailView(AdministradorPermisoMixin, DetailView):
@@ -120,22 +276,6 @@ class QuotationDetailView(AdministradorPermisoMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['status_choices'] = QuotationRequest.STATUS_CHOICES
         items = self.object.items.all()
         ctx['total'] = sum(item.subtotal for item in items)
         return ctx
-
-
-class QuotationStatusUpdateView(AdministradorPermisoMixin, View):
-    http_method_names = ['post']
-
-    def post(self, request, pk):
-        quotation = get_object_or_404(QuotationRequest, pk=pk)
-        new_status = request.POST.get('status', '')
-        if new_status in dict(QuotationRequest.STATUS_CHOICES):
-            quotation.status = new_status
-            quotation.save(update_fields=['status'])
-            messages.success(request, f'Estado actualizado a "{quotation.get_status_display()}".')
-        else:
-            messages.error(request, 'Estado inválido.')
-        return HttpResponseRedirect(reverse('app_quotations:quotation-detail', kwargs={'pk': pk}))
