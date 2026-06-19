@@ -1,7 +1,12 @@
 {% extends 'home/base_home.html' %}
+{% load static %}
 
 {% block title %}Garantía | Catálogo 2026{% endblock %}
 {% block meta_description %}Política de garantía para productos tecnológicos en una web administrativa.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/product-card.css' %}">
+{% endblock %}
 
 {% block content %}
 <section class="row g-4 align-items-start">

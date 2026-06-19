@@ -1,4 +1,4 @@
-# Proyecto: Catálogo 2026 — Estado al 18/06/2026
+# Proyecto: Catálogo 2026 — Estado al 19/06/2026
 
 ## Estructura de templates
 
@@ -11,9 +11,9 @@ templates/
 │       ├── base_users.html          # Hereda base.html, agrega header/footer
 │       └── base_panel.html          # Hereda base_users, layout sidebar + content
 ├── include/
-│   ├── header.html
+│   ├── header.html                  # Announcement bar + navbar con search AJAX
 │   ├── footer.html
-│   └── panel_sidebar.html           # Sidebar reutilizable (Perfil, Productos)
+│   └── panel_sidebar.html           # Sidebar reutilizable (Dashboard, Perfil, Productos)
 ├── home/       → heredan de home/base_home.html
 ├── products/   → heredan de products/base_products.html
 └── users/
@@ -22,9 +22,11 @@ templates/
     ├── login.html                   → hereda base_users (sin panel)
     ├── register.html                → hereda base_users (sin panel)
     ├── perfil.html                  → hereda base_panel, usa panel_content
-    ├── cambiar_password.html        → hereda base_panel, usa panel_content
+    ├── dashboard.html               → hereda base_panel, usa panel_content
+    ├── cambiar_password.html        → hereda base_panel, usa panel_content (solo admin)
     ├── lista_usuarios.html          → hereda base_panel, usa panel_content
-    └── editar_usuario.html          → hereda base_panel, usa panel_content
+    ├── editar_usuario.html          → hereda base_panel, usa panel_content
+    └── reset_password.html          → hereda base_panel, usa panel_content (solo admin)
 ```
 
 ## Jerarquía de herencia
@@ -36,6 +38,7 @@ base.html  (header/footer blocks vacíos)
 └── users/base_users.html   → rellena header/footer blocks
     └── users/base_panel.html  → layout row (sidebar 2 + content 10)
         ├── perfil.html          → panel_content (secciones: perfil, usuarios)
+        ├── dashboard.html       → panel_content (KPIs, cotizaciones recientes, stock bajo)
         ├── cambiar_password.html → panel_content (formulario)
         ├── lista_usuarios.html  → panel_content (tabla)
         └── editar_usuario.html  → panel_content (formulario)
@@ -44,17 +47,27 @@ base.html  (header/footer blocks vacíos)
 ## Sidebar del panel (panel_sidebar.html)
 
 - **Perfil** (siempre visible) — activo cuando `url_name == 'perfil'` y `section != 'products'`
-- **Productos** (solo admin: `is_superuser` u `occupation == '0'`) — activo cuando `section == 'products'`
+- **Dashboard** (Admin + Ventas) — activo cuando `url_name == 'dashboard'`
+- **Movimientos** (Admin + Ventas)
+- **Cotizaciones** (solo admin)
+- **Productos**, **Categorías**, **Marcas** (solo admin)
 - **Inicio** → `app_home:index`
 - **Salir** → `app_users:logout`
 
-El ítem activo se detecta automáticamente vía `request.resolver_match.url_name` y `request.GET.section`.
+El ítem activo se detecta automáticamente vía `request.resolver_match.url_name`.
 
 ## Perfil (perfil.html)
 
 - Sección por defecto: `perfil` (información del usuario)
 - Sección `usuarios`: listado de usuarios (solo admin)
 - Dentro de `perfil`: botones para "Cambiar Contraseña" y "Lista Usuarios" (solo admin)
+
+## Dashboard (dashboard.html)
+
+- **Ruta**: `/users/dashboard/` — nombre `app_users:dashboard`
+- **Vista**: `DashboardView` (VentasPermisoMixin — Admin + Ventas)
+- **KPIs**: Productos activos, Categorías, Marcas, Cotizaciones, Stock bajo, Sin stock
+- **Tablas**: Últimas 5 cotizaciones + Productos con stock bajo (&lt;5)
 
 ## Seed de productos
 
@@ -85,6 +98,43 @@ El ítem activo se detecta automáticamente vía `request.resolver_match.url_nam
 
 ## Últimos cambios
 
+### 19/06/2026 — Footer rediseñado, fix templates sin product-card.css
+- Footer rediseñado con 4 columnas: (1) Marca + iconos redes sociales (WhatsApp, Facebook, LinkedIn, correo), (2) Enlaces rápidos (Inicio, Productos, Cotización, Contacto), (3) Atención + horarios (Lun–Vie 9–18 / Sáb 9–13), (4) Ubicación + botón "Cotiza por WhatsApp"
+- Agregado "↑ Volver arriba" con `scrollTo` smooth en footer-bottom
+- CSS footer compactado (`padding: 2.5rem 0 1.25rem`), animaciones hover en links, iconos sociales con círculo y `translateY(-2px)`
+- **Fix**: 7 templates públicos que heredan `home/base_home.html` no cargaban `product-card.css`, dejando el footer sin estilos (sin fondo oscuro). Se agregó `{% load static %}` + `{% block extra_css %}` con `product-card.css` en: `contact.html`, `warranty.html`, `categories.html`, `brands.html`, `about.html`, `quotation_build.html`, `public_product_detail.html`
+
+### 19/06/2026 — Gestión de contraseñas solo admin, mejoras UI product_list, detalle público, header compacto
+- **Eliminado** password reset público (4 rutas, 6 templates, link en login)
+- `UpdatePasswordView` restringido solo a admin (`AdministradorPermisoMixin`)
+- Creado `AdminResetPasswordView` para resetear contraseña de cualquier usuario
+- Creado `reset_password.html`, `ResetPasswordForm`, botón en `lista_usuarios.html`
+- Eliminados campos `new_password`/`confirm_password` de `UserUpdateForm`
+- `product_list.html`: filtros categoría/marca/estado, miniaturas 40×40, stock coloreado, badge Oferta, contador, sort por columnas, confirm delete con tooltips, `table-bordered`
+- `public_product_detail.html`: breadcrumbs, galería con lightbox, tabs Descripción/Especificaciones, stock bar, total dinámico JS, productos relacionados, card cotización compacto (p-3, inputs sm, botones −/+ sin spinners)
+- Header compactado (`py-1`, brand .95rem, nav links `px-lg-1`, botones `btn-sm`)
+- Announcement bar agregada (`bg-dark`, dirección centrada, sin link)
+- **Buscador unificado**: eliminado form GET duplicado de `products.html`, header search visible en todos los tamaños (quitado `d-none d-lg-block`)
+- Sidebar categorías/marcas compactado verticalmente (`py-2 px-3`, títulos `h6 small`, items `py-1 small`)
+- Galería de imágenes en detalle: miniaturas ahora en columna vertical a la izquierda de la imagen principal
+
+### 18/06/2026 — Categorías/Marcas dinámicas, Dashboard KPIs, Password reset, Contacto real
+- Páginas Categorías y Marcas ahora dinámicas desde BD (`CategoriesView`, `BrandsView` con `get_context_data`)
+- Templates `categories.html` y `brands.html` reescritos con `{% for %}` loop, link a filtro de productos
+- Agregado filtro por marca (`?brand=id`) en `ProductsView` + sidebar de marcas en `home/products.html`
+- Creado `DashboardView` con KPIs (6 cards) + tabla últimas cotizaciones + tabla stock bajo
+- Nueva ruta `/users/dashboard/` protegida con `VentasPermisoMixin`
+- Agregado ítem "Dashboard" en sidebar (Admin + Ventas)
+- `PerfilView` simplificado: solo info del usuario, sin KPIs
+- Página Contacto actualizada con datos reales (2 emails, 2 teléfonos, dirección específica)
+- Mapa Google ahora apunta a dirección exacta (Av. Esperanza Nro. 616 Int. EL09 – ATE – Lima)
+- Descomentados links del header: Categorías, Marcas, Garantía (con detección `active`)
+- Agregado flujo completo de recuperación de contraseña (password reset):
+  - 4 rutas usando `django.contrib.auth.views`
+  - 5 templates: form, done, confirm, complete, email
+  - Link "¿Olvidaste tu contraseña?" en login
+- Creado `analisis_proyecto.docx` con análisis completo vs requisitos
+
 ### 18/06/2026 — sale_price (precio de oferta) + mejoras UI
 - Agregado campo `sale_price` al modelo `Product` (DecimalField opcional) con propiedades `on_sale` y `effective_price`
 - Migración `0003_product_sale_price` creada y aplicada
@@ -96,17 +146,6 @@ El ítem activo se detecta automáticamente vía `request.resolver_match.url_nam
 - `quotation_build.html`: carrito usa `effective_price`
 - `products/product_list.html` y `products/product_detail.html`: admin muestra `effective_price`
 - `QuotationCreateFromCartView` y `CreateQuotationView` envía email con `effective_price` (unit_price, subtotal, total)
-
-### 18/06/2026 — Email SMTP, eliminado status de cotizaciones, modal de confirmación
-- Agregada configuración SMTP Gmail en `settings.py` + `.env` para envío de correos
-- Eliminado campo `status` de `QuotationRequest` (modelo, vistas, URLs, admin, templates, migración `0002`)
-- `QuotationCreateFromCartView` y `CreateQuotationView` ahora envían email con datos del cliente + tabla de productos a `customer_email` y `roberthbardales@gmail.com` (CC)
-- Eliminado `/cotizacion/gracias/` (`thanks.html`, `QuotationThanksView`, URL)
-- Agregado modal Bootstrap de confirmación al enviar cotización (redirige con `?sent=1` y muestra modal ✅)
-- Reemplazado emoji 🔍 por `fa-search` de FontAwesome en el buscador del header
-- Reducido margen del breadcrumb en `home/products.html` (`mb-4` → `mb-1`)
-
-### 18/06/2026 — Carrusel hero, footer con datos reales, WhatsApp avanzado, mejoras varias
 
 ### 18/06/2026 — Email SMTP, eliminado status de cotizaciones, modal de confirmación
 - Agregada configuración SMTP Gmail en `settings.py` + `.env` para envío de correos

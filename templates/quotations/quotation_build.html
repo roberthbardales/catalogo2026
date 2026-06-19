@@ -4,6 +4,10 @@
 {% block title %}Tu cotización | Catálogo 2026{% endblock %}
 {% block meta_description %}Revisa los productos seleccionados y envía tu solicitud de cotización.{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/product-card.css' %}">
+{% endblock %}
+
 {% block content %}
 {% csrf_token %}
 
@@ -39,7 +43,7 @@
                             <div class="min-w-0">
                                 <div class="fw-semibold text-truncate">{{ item.product.name }}</div>
                                 <div class="text-muted small">SKU: {{ item.product.sku }} | {{ item.product.brand.name }}</div>
-                                <div class="text-muted small">S/ {{ item.product.effective_price }} c/u</div>
+                                <div class="text-muted small">S/ {{ item.product.effective_price|floatformat:"0" }} c/u</div>
                             </div>
                         </div>
                         <div style="width:130px;text-align:center;flex-shrink:0;">
@@ -50,7 +54,7 @@
                             </div>
                         </div>
                         <div style="width:100px;text-align:end;flex-shrink:0;">
-                            <div class="fw-bold">S/ {{ item.subtotal }}</div>
+                            <div class="fw-bold">S/ {{ item.subtotal|floatformat:"0" }}</div>
                         </div>
                         <div style="width:24px;text-align:center;flex-shrink:0;">
                             <button class="remove-from-cart btn btn-sm btn-outline-danger" data-product-id="{{ item.product.pk }}" title="Quitar"><i class="fas fa-trash-alt"></i></button>
@@ -61,7 +65,7 @@
 
                 <div class="d-flex justify-content-between fw-bold fs-4 mt-4 pt-3 border-top">
                     <span>Total</span>
-                    <span>S/ {{ cart_total }}</span>
+                    <span>S/ {{ cart_total|floatformat:"0" }}</span>
                 </div>
             </div>
         </div>

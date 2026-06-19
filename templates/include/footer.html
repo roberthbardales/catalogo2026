@@ -1,13 +1,26 @@
 <footer class="footer-custom">
   <div class="container">
-    <div class="row">
+    <div class="row g-4">
       <div class="col-lg-4 col-md-6 footer-section">
-        <h5>Catálogo 2026</h5>
-        <p>
-          Gestión de repuestos, equipos y consumibles para la disponibilidad de su planta. Equipo técnico especialista en automatización y control.
-        </p>
+        <h5><i class="fas fa-microchip me-2"></i>Catálogo 2026</h5>
+        <p>Gestión de repuestos, equipos y consumibles para la disponibilidad de su planta. Equipo técnico especialista en automatización y control.</p>
+        <div class="footer-social">
+          <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener noreferrer" class="footer-social-icon" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="footer-social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer-social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="mailto:solutionsmech05@gmail.com" class="footer-social-icon" title="Correo"><i class="fas fa-envelope"></i></a>
+        </div>
       </div>
-      <div class="col-lg-4 col-md-6 footer-section">
+      <div class="col-lg-2 col-md-6 footer-section">
+        <h5>Enlaces</h5>
+        <ul class="footer-links">
+          <li><a href="{% url 'app_home:index' %}"><i class="fas fa-chevron-right"></i>Inicio</a></li>
+          <li><a href="{% url 'app_home:products' %}"><i class="fas fa-chevron-right"></i>Productos</a></li>
+          <li><a href="{% url 'app_quotations:quotation-build' %}"><i class="fas fa-chevron-right"></i>Cotización</a></li>
+          <li><a href="{% url 'app_home:contact' %}"><i class="fas fa-chevron-right"></i>Contacto</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6 footer-section">
         <h5>Atención</h5>
         <div class="footer-contact">
           <div class="footer-contact-item">
@@ -26,22 +39,31 @@
             <i class="fas fa-phone"></i>
             <span>+51 976 295 396</span>
           </div>
+          <div class="footer-contact-item mt-2">
+            <i class="fas fa-clock"></i>
+            <span>Lun–Vie: 9:00–18:00<br>Sáb: 9:00–13:00</span>
+          </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6 footer-section">
+      <div class="col-lg-3 col-md-6 footer-section">
         <h5>Ubicación</h5>
         <div class="footer-contact">
           <div class="footer-contact-item">
             <i class="fas fa-map-marker-alt"></i>
-            <span>Av. Esperanza Nro. 616 Int. EL09 – ATE – Lima</span>
+            <span>Av. Esperanza Nro. 616 Int. EL09<br>ATE – Lima</span>
           </div>
+        </div>
+        <div class="mt-3">
+          <a href="https://wa.me/{{ whatsapp_number }}?text=Hola%2C%20quisiera%20recibir%20una%20cotizaci%C3%B3n" class="btn btn-sm btn-success" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp me-1"></i>Cotiza por WhatsApp
+          </a>
         </div>
       </div>
     </div>
     <hr class="my-3">
-    <div class="footer-bottom text-center">
+    <div class="footer-bottom d-flex flex-wrap justify-content-between align-items-center">
       <p class="mb-0">© 2026 Solutions Mech Perú</p>
-      <p class="mb-0">By: roberthbardales@gmail.com</p>
+      <a href="#" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false"><i class="fas fa-arrow-up me-1"></i>Volver arriba</a>
     </div>
   </div>
 </footer>

@@ -15,8 +15,19 @@ class IndexView(TemplateView):
         ctx['total_brands'] = Brand.objects.filter(is_active=True).count()
         ctx['featured_products'] = Product.objects.filter(
             is_active=True
-        ).select_related('category', 'brand')[:4]
-        ctx['categories'] = Category.objects.filter(is_active=True)[:6]
+        ).select_related('category', 'brand')[:5]
+        ctx['categories'] = Category.objects.filter(is_active=True).annotate(
+            product_count=Count('products', filter=Q(products__is_active=True))
+        ).order_by('name')[:6]
+        ctx['on_sale_products'] = Product.objects.filter(
+            is_active=True, sale_price__isnull=False
+        ).select_related('brand')[:10]
+        ctx['testimonials'] = [
+            {'name': 'Carlos Mendoza', 'role': 'Gerente de TI — Corporación Nova', 'text': 'El proceso de cotización fue rápido y el equipo nos ayudó a elegir los equipos adecuados para nuestra empresa.'},
+            {'name': 'María Fernanda López', 'role': 'Administradora — Centro Educativo San José', 'text': 'Comprar 30 laptops para nuestro laboratorio nunca fue tan sencillo. Excelente atención postventa.'},
+            {'name': 'Ricardo Gálvez', 'role': 'CEO — TechSolutions EIRL', 'text': 'Trabajamos con ellos desde 2024 y siempre cumplen los plazos. Los precios corporativos son muy competitivos.'},
+        ]
+        ctx['brands'] = Brand.objects.filter(is_active=True).order_by('name')
         return ctx
 
 
@@ -43,6 +54,9 @@ class ProductsView(ListView):
         category_id = self.request.GET.get('category', '').strip()
         if category_id and category_id.isdigit():
             qs = qs.filter(category_id=int(category_id))
+        brand_id = self.request.GET.get('brand', '').strip()
+        if brand_id and brand_id.isdigit():
+            qs = qs.filter(brand_id=int(brand_id))
         return qs
 
     def get_context_data(self, **kwargs):
@@ -51,16 +65,34 @@ class ProductsView(ListView):
         ctx['categories'] = Category.objects.filter(is_active=True).annotate(
             product_count=Count('products', filter=Q(products__is_active=True))
         ).order_by('name')
+        ctx['brands'] = Brand.objects.filter(is_active=True).annotate(
+            product_count=Count('products', filter=Q(products__is_active=True))
+        ).order_by('name')
         ctx['current_category'] = self.request.GET.get('category', '')
+        ctx['current_brand'] = self.request.GET.get('brand', '')
         return ctx
 
 
 class CategoriesView(TemplateView):
     template_name = 'home/categories.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['categories'] = Category.objects.filter(is_active=True).annotate(
+            product_count=Count('products', filter=Q(products__is_active=True))
+        ).order_by('name')
+        return ctx
+
 
 class BrandsView(TemplateView):
     template_name = 'home/brands.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['brands'] = Brand.objects.filter(is_active=True).annotate(
+            product_count=Count('products', filter=Q(products__is_active=True))
+        ).order_by('name')
+        return ctx
 
 
 class WarrantyView(TemplateView):

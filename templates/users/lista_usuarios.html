@@ -44,6 +44,9 @@
                                     <a href="{% url 'app_users:user-edit' usuario.id %}" class="btn btn-sm btn-outline-primary me-1">
                                         Modificar
                                     </a>
+                                    <a href="{% url 'app_users:user-reset-password' usuario.id %}" class="btn btn-sm btn-outline-warning me-1">
+                                        Resetear contraseña
+                                    </a>
                                     {% if usuario != request.user %}
                                     <form method="post" action="{% url 'app_users:user-toggle-active' usuario.id %}" class="d-inline">
                                         {% csrf_token %}

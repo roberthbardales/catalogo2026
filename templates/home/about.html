@@ -1,7 +1,12 @@
 {% extends 'home/base_home.html' %}
+{% load static %}
 
 {% block title %}Nosotros | Solutions Mech Perú{% endblock %}
 {% block meta_description %}Solutions Mech Perú — Gestión de repuestos, equipos y consumibles para la disponibilidad de su planta. Equipo técnico especialista en automatización y control.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/product-card.css' %}">
+{% endblock %}
 
 {% block content %}
 <section class="card shadow-sm border-0">

@@ -4,8 +4,9 @@
         <div class="section-kicker mb-2">Panel</div>
         <h1 class="h5 fw-bold mb-3">Opciones</h1>
         <div class="list-group list-group-flush">
-            <a href="{% url 'app_users:perfil' %}" class="list-group-item list-group-item-action {% if url_name == 'perfil' or url_name == 'user-update' or url_name == 'user-list' or url_name == 'user-edit' or url_name == 'user-toggle-active' %}active{% endif %}">Perfil</a>
+            <a href="{% url 'app_users:perfil' %}" class="list-group-item list-group-item-action {% if url_name == 'perfil' or url_name == 'user-update' or url_name == 'user-list' or url_name == 'user-edit' or url_name == 'user-toggle-active' or url_name == 'user-reset-password' %}active{% endif %}">Perfil</a>
             {% if user.is_superuser or user.occupation == '0' or user.occupation == '1' %}
+            <a href="{% url 'app_users:dashboard' %}" class="list-group-item list-group-item-action {% if url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
             <a href="{% url 'app_inventory:movement-list' %}" class="list-group-item list-group-item-action {% if url_name == 'movement-list' or url_name == 'movement-create' %}active{% endif %}">Movimientos</a>
             {% endif %}
             {% if user.is_superuser or user.occupation == '0' %}

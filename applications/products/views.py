@@ -25,7 +25,8 @@ class ProductListView(AdministradorPermisoMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        qs = Product.objects.select_related('category', 'brand').prefetch_related('tags').order_by('name')
+        qs = Product.objects.select_related('category', 'brand').prefetch_related('tags')
+
         q = self.request.GET.get('q', '').strip()
         if q:
             qs = qs.filter(
@@ -42,6 +43,23 @@ class ProductListView(AdministradorPermisoMixin, ListView):
         brand_id = self.request.GET.get('brand', '').strip()
         if brand_id and brand_id.isdigit():
             qs = qs.filter(brand_id=int(brand_id))
+        is_active = self.request.GET.get('is_active', '').strip()
+        if is_active == '1':
+            qs = qs.filter(is_active=True)
+        elif is_active == '0':
+            qs = qs.filter(is_active=False)
+
+        sort = self.request.GET.get('sort', 'name')
+        dir = self.request.GET.get('dir', 'asc')
+        sort_map = {
+            'name': 'name', 'price': 'price', 'stock': 'stock',
+            'category': 'category__name', 'brand': 'brand__name',
+        }
+        order_key = f'-{sort}' if dir == 'desc' else sort
+        if order_key.lstrip('-') in sort_map:
+            qs = qs.order_by(order_key)
+        else:
+            qs = qs.order_by('name')
         return qs
 
     def get_context_data(self, **kwargs):
@@ -53,6 +71,9 @@ class ProductListView(AdministradorPermisoMixin, ListView):
         ctx['brands'] = Brand.objects.filter(is_active=True).order_by('name')
         ctx['current_category'] = self.request.GET.get('category', '')
         ctx['current_brand'] = self.request.GET.get('brand', '')
+        ctx['current_is_active'] = self.request.GET.get('is_active', '')
+        ctx['current_sort'] = self.request.GET.get('sort', 'name')
+        ctx['current_dir'] = self.request.GET.get('dir', 'asc')
         return ctx
 
 

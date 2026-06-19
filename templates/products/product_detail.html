@@ -12,7 +12,7 @@
                 <p class="text-muted">{{ product.description|default:"Sin descripción" }}</p>
                 <div class="row g-3">
                     <div class="col-md-6"><div class="bg-light rounded-4 p-3"><small class="text-muted">SKU</small><div class="fw-semibold">{{ product.sku }}</div></div></div>
-                    <div class="col-md-6"><div class="bg-light rounded-4 p-3"><small class="text-muted">Precio</small><div class="fw-semibold{% if product.on_sale %} text-danger{% endif %}">S/ {{ product.effective_price }}</div>{% if product.on_sale %}<div class="text-decoration-line-through small">S/ {{ product.price }}</div>{% endif %}</div></div>
+                    <div class="col-md-6"><div class="bg-light rounded-4 p-3"><small class="text-muted">Precio</small><div class="fw-semibold{% if product.on_sale %} text-danger{% endif %}">S/ {{ product.effective_price|floatformat:"0" }}</div>{% if product.on_sale %}<div class="text-decoration-line-through small">S/ {{ product.price|floatformat:"0" }}</div>{% endif %}</div></div>
                     <div class="col-md-6"><div class="bg-light rounded-4 p-3"><small class="text-muted">Categoría</small><div class="fw-semibold">{{ product.category }}</div></div></div>
                     <div class="col-md-6"><div class="bg-light rounded-4 p-3"><small class="text-muted">Marca</small><div class="fw-semibold">{{ product.brand }}</div></div></div>
                     <div class="col-md-6"><div class="bg-light rounded-4 p-3"><small class="text-muted">Stock</small><div class="fw-semibold">{{ product.stock }}</div></div></div>

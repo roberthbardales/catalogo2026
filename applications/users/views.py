@@ -6,10 +6,11 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, TemplateView, View
 from django.views.generic.edit import FormView
 
-from .forms import LoginForm, UpdatePasswordForm, UserRegisterForm, UserUpdateForm
-from .mixins import AdministradorPermisoMixin
+from .forms import LoginForm, ResetPasswordForm, UpdatePasswordForm, UserRegisterForm, UserUpdateForm
+from .mixins import AdministradorPermisoMixin, VentasPermisoMixin
 from .models import User
-from applications.products.models import Product
+from applications.products.models import Product, Category, Brand
+from applications.quotations.models import QuotationRequest
 
 
 # --- Helper reutilizable ---
@@ -71,7 +72,7 @@ class LogoutView(LoginRequiredMixin, View):
         return HttpResponseRedirect(reverse('app_users:login'))
 
 
-class UpdatePasswordView(LoginRequiredMixin, FormView):
+class UpdatePasswordView(AdministradorPermisoMixin, FormView):
     template_name = 'users/cambiar_password.html'
     form_class = UpdatePasswordForm
     success_url = reverse_lazy('app_users:login')
@@ -87,6 +88,22 @@ class UpdatePasswordView(LoginRequiredMixin, FormView):
         usuario.save()
         logout(self.request)
         return super().form_valid(form)
+
+
+class DashboardView(VentasPermisoMixin, TemplateView):
+    template_name = 'users/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['total_products'] = Product.objects.filter(is_active=True).count()
+        ctx['total_categories'] = Category.objects.filter(is_active=True).count()
+        ctx['total_brands'] = Brand.objects.filter(is_active=True).count()
+        ctx['total_quotations'] = QuotationRequest.objects.count()
+        ctx['low_stock'] = Product.objects.filter(is_active=True, stock__lt=5, stock__gt=0).count()
+        ctx['out_of_stock'] = Product.objects.filter(is_active=True, stock=0).count()
+        ctx['recent_quotations'] = QuotationRequest.objects.order_by('-created')[:5]
+        ctx['low_stock_products'] = Product.objects.filter(is_active=True, stock__lt=5).select_related('category', 'brand').order_by('stock')[:10]
+        return ctx
 
 
 class PerfilView(LoginRequiredMixin, TemplateView):
@@ -156,6 +173,26 @@ class UserUpdateView(AdministradorPermisoMixin, FormView):
         if _es_admin(self.request.user) and 'occupation' in form.cleaned_data:
             self.usuario.occupation = form.cleaned_data['occupation']
 
+        self.usuario.save()
+        return super().form_valid(form)
+
+
+class AdminResetPasswordView(AdministradorPermisoMixin, FormView):
+    template_name = 'users/reset_password.html'
+    form_class = ResetPasswordForm
+    success_url = reverse_lazy('app_users:user-list')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.usuario = get_object_or_404(User, pk=kwargs['user_id'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['usuario'] = self.usuario
+        return ctx
+
+    def form_valid(self, form):
+        self.usuario.set_password(form.cleaned_data['new_password'])
         self.usuario.save()
         return super().form_valid(form)
 

@@ -82,7 +82,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 # Procesadores personalizados
-                # 'applications.procesors.home_contact',
+                'applications.procesors.whatsapp_number',
             ],
         },
     },
@@ -174,6 +174,11 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = env('EMAIL_HOST_USER')
+
+# --------------------------------------------------
+# WHATSAPP
+# --------------------------------------------------
+WHATSAPP_NUMBER = '51960174778'
 
 AUTH_USER_MODEL = 'users.User'
 

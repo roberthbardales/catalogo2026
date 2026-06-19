@@ -70,13 +70,12 @@ class UserUpdateForm(forms.Form):
         required=False,
         widget=forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
     )
-
     def __init__(self, *args, **kwargs):
         self.is_admin_context = kwargs.pop('is_admin_context', False)
         self.user_instance = kwargs.pop('user_instance', None)
         super().__init__(*args, **kwargs)
 
-        for field in self.fields.values():
+        for name, field in self.fields.items():
             if isinstance(field.widget, forms.Select):
                 field.widget.attrs.update({'class': 'form-select'})
             else:
@@ -84,8 +83,6 @@ class UserUpdateForm(forms.Form):
 
         if not self.is_admin_context:
             self.fields.pop('occupation')
-        else:
-            self.fields['occupation'].required = True
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -115,6 +112,26 @@ class LoginForm(forms.Form):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.update({'class': 'form-control'})
+
+
+class ResetPasswordForm(forms.Form):
+    new_password = forms.CharField(label='Nueva contraseña', widget=forms.PasswordInput)
+    confirm_password = forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get('new_password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if new_password and confirm_password and new_password != confirm_password:
+            raise forms.ValidationError('Las contraseñas no coinciden.')
+
+        return cleaned_data
 
 
 class UpdatePasswordForm(forms.Form):

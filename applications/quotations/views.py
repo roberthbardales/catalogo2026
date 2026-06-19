@@ -117,8 +117,8 @@ class QuotationCreateFromCartView(FormView):
         total = sum(qty * product.effective_price for product in products for qty in [cart.get(str(product.pk), 0)] if qty > 0)
         rows_html = ''.join(
             f'<tr><td>{p.name}</td><td>{p.sku}</td><td style="text-align:center">{cart.get(str(p.pk), 0)}</td>'
-            f'<td style="text-align:right">S/ {p.effective_price:.2f}</td>'
-            f'<td style="text-align:right">S/ {cart.get(str(p.pk), 0) * p.effective_price:.2f}</td></tr>'
+            f'<td style="text-align:right">S/ {p.effective_price:.0f}</td>'
+            f'<td style="text-align:right">S/ {cart.get(str(p.pk), 0) * p.effective_price:.0f}</td></tr>'
             for p in products if cart.get(str(p.pk), 0) > 0
         )
         html = f"""
@@ -134,7 +134,7 @@ class QuotationCreateFromCartView(FormView):
         <tbody>{rows_html}</tbody>
         <tfoot><tr style="font-weight:bold">
         <td colspan="4" style="text-align:right">Total</td>
-        <td style="text-align:right">S/ {total:.2f}</td>
+        <td style="text-align:right">S/ {total:.0f}</td>
         </tr></tfoot>
         </table>
         """
@@ -169,12 +169,20 @@ class PublicProductDetailView(DetailView):
     slug_url_kwarg = 'slug'
 
     def get_queryset(self):
-        return Product.objects.filter(is_active=True).select_related('category', 'brand')
+        return Product.objects.filter(is_active=True).select_related(
+            'category', 'brand'
+        ).prefetch_related('images', 'specifications')
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['form'] = PublicQuotationForm(initial={'product_id': self.object.pk, 'quantity': 1})
         ctx['show_modal'] = self.request.GET.get('sent') == '1'
+        ctx['gallery'] = list(self.object.images.all())
+        ctx['related_products'] = Product.objects.filter(
+            is_active=True, category=self.object.category
+        ).exclude(pk=self.object.pk).select_related(
+            'category', 'brand'
+        )[:4]
         return ctx
 
 
@@ -215,8 +223,8 @@ class CreateQuotationView(FormView):
         </tr></thead>
         <tbody>
         <tr><td>{product.name}</td><td>{product.sku}</td><td style="text-align:center">{form.cleaned_data['quantity']}</td>
-        <td style="text-align:right">S/ {up:.2f}</td>
-        <td style="text-align:right">S/ {form.cleaned_data['quantity'] * up:.2f}</td></tr>
+        <td style="text-align:right">S/ {up:.0f}</td>
+        <td style="text-align:right">S/ {form.cleaned_data['quantity'] * up:.0f}</td></tr>
         </tbody>
         </table>
         """

@@ -12,5 +12,7 @@ urlpatterns = [
     path('users/', views.UserListView.as_view(), name='user-list'),
     path('users/<int:user_id>/edit/', views.UserUpdateView.as_view(), name='user-edit'),
     path('users/<int:user_id>/toggle-active/', views.ToggleUserActiveView.as_view(), name='user-toggle-active'),
+    path('users/<int:user_id>/reset-password/', views.AdminResetPasswordView.as_view(), name='user-reset-password'),
+    path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
     path('', views.PerfilView.as_view(), name='perfil'),
 ]
