@@ -7,17 +7,34 @@
 <header class="bg-white border-bottom shadow-sm">
     <nav class="navbar navbar-expand-lg navbar-light py-1">
         <div class="container">
-            <div class="d-flex align-items-center w-100">
-                <a class="navbar-brand d-flex align-items-center gap-1 fw-bold flex-shrink-0 py-0" href="{% url 'app_home:index' %}">
-                    <span class="brand-mark">C</span>
-                    <span style="font-size:.95rem">Catálogo</span>
+            <div class="d-flex align-items-center w-100 position-relative">
+                {% load static %}
+                <a class="navbar-brand d-flex align-items-center flex-shrink-0 py-0" href="{% url 'app_home:index' %}">
+                    <img src="{% static 'img/logo.png' %}" alt="Solutions Mech Perú" height="38">
                 </a>
-                <div class="position-relative mx-2 flex-grow-1" style="max-width: 350px;">
-                    <div class="input-group">
-                        <input type="text" id="product-search" class="form-control border-end-0" placeholder="Buscar productos..." autocomplete="off">
-                        <span class="input-group-text bg-white"><i class="fas fa-search text-muted"></i></span>
+                <div class="dropdown d-none d-md-block mx-1">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categorías
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'app_home:products' %}">Todas las categorías</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        {% for cat in nav_categories %}
+                        <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="{% url 'app_home:products' %}?category={{ cat.id }}">
+                            {{ cat.name }}
+                            <span class="badge bg-secondary rounded-pill">{{ cat.product_count }}</span>
+                        </a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="position-absolute start-50 translate-middle-x d-none d-md-block" style="max-width:400px;width:100%;">
+                    <div class="position-relative">
+                        <div class="input-group">
+                            <input type="text" id="product-search" class="form-control border-end-0" placeholder="Buscar productos..." autocomplete="off">
+                            <span class="input-group-text bg-white"><i class="fas fa-search text-muted"></i></span>
+                        </div>
+                        <div id="search-results" class="position-absolute w-100 mt-1 d-none" style="z-index: 1050;"></div>
                     </div>
-                    <div id="search-results" class="position-absolute w-100 mt-1 d-none" style="z-index: 1050;"></div>
                 </div>
                 <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -105,4 +122,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 </script>

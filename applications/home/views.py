@@ -15,7 +15,7 @@ class IndexView(TemplateView):
         ctx['total_brands'] = Brand.objects.filter(is_active=True).count()
         ctx['featured_products'] = Product.objects.filter(
             is_active=True
-        ).select_related('category', 'brand')[:5]
+        ).select_related('category', 'brand')[:6]
         ctx['categories'] = Category.objects.filter(is_active=True).annotate(
             product_count=Count('products', filter=Q(products__is_active=True))
         ).order_by('name')[:6]
@@ -39,7 +39,7 @@ class ProductsView(ListView):
     model = Product
     template_name = 'home/products.html'
     context_object_name = 'products'
-    paginate_by = 12
+    paginate_by = 15
 
     def get_queryset(self):
         qs = Product.objects.filter(is_active=True).select_related('category', 'brand')

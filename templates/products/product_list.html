@@ -86,13 +86,12 @@
                             </td>
                             <td>
                                 <div class="fw-semibold">{{ product.name }}</div>
-                                <div class="text-muted small">{{ product.short_description|default:"Sin descripción breve" }}</div>
                             </td>
                             <td>{{ product.sku }}</td>
                             <td>{{ product.category }}</td>
                             <td>{{ product.brand }}</td>
                             <td class="text-end">
-                                S/ {{ product.effective_price|floatformat:"0" }}
+                                <span class="{% if product.on_sale %}text-danger fw-bold{% endif %}">S/ {{ product.effective_price|floatformat:"0" }}</span>
                                 {% if product.on_sale %}
                                 <br><span class="text-decoration-line-through text-muted small">S/ {{ product.price|floatformat:"0" }}</span>
                                 <span class="badge bg-danger ms-1">Oferta</span>

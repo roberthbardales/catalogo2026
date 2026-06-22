@@ -1,4 +1,4 @@
-# Proyecto: Catálogo 2026 — Estado al 19/06/2026
+# Proyecto: Catálogo 2026 — Estado al 22/06/2026
 
 ## Estructura de templates
 
@@ -97,6 +97,25 @@ El ítem activo se detecta automáticamente vía `request.resolver_match.url_nam
 - Se configura desde el formulario de edición (`product_form.html`) y admin
 
 ## Últimos cambios
+
+### 22/06/2026 — Spacing unificado en index.html (todo a -2)
+- `templates/home/index.html`: unificados todos los valores de margin, padding y gap a `-2` (0.5rem)
+  - `mb-0/1/3/4` → `mb-2`, `mt-1/4` → `mt-2`, `me-1` → `me-2`
+  - `p-3/4/5` → `p-2`, `py-0/1/5` → `py-2`, `px-4` → `px-2`
+  - `gap-1/3` → `gap-2`, `g-0/3/4` → `g-2`
+  - Total ~70 ocurrencias actualizadas
+- `templates/home/products.html`: intento similar revertido a estado original
+
+### 20/06/2026 — Registro solo admin, app notifications (creada y revertida)
+- `UserRegisterView` restringido solo a admin vía `AdministradorPermisoMixin`; `success_url` cambiado a `app_users:user-list`
+- Creada app `applications/notifications` con modelo `Notification`, señales (`StockMovement < 5`, nuevas cotizaciones), campana en header con polling AJAX, y página de listado en el panel — **revertido completamente** poco después
+
+### 20/06/2026 — Logo en header, buscador centrado, botón Categorías con dropdown
+- Reemplazado texto "C" + "Catálogo" por `logo.png` en el navbar-brand del header
+- Buscador movido a `position-absolute start-50 translate-middle-x` para centrarlo horizontalmente entre logo y toggler (oculto en móvil)
+- Creado `categories_processor` en `applications/procesors.py` que inyecta `nav_categories` (categorías activas con `product_count`) en todos los templates vía context processor
+- Registrado `categories_processor` en `catalogo2026/settings.py`
+- Agregado botón "Categorías" con dropdown Bootstrap entre el logo y el buscador: lista todas las categorías con badge de conteo + link "Todas las categorías" (solo visible en desktop)
 
 ### 19/06/2026 — Footer rediseñado, fix templates sin product-card.css
 - Footer rediseñado con 4 columnas: (1) Marca + iconos redes sociales (WhatsApp, Facebook, LinkedIn, correo), (2) Enlaces rápidos (Inicio, Productos, Cotización, Contacto), (3) Atención + horarios (Lun–Vie 9–18 / Sáb 9–13), (4) Ubicación + botón "Cotiza por WhatsApp"

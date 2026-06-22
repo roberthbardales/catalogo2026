@@ -43,6 +43,7 @@ class QuotationBuildView(TemplateView):
         ctx['cart_total'] = sum(item['subtotal'] for item in cart_items)
         ctx['cart_count'] = sum(item['quantity'] for item in cart_items)
         ctx['show_modal'] = self.request.GET.get('sent') == '1'
+        ctx['sent_email'] = self.request.GET.get('email', '')
         return ctx
 
 
@@ -148,7 +149,7 @@ class QuotationCreateFromCartView(FormView):
         )
 
         del self.request.session['quotation_cart']
-        return HttpResponseRedirect(reverse('app_quotations:quotation-build') + '?sent=1')
+        return HttpResponseRedirect(reverse('app_quotations:quotation-build') + '?sent=1&email=' + quotation.customer_email)
 
     def form_invalid(self, form):
         for field, errors in form.errors.items():

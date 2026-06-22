@@ -20,10 +20,10 @@ def _es_admin(user):
     )
 
 
-class UserRegisterView(FormView):
+class UserRegisterView(AdministradorPermisoMixin, FormView):
     template_name = 'users/register.html'
     form_class = UserRegisterForm
-    success_url = reverse_lazy('app_users:login')
+    success_url = reverse_lazy('app_users:user-list')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

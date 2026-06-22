@@ -12,10 +12,9 @@
     100% { transform: translateX(-50%); }
 }
 .offer-track {
-    animation: scroll-offers 35s linear infinite;
-}
-.offer-track:hover {
-    animation-play-state: paused;
+    display: flex;
+    gap: 1rem;
+    white-space: nowrap;
 }
 .card-hover {
     transition: transform .2s, box-shadow .2s;
@@ -31,35 +30,20 @@
 {% csrf_token %}
 
 {% if on_sale_products %}
-<div class="bg-danger bg-opacity-10 border-bottom border-danger border-opacity-25 py-2 mb-3 rounded-3 overflow-hidden">
+<div class="bg-danger bg-opacity-10 border-bottom border-danger border-opacity-25 py-2 mb-2 rounded-3 overflow-hidden">
     <div class="d-flex align-items-center">
         <div class="d-flex align-items-center gap-2 flex-shrink-0 px-2 z-1">
             <span class="badge bg-danger" style="font-size:.7rem">🔥 Ofertas</span>
         </div>
         <div class="overflow-hidden flex-grow-1" style="mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%)">
-            <div class="d-flex gap-3 py-1 offer-track" style="width:max-content">
+            <div class="d-flex gap-2 py-2 offer-track" id="offerTrack" style="width:max-content">
                 {% for p in on_sale_products %}
                 <a href="{% url 'app_quotations:public-product-detail' p.slug %}" class="d-flex align-items-center gap-2 text-decoration-none text-reset flex-shrink-0">
                     {% if p.image_main %}
                     <img src="{{ p.image_main.url }}" alt="" width="40" height="40" style="object-fit:cover;border-radius:6px;">
                     {% endif %}
-                    <div class="small lh-sm">
-                        <div class="fw-semibold text-truncate" style="max-width:110px">{{ p.name }}</div>
-                        <div class="fw-bold text-danger" style="font-size:.8rem">S/ {{ p.effective_price|floatformat:"0" }}</div>
-                    </div>
-                </a>
-                {% if not forloop.last %}
-                <div class="border-end border-danger border-opacity-25" style="height:30px;align-self:center;"></div>
-                {% endif %}
-                {% endfor %}
-                {% for p in on_sale_products %}
-                <a href="{% url 'app_quotations:public-product-detail' p.slug %}" class="d-flex align-items-center gap-2 text-decoration-none text-reset flex-shrink-0">
-                    {% if p.image_main %}
-                    <img src="{{ p.image_main.url }}" alt="" width="40" height="40" style="object-fit:cover;border-radius:6px;">
-                    {% endif %}
-                    <div class="small lh-sm">
-                        <div class="fw-semibold text-truncate" style="max-width:110px">{{ p.name }}</div>
-                        <div class="fw-bold text-danger" style="font-size:.8rem">S/ {{ p.effective_price|floatformat:"0" }}</div>
+                    <div class="small" style="line-height:1.3;max-width:100px">
+                        <div class="fw-semibold" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">{{ p.name }}</div>
                     </div>
                 </a>
                 {% if not forloop.last %}
@@ -73,7 +57,7 @@
 {% endif %}
 
 <!-- Hero Carousel -->
-<div id="heroCarousel" class="carousel slide mb-4 rounded-3 overflow-hidden" data-bs-ride="carousel" data-bs-interval="3000">
+<div id="heroCarousel" class="carousel slide mb-2 rounded-3 overflow-hidden" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -113,15 +97,14 @@
 </div>
 
 {% if featured_products %}
-<section class="mb-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+<section class="mb-2">
+    <div class="d-flex justify-content-between align-items-center mb-2">
         <div>
-            <div class="section-kicker mb-1">Destacados</div>
-            <h2 class="h4 fw-bold mb-0">Productos destacados</h2>
+            <div class="section-kicker mb-2">Destacados</div>
         </div>
         <a href="{% url 'app_home:products' %}" class="btn btn-outline-primary btn-sm">Ver todos</a>
     </div>
-    <div class="row g-4 row-cols-lg-5">
+    <div class="row g-2 row-cols-2 row-cols-md-3 row-cols-lg-6">
         {% for product in featured_products %}
         <div class="col-md-6">
             <div class="card h-100 shadow-sm product-card">
@@ -144,23 +127,22 @@
                         <span class="badge bg-warning text-dark">Stock bajo</span>
                         {% endif %}
                     </div>
-                    <h2 class="h6 fw-bold mb-1"><a href="{% url 'app_quotations:public-product-detail' product.slug %}" class="text-decoration-none text-reset product-name">{{ product.name }}</a></h2>
-                    <p class="text-muted small mb-2 flex-grow-1">{{ product.short_description|default:product.description|truncatechars:80 }}</p>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="fw-bold">S/ {{ product.effective_price|floatformat:"0" }}</span>
+                    <h2 class="h6 fw-bold mb-2"><a href="{% url 'app_quotations:public-product-detail' product.slug %}" class="text-decoration-none text-reset product-name">{{ product.name }}</a></h2>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold {% if product.on_sale %}text-danger{% else %}text-primary{% endif %}">S/ {{ product.effective_price|floatformat:"0" }}</span>
                         {% if product.on_sale %}
                         <span class="text-decoration-line-through text-muted small">S/ {{ product.price|floatformat:"0" }}</span>
                         {% endif %}
                     </div>
-                    <div class="d-flex flex-column gap-1 mt-auto">
+                    <div class="d-flex flex-column gap-2 mt-auto">
                         {% url 'app_quotations:public-product-detail' product.slug as product_url %}
                         <a href="https://wa.me/{{ whatsapp_number }}?text=Hola%2C%20quisiera%20cotizar%20{{ product.name|urlencode }}%20(SKU%3A%20{{ product.sku|urlencode }})%20-%20{{ request.scheme }}://{{ request.get_host }}{{ product_url|urlencode }}"
                            class="btn btn-success btn-sm w-100"
                            target="_blank"
                            rel="noopener noreferrer">
-                            <i class="fab fa-whatsapp me-1"></i> Cotizar
+                            <i class="fab fa-whatsapp me-2"></i> Cotizar
                         </a>
-                        <button class="btn btn-outline-primary btn-sm w-100 add-to-cart-btn" data-product-id="{{ product.pk }}"><i class="fas fa-plus me-1"></i>Agregar</button>
+                        <button class="btn btn-outline-primary btn-sm w-100 add-to-cart-btn" data-product-id="{{ product.pk }}"><i class="fas fa-plus me-2"></i>Agregar</button>
                     </div>
                 </div>
             </div>
@@ -171,10 +153,9 @@
 {% endif %}
 
 {% if categories %}
-<section class="row g-4 mb-4">
+<section class="row g-2 mb-2">
     <div class="col-12">
-        <div class="section-kicker mb-1">Categorías</div>
-        <h2 class="h4 fw-bold mb-3">Explora por categoría</h2>
+        <div class="section-kicker mb-2">Categorías</div>
     </div>
     {% for cat in categories %}
     {% cycle 'fa-laptop' 'fa-headphones' 'fa-keyboard' 'fa-plug' 'fa-hdd' 'fa-mobile-screen' as icon silent %}
@@ -182,12 +163,12 @@
     <div class="col-md-4 col-lg-2">
         <a href="{% url 'app_home:products' %}?category={{ cat.id }}" class="text-decoration-none">
             <div class="card h-100 shadow-sm text-center border-0 card-hover">
-                <div class="card-body p-4">
+                <div class="card-body p-2">
                     <div class="fs-1 mb-2">
                         <i class="fas {{ icon }}" style="color:{{ icon_color }}"></i>
                     </div>
-                    <h3 class="h6 fw-bold mb-1 text-dark">{{ cat.name }}</h3>
-                    <p class="text-muted small mb-0">{{ cat.description|truncatechars:30 }}</p>
+                    <h3 class="h6 fw-bold mb-2 text-dark">{{ cat.name }}</h3>
+                    <p class="text-muted small mb-2">{{ cat.description|truncatechars:30 }}</p>
                 </div>
             </div>
         </a>
@@ -197,23 +178,22 @@
 {% endif %}
 
 {% if brands %}
-<section class="mb-4">
-    <div class="text-center mb-4">
-        <div class="section-kicker mb-1">Marcas</div>
-        <h2 class="h4 fw-bold mb-0">Trabajamos con las mejores marcas</h2>
+<section class="mb-2">
+    <div class="text-center mb-2">
+        <div class="section-kicker mb-2">Marcas</div>
     </div>
-    <div class="row g-3 row-cols-3 row-cols-md-5 row-cols-lg-10 justify-content-center">
+    <div class="row g-2 row-cols-3 row-cols-md-5 row-cols-lg-10 justify-content-center">
         {% for brand in brands %}
         <div class="col">
             <a href="{% url 'app_home:products' %}?brand={{ brand.id }}" class="text-decoration-none">
                 <div class="card h-100 shadow-sm border-0 card-hover">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center p-3">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center p-2">
                         <img src="https://www.google.com/s2/favicons?domain={{ brand.name|lower }}.com&sz=64"
                              alt="{{ brand.name }}"
                              width="32" height="32"
                              style="object-fit:contain"
                              onerror="this.style.display='none'">
-                        <span class="small fw-semibold text-dark mt-1 text-center">{{ brand.name }}</span>
+                        <span class="small fw-semibold text-dark mt-2 text-center">{{ brand.name }}</span>
                     </div>
                 </div>
             </a>
@@ -222,45 +202,45 @@
     </div>
 </section>
 {% endif %}
-<section class="mb-4">
-    <div class="text-center mb-4">
-        <div class="section-kicker mb-1">¿Cómo funciona?</div>
-        <h2 class="h4 fw-bold mb-0">Tu cotización en 3 pasos</h2>
+<section class="mb-2">
+    <div class="text-center mb-2">
+        <div class="section-kicker mb-2">¿Cómo funciona?</div>
+        <h2 class="h4 fw-bold mb-2">Tu cotización en 3 pasos</h2>
     </div>
-    <div class="row g-4">
+    <div class="row g-2">
         <div class="col-md-4">
             <div class="card h-100 shadow-sm border-0 text-center">
-                <div class="card-body p-4">
-                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-3" style="width:64px;height:64px">
+                <div class="card-body p-2">
+                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-2" style="width:64px;height:64px">
                         <i class="fas fa-search text-primary" style="font-size:1.5rem"></i>
                     </div>
                     <span class="badge bg-primary mb-2">Paso 1</span>
                     <h3 class="h6 fw-bold">Elige tu producto</h3>
-                    <p class="text-muted small mb-0">Explora nuestro catálogo y selecciona los equipos que necesitas.</p>
+                    <p class="text-muted small mb-2">Explora nuestro catálogo y selecciona los equipos que necesitas.</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card h-100 shadow-sm border-0 text-center">
-                <div class="card-body p-4">
-                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-3" style="width:64px;height:64px">
+                <div class="card-body p-2">
+                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-2" style="width:64px;height:64px">
                         <i class="fas fa-file-invoice text-primary" style="font-size:1.5rem"></i>
                     </div>
                     <span class="badge bg-primary mb-2">Paso 2</span>
                     <h3 class="h6 fw-bold">Solicita cotización</h3>
-                    <p class="text-muted small mb-0">Completa el formulario con tus datos y la cantidad requerida.</p>
+                    <p class="text-muted small mb-2">Completa el formulario con tus datos y la cantidad requerida.</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card h-100 shadow-sm border-0 text-center">
-                <div class="card-body p-4">
-                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-3" style="width:64px;height:64px">
+                <div class="card-body p-2">
+                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-2" style="width:64px;height:64px">
                         <i class="fas fa-headset text-primary" style="font-size:1.5rem"></i>
                     </div>
                     <span class="badge bg-primary mb-2">Paso 3</span>
                     <h3 class="h6 fw-bold">Te contactamos</h3>
-                    <p class="text-muted small mb-0">Recibirás una respuesta personalizada con precios y disponibilidad.</p>
+                    <p class="text-muted small mb-2">Recibirás una respuesta personalizada con precios y disponibilidad.</p>
                 </div>
             </div>
         </div>
@@ -269,20 +249,20 @@
 
 {# --- Testimonios --- #}
 {% if testimonials %}
-<section class="mb-4">
-    <div class="text-center mb-4">
-        <div class="section-kicker mb-1">Testimonios</div>
-        <h2 class="h4 fw-bold mb-0">Lo que dicen nuestros clientes</h2>
+<section class="mb-2">
+    <div class="text-center mb-2">
+        <div class="section-kicker mb-2">Testimonios</div>
+        <h2 class="h4 fw-bold mb-2">Lo que dicen nuestros clientes</h2>
     </div>
-    <div class="row g-4">
+    <div class="row g-2">
         {% for t in testimonials %}
         <div class="col-md-4">
             <div class="card h-100 shadow-sm border-0">
-                <div class="card-body p-4 d-flex flex-column">
+                <div class="card-body p-2 d-flex flex-column">
                     <div class="text-warning mb-2">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="text-muted small flex-grow-1 mb-3">"{{ t.text }}"</p>
+                    <p class="text-muted small flex-grow-1 mb-2">"{{ t.text }}"</p>
                     <div class="d-flex align-items-center gap-2">
                         <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center" style="width:40px;height:40px">
                             <span class="fw-bold text-primary small">{{ t.name|make_list|first }}</span>
@@ -301,10 +281,10 @@
 {% endif %}
 
 {# --- FAQ --- #}
-<section class="mb-4">
-    <div class="text-center mb-4">
-        <div class="section-kicker mb-1">FAQ</div>
-        <h2 class="h4 fw-bold mb-0">Preguntas frecuentes</h2>
+<section class="mb-2">
+    <div class="text-center mb-2">
+        <div class="section-kicker mb-2">FAQ</div>
+        <h2 class="h4 fw-bold mb-2">Preguntas frecuentes</h2>
     </div>
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -363,20 +343,20 @@
 </section>
 
 {# --- CTA Final --- #}
-<section class="mb-4">
+<section class="mb-2">
     <div class="card border-0 bg-primary text-white">
-        <div class="card-body p-5 text-center">
+        <div class="card-body p-2 text-center">
             <h2 class="h4 fw-bold mb-2">¿Listo para comenzar?</h2>
-            <p class="text-white-50 mb-4">Solicita tu cotización sin compromiso y te responderemos en breve.</p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="{% url 'app_home:products' %}" class="btn btn-light fw-semibold px-4">
-                    <i class="fas fa-shopping-cart me-1"></i> Ver productos
+            <p class="text-white-50 mb-2">Solicita tu cotización sin compromiso y te responderemos en breve.</p>
+            <div class="d-flex justify-content-center gap-2">
+                <a href="{% url 'app_home:products' %}" class="btn btn-light fw-semibold px-2">
+                    <i class="fas fa-shopping-cart me-2"></i> Ver productos
                 </a>
                 <a href="https://wa.me/{{ whatsapp_number }}?text=Hola%2C%20quisiera%20recibir%20una%20cotizaci%C3%B3n"
-                   class="btn btn-outline-light fw-semibold px-4"
+                   class="btn btn-outline-light fw-semibold px-2"
                    target="_blank"
                    rel="noopener noreferrer">
-                    <i class="fab fa-whatsapp me-1"></i> Escribir por WhatsApp
+                    <i class="fab fa-whatsapp me-2"></i> Escribir por WhatsApp
                 </a>
             </div>
         </div>
@@ -410,21 +390,41 @@
                     self.classList.remove('btn-outline-primary');
                     self.classList.add('btn-success');
                     setTimeout(function() {
-                        self.innerHTML = '<i class="fas fa-plus me-1"></i>Agregar';
+                        self.innerHTML = '<i class="fas fa-plus me-2"></i>Agregar';
                         self.classList.remove('btn-success');
                         self.classList.add('btn-outline-primary');
                         self.disabled = false;
                     }, 2000);
                 } else {
-                    self.innerHTML = '<i class="fas fa-plus me-1"></i>Agregar';
+                    self.innerHTML = '<i class="fas fa-plus me-2"></i>Agregar';
                     self.disabled = false;
                 }
             }).catch(function() {
-                self.innerHTML = '<i class="fas fa-plus me-1"></i>Agregar';
+                self.innerHTML = '<i class="fas fa-plus me-2"></i>Agregar';
                 self.disabled = false;
             });
         });
     });
+})();
+</script>
+<script>
+(function() {
+    var track = document.getElementById('offerTrack');
+    if (!track || !track.children.length) return;
+    var items = Array.from(track.children);
+    var setWidth = 0;
+    items.forEach(function(el) { setWidth += el.offsetWidth + 12; });
+    var clones = items.map(function(el) { return el.cloneNode(true); });
+    clones.forEach(function(cl) { track.appendChild(cl); });
+    var pos = 0;
+    var speed = 0.4;
+    function step() {
+        pos -= speed;
+        if (Math.abs(pos) >= setWidth) pos = 0;
+        track.style.transform = 'translateX(' + pos + 'px)';
+        requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
 })();
 </script>
 {% endblock %}
