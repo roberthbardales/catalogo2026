@@ -10,3 +10,7 @@ def categories_processor(request):
         product_count=Count('products', filter=Q(products__is_active=True))
     ).order_by('name')
     return {'nav_categories': categories}
+
+def cart_count_processor(request):
+    cart = request.session.get('quotation_cart', {})
+    return {'header_cart_count': sum(cart.values())}

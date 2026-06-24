@@ -1,41 +1,130 @@
 {% extends 'home/base_home.html' %}
 {% load static %}
 
-{% block title %}Nosotros | Solutions Mech Perú{% endblock %}
-{% block meta_description %}Solutions Mech Perú — Gestión de repuestos, equipos y consumibles para la disponibilidad de su planta. Equipo técnico especialista en automatización y control.{% endblock %}
+{% block title %}Contacto | Catálogo 2026{% endblock %}
+{% block meta_description %}Información de contacto, garantía, marcas y categorías de Solutions Mech Perú.{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/product-card.css' %}">
 {% endblock %}
 
 {% block content %}
-<section class="card shadow-sm border-0">
-    <div class="card-body p-4 p-lg-5">
-        <div class="section-kicker mb-2">Nosotros</div>
-        <h1 class="display-6 fw-bold mb-3">Soluciones en repuestos, equipos y consumibles para tu planta</h1>
-        <div class="row g-4">
-            <div class="col-lg-7">
-                <p class="text-muted mb-3">
-                    Solutions Mech Perú es una empresa nacional en crecimiento, enfocada en facilitar la gestión de repuestos, equipos y consumibles para la disponibilidad de su planta o proceso.
-                </p>
-                <p class="text-muted mb-3">
-                    Contamos con equipo técnico especialista para brindar soluciones en la selección de componentes, con acceso a múltiples marcas y socios estratégicos para reducir tiempos de entrega.
-                </p>
-                <p class="text-muted mb-0">
-                    Nuestras divisiones cubren mecánica, hidráulica, automatización y control, neumática, eléctrica y electrónica.
-                </p>
-            </div>
-            <div class="col-lg-5">
-                <div class="bg-light rounded-4 p-4">
-                    <h2 class="h5 fw-semibold">Cobertura</h2>
-                    <ul class="mb-0">
-                        <li>Instalaciones en Lima</li>
-                        <li>Coordinación para entregar en cualquier provincia del Perú</li>
-                        <li>Acceso a múltiples marcas y socios estratégicos</li>
-                    </ul>
+
+<div class="section-kicker mb-2">Información</div>
+<h1 class="h3 fw-bold mb-4">Todo lo que necesitas saber</h1>
+
+<div class="accordion" id="infoAccordion">
+
+    <div class="accordion-item border-0 mb-3 shadow-sm">
+        <h2 class="accordion-header">
+            <button class="accordion-button fw-bold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContact" aria-expanded="true">
+                <i class="fas fa-phone me-2 text-primary"></i>Contacto y ubicación
+            </button>
+        </h2>
+        <div id="collapseContact" class="accordion-collapse collapse show" data-bs-parent="#infoAccordion">
+            <div class="accordion-body p-4">
+                <div class="row g-4">
+                    <div class="col-lg-5">
+                        <p class="text-muted mb-4">Estamos disponibles para consultas sobre repuestos, equipos, consumibles, automatización y control.</p>
+                        <div class="mb-3">
+                            <strong><i class="fas fa-envelope me-2 text-primary"></i>Email:</strong><br>
+                            <a href="mailto:solutionsmech05@gmail.com" class="text-decoration-none">solutionsmech05@gmail.com</a><br>
+                            <a href="mailto:mechsolutionsperu@gmail.com" class="text-decoration-none">mechsolutionsperu@gmail.com</a>
+                        </div>
+                        <div class="mb-3">
+                            <strong><i class="fas fa-phone me-2 text-primary"></i>Teléfono:</strong><br>
+                            <a href="tel:+51963137017" class="text-decoration-none">+51 963 137 017</a><br>
+                            <a href="tel:+51976295396" class="text-decoration-none">+51 976 295 396</a>
+                        </div>
+                        <div class="mb-3">
+                            <strong><i class="fas fa-map-marker-alt me-2 text-primary"></i>Dirección:</strong><br>
+                            Av. Esperanza Nro. 616 Int. EL09 – ATE – Lima
+                        </div>
+                        <div class="mb-0">
+                            <strong><i class="fas fa-clock me-2 text-primary"></i>Horario:</strong><br>
+                            Lunes a viernes, 9:00 a 18:00
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="ratio ratio-16x9 rounded-4 overflow-hidden border">
+                            <iframe
+                                title="Ubicación de Solutions Mech Perú"
+                                src="https://www.google.com/maps?q=Av.+Esperanza+Nro.+616+Int.+EL09+ATE+Lima+Peru&output=embed"
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+
+    <div class="accordion-item border-0 mb-3 shadow-sm">
+        <h2 class="accordion-header">
+            <button class="accordion-button fw-bold shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWarranty" aria-expanded="false">
+                <i class="fas fa-shield-alt me-2 text-primary"></i>Garantía y soporte
+            </button>
+        </h2>
+        <div id="collapseWarranty" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
+            <div class="accordion-body p-4">
+                <div class="row g-4 align-items-start">
+                    <div class="col-lg-7">
+                        <p class="text-muted">
+                            Los productos tecnológicos pueden incluir garantía de fabricante, cobertura por defecto de fábrica y
+                            atención de incidencias dentro del periodo establecido por cada marca.
+                        </p>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item px-0">Recepción de equipos con comprobante de compra</div>
+                            <div class="list-group-item px-0">Validación del número de serie y estado del producto</div>
+                            <div class="list-group-item px-0">Seguimiento del caso desde soporte administrativo</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="bg-dark text-white rounded-4 p-4">
+                            <h3 class="h5 fw-semibold">Tiempos de atención</h3>
+                            <ul class="mb-0">
+                                <li>Revisión inicial: 24 a 48 horas</li>
+                                <li>Diagnóstico técnico: según el equipo</li>
+                                <li>Respuesta administrativa: inmediata en horario laboral</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item border-0 mb-3 shadow-sm">
+        <h2 class="accordion-header">
+            <button class="accordion-button fw-bold shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBrands" aria-expanded="false">
+                <i class="fas fa-tag me-2 text-primary"></i>Marcas
+            </button>
+        </h2>
+        <div id="collapseBrands" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
+            <div class="accordion-body p-4">
+                <div class="row g-3">
+                    {% for brand in brands %}
+                    <div class="col-6 col-lg-3">
+                        <a href="{% url 'app_home:products' %}?brand={{ brand.id }}" class="text-decoration-none">
+                            <div class="border rounded-4 p-4 text-center bg-light h-100">
+                                {% if brand.logo %}
+                                <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="img-fluid mb-2" style="max-height: 50px; object-fit: contain;">
+                                {% endif %}
+                                <div class="fw-semibold{% if brand.logo %} small{% endif %}">{{ brand.name }}</div>
+                                <span class="small text-primary fw-semibold">{{ brand.product_count }} producto{{ brand.product_count|pluralize:"s" }}</span>
+                            </div>
+                        </a>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center py-5 text-muted">No hay marcas disponibles.</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
 {% endblock %}

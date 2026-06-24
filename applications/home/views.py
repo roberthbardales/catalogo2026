@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.views.generic import ListView, TemplateView, View
@@ -35,6 +36,12 @@ class AboutView(TemplateView):
     template_name = 'home/about.html'
 
 
+def _parse_id_list(raw):
+    if not raw:
+        return []
+    return [int(x) for x in raw.split(',') if x.strip().isdigit()]
+
+
 class ProductsView(ListView):
     model = Product
     template_name = 'home/products.html'
@@ -51,12 +58,12 @@ class ProductsView(ListView):
                 | Q(category__name__icontains=q)
                 | Q(brand__name__icontains=q)
             )
-        category_id = self.request.GET.get('category', '').strip()
-        if category_id and category_id.isdigit():
-            qs = qs.filter(category_id=int(category_id))
-        brand_id = self.request.GET.get('brand', '').strip()
-        if brand_id and brand_id.isdigit():
-            qs = qs.filter(brand_id=int(brand_id))
+        cat_ids = _parse_id_list(self.request.GET.get('categories', ''))
+        if cat_ids:
+            qs = qs.filter(category_id__in=cat_ids)
+        brd_ids = _parse_id_list(self.request.GET.get('brands', ''))
+        if brd_ids:
+            qs = qs.filter(brand_id__in=brd_ids)
         return qs
 
     def get_context_data(self, **kwargs):
@@ -68,9 +75,67 @@ class ProductsView(ListView):
         ctx['brands'] = Brand.objects.filter(is_active=True).annotate(
             product_count=Count('products', filter=Q(products__is_active=True))
         ).order_by('name')
-        ctx['current_category'] = self.request.GET.get('category', '')
-        ctx['current_brand'] = self.request.GET.get('brand', '')
+
+        raw_cats = self.request.GET.get('categories', '')
+        ctx['selected_categories'] = [s.strip() for s in raw_cats.split(',') if s.strip().isdigit()]
+        raw_brands = self.request.GET.get('brands', '')
+        ctx['selected_brands'] = [s.strip() for s in raw_brands.split(',') if s.strip().isdigit()]
         return ctx
+
+
+class ProductFilterAPIView(View):
+    def get(self, request):
+        qs = Product.objects.filter(is_active=True).select_related('category', 'brand')
+
+        q = request.GET.get('q', '').strip()
+        if q:
+            qs = qs.filter(
+                Q(name__icontains=q)
+                | Q(short_description__icontains=q)
+                | Q(category__name__icontains=q)
+                | Q(brand__name__icontains=q)
+            )
+
+        cat_ids = _parse_id_list(request.GET.get('categories', ''))
+        if cat_ids:
+            qs = qs.filter(category_id__in=cat_ids)
+
+        brd_ids = _parse_id_list(request.GET.get('brands', ''))
+        if brd_ids:
+            qs = qs.filter(brand_id__in=brd_ids)
+
+        paginator = Paginator(qs, 15)
+        page = request.GET.get('page', 1)
+        try:
+            page_obj = paginator.page(page)
+        except (PageNotAnInteger, EmptyPage):
+            page_obj = paginator.page(1)
+
+        products_data = []
+        for p in page_obj.object_list:
+            products_data.append({
+                'id': p.id,
+                'name': p.name,
+                'slug': p.slug,
+                'sku': p.sku,
+                'price': str(p.price),
+                'sale_price': str(p.sale_price) if p.sale_price else None,
+                'effective_price': str(p.effective_price),
+                'on_sale': p.on_sale,
+                'stock': p.stock,
+                'image_main': p.image_main.url if p.image_main else '',
+                'brand_name': p.brand.name,
+                'category_name': p.category.name,
+            })
+
+        return JsonResponse({
+            'products': products_data,
+            'page': page_obj.number,
+            'num_pages': paginator.num_pages,
+            'has_previous': page_obj.has_previous(),
+            'has_next': page_obj.has_next(),
+            'total': paginator.count,
+        })
 
 
 class CategoriesView(TemplateView):
@@ -100,7 +165,17 @@ class WarrantyView(TemplateView):
 
 
 class ContactView(TemplateView):
-    template_name = 'home/contact.html'
+    template_name = 'home/about.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['categories'] = Category.objects.filter(is_active=True).annotate(
+            product_count=Count('products', filter=Q(products__is_active=True))
+        ).order_by('name')
+        ctx['brands'] = Brand.objects.filter(is_active=True).annotate(
+            product_count=Count('products', filter=Q(products__is_active=True))
+        ).order_by('name')
+        return ctx
 
 
 class ProductSearchAPIView(View):

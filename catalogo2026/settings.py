@@ -84,6 +84,7 @@ TEMPLATES = [
                 # Procesadores personalizados
                 'applications.procesors.whatsapp_number',
                 'applications.procesors.categories_processor',
+                'applications.procesors.cart_count_processor',
             ],
         },
     },

@@ -7,13 +7,8 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/product-card.css' %}">
 <style>
-@keyframes scroll-offers {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
 .offer-track {
     display: flex;
-    gap: 1rem;
     white-space: nowrap;
 }
 .card-hover {
@@ -36,7 +31,7 @@
             <span class="badge bg-danger" style="font-size:.7rem">🔥 Ofertas</span>
         </div>
         <div class="overflow-hidden flex-grow-1" style="mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%)">
-            <div class="d-flex gap-2 py-2 offer-track" id="offerTrack" style="width:max-content">
+            <div class="d-flex gap-4 py-1 offer-track" id="offerTrack" style="width:max-content">
                 {% for p in on_sale_products %}
                 <a href="{% url 'app_quotations:public-product-detail' p.slug %}" class="d-flex align-items-center gap-2 text-decoration-none text-reset flex-shrink-0">
                     {% if p.image_main %}
@@ -152,30 +147,7 @@
 </section>
 {% endif %}
 
-{% if categories %}
-<section class="row g-2 mb-2">
-    <div class="col-12">
-        <div class="section-kicker mb-2">Categorías</div>
-    </div>
-    {% for cat in categories %}
-    {% cycle 'fa-laptop' 'fa-headphones' 'fa-keyboard' 'fa-plug' 'fa-hdd' 'fa-mobile-screen' as icon silent %}
-    {% cycle '#0d6efd' '#198754' '#dc3545' '#ffc107' '#6610f2' '#20c997' as icon_color silent %}
-    <div class="col-md-4 col-lg-2">
-        <a href="{% url 'app_home:products' %}?category={{ cat.id }}" class="text-decoration-none">
-            <div class="card h-100 shadow-sm text-center border-0 card-hover">
-                <div class="card-body p-2">
-                    <div class="fs-1 mb-2">
-                        <i class="fas {{ icon }}" style="color:{{ icon_color }}"></i>
-                    </div>
-                    <h3 class="h6 fw-bold mb-2 text-dark">{{ cat.name }}</h3>
-                    <p class="text-muted small mb-2">{{ cat.description|truncatechars:30 }}</p>
-                </div>
-            </div>
-        </a>
-    </div>
-    {% endfor %}
-</section>
-{% endif %}
+
 
 {% if brands %}
 <section class="mb-2">
@@ -187,10 +159,10 @@
         <div class="col">
             <a href="{% url 'app_home:products' %}?brand={{ brand.id }}" class="text-decoration-none">
                 <div class="card h-100 shadow-sm border-0 card-hover">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center p-2">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center py-2 px-1">
                         <img src="https://www.google.com/s2/favicons?domain={{ brand.name|lower }}.com&sz=64"
                              alt="{{ brand.name }}"
-                             width="32" height="32"
+                             width="48" height="48"
                              style="object-fit:contain"
                              onerror="this.style.display='none'">
                         <span class="small fw-semibold text-dark mt-2 text-center">{{ brand.name }}</span>
@@ -249,7 +221,7 @@
 
 {# --- Testimonios --- #}
 {% if testimonials %}
-<section class="mb-2">
+<!-- <section class="mb-2">
     <div class="text-center mb-2">
         <div class="section-kicker mb-2">Testimonios</div>
         <h2 class="h4 fw-bold mb-2">Lo que dicen nuestros clientes</h2>
@@ -277,91 +249,13 @@
         </div>
         {% endfor %}
     </div>
-</section>
+</section> -->
 {% endif %}
 
 {# --- FAQ --- #}
-<section class="mb-2">
-    <div class="text-center mb-2">
-        <div class="section-kicker mb-2">FAQ</div>
-        <h2 class="h4 fw-bold mb-2">Preguntas frecuentes</h2>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="accordion shadow-sm" id="faqAccordion">
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                            ¿Cómo funciona el proceso de cotización?
-                        </button>
-                    </h3>
-                    <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body small text-muted">
-                            Seleccionas los productos que te interesan, completas tus datos en el formulario y nosotros te enviamos una cotización personalizada vía correo electrónico.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                            ¿Cuáles son los tiempos de entrega?
-                        </button>
-                    </h3>
-                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body small text-muted">
-                            Dependiendo del producto y la disponibilidad, los tiempos varían entre 24 horas y 7 días hábiles. En tu cotización te indicaremos el plazo estimado.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                            ¿Ofrecen garantía?
-                        </button>
-                    </h3>
-                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body small text-muted">
-                            Sí, todos nuestros productos cuentan con garantía oficial. Los detalles específicos se incluyen en la cotización de cada equipo.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                            ¿Qué métodos de pago aceptan?
-                        </button>
-                    </h3>
-                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body small text-muted">
-                            Trabajamos con transferencia bancaria, depósito en cuenta y facturación corporativa. Consulta por otras opciones al momento de la cotización.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 {# --- CTA Final --- #}
-<section class="mb-2">
-    <div class="card border-0 bg-primary text-white">
-        <div class="card-body p-2 text-center">
-            <h2 class="h4 fw-bold mb-2">¿Listo para comenzar?</h2>
-            <p class="text-white-50 mb-2">Solicita tu cotización sin compromiso y te responderemos en breve.</p>
-            <div class="d-flex justify-content-center gap-2">
-                <a href="{% url 'app_home:products' %}" class="btn btn-light fw-semibold px-2">
-                    <i class="fas fa-shopping-cart me-2"></i> Ver productos
-                </a>
-                <a href="https://wa.me/{{ whatsapp_number }}?text=Hola%2C%20quisiera%20recibir%20una%20cotizaci%C3%B3n"
-                   class="btn btn-outline-light fw-semibold px-2"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    <i class="fab fa-whatsapp me-2"></i> Escribir por WhatsApp
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 {% endblock %}
 
@@ -389,6 +283,8 @@
                     self.innerHTML = '✓ Agregado';
                     self.classList.remove('btn-outline-primary');
                     self.classList.add('btn-success');
+                    if (typeof updateCartBadge === 'function') updateCartBadge(data.count);
+                    if (typeof showAddToast === 'function') showAddToast();
                     setTimeout(function() {
                         self.innerHTML = '<i class="fas fa-plus me-2"></i>Agregar';
                         self.classList.remove('btn-success');
@@ -413,7 +309,7 @@
     if (!track || !track.children.length) return;
     var items = Array.from(track.children);
     var setWidth = 0;
-    items.forEach(function(el) { setWidth += el.offsetWidth + 12; });
+    items.forEach(function(el) { setWidth += el.offsetWidth + 16; });
     var clones = items.map(function(el) { return el.cloneNode(true); });
     clones.forEach(function(cl) { track.appendChild(cl); });
     var pos = 0;

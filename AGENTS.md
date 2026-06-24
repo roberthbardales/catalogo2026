@@ -98,13 +98,50 @@ El ítem activo se detecta automáticamente vía `request.resolver_match.url_nam
 
 ## Últimos cambios
 
-### 22/06/2026 — Spacing unificado en index.html (todo a -2)
+### 24/06/2026 — Header: btn-outline-teal, carrito con badge, toast notificación
+- **Header** (`templates/include/header.html`):
+  - Botón "Categorías" cambiado de `btn-outline-primary` a `btn-outline-teal` (clase CSS personalizada con `#0f766e`)
+  - Hover de dropdown items más visible: `background-color: rgba(15, 118, 110, 0.1)` + texto `#0f766e`
+  - Agregado link "Cotizar" en el nav con badge rojo (`cart-badge`) que muestra cantidad de productos en carrito
+  - Badge posición ajustada (`top:8px` en vez de `top-0`)
+  - Animación shake en el badge al agregar producto (`@keyframes cart-badge-shake`)
+  - Agregado **Toast Bootstrap** autodescartable (4s) al agregar producto: "Producto agregado a cotización" + botones [Seguir] e [Ir al carrito]
+  - Agregada clase `.btn-teal` (fondo sólido `#0f766e`) para el botón "Ir al carrito"
+  - Función global `window.showAddToast()` y `window.updateCartBadge(count)`
+- **Context processor** (`applications/procesors.py`): nuevo `cart_count_processor` que expone `header_cart_count` (suma de cantidades del carrito en sesión)
+- **Settings** (`catalogo2026/settings.py`): registrado `cart_count_processor`
+- **Products** (`templates/home/products.html`): `bindAddToCart` ahora llama `showAddToast()` al agregar
+- **Index** (`templates/home/index.html`): mismo cambio en el JS de "Agregar"
+
+### 23/06/2026 — Sidebar productos: tabs → accordion, header fixes
+- **Sidebar productos** (`templates/home/products.html`): tabs de Marcas/Categorías reemplazadas por accordion Bootstrap
+  - Categorías primero (expandido por defecto), Marcas después (colapsado)
+  - JS que previene colapsar una sección si tiene checkboxes marcados
+- **Header** (`templates/include/header.html`):
+  - Eliminado badge `product_count` del dropdown de categorías
+  - Fix: `?category=` → `?categories=` (el link dejó de funcionar al cambiar el view a plural)
+  - Buscador AJAX simplificado: solo imagen, nombre y precio (sin descripción ni stock)
+  - Input de búsqueda más ancho: 400px → 600px
+
+### 22/06/2026 — Plan: Filtro productos con accordion Marcas→Categorías / Categorías→Marcas
+
+- Sidebar de productos (`home/products.html`) actualmente: dos pestañas (Marcas / Categorías) con flat lists de checkboxes que hacen fetch AJAX a `/api/productos/filtrar/`
+- **Plan**: Convertir cada pestaña en un accordion donde cada marca expande sus categorías y cada categoría expande sus marcas
+- **Backend**: Agregar `brand_categories` (brand_id → {name, categories[]}) y `category_brands` (category_id → {name, brands[]}) al contexto de `ProductsView`
+  - Ambos se construyen desde `Product.objects.values('brand_id', 'brand__name', 'category_id', 'category__name').distinct()`
+- **Frontend**: Marcas tab → accordion con checkbox en header + categories como sub-items colapsables. Categorías tab → mismo patrón al revés
+- **Pendiente**: definir si check de sub-opción envía solo su tipo o ambos (marca + categoría)
+- Decidido: guardar plan en AGENTS.md y abandonar la implementación por ahora
+
+### 22/06/2026 — Spacing unificado en index.html (todo a -2), fixes franja de ofertas, logos marcas más grandes
 - `templates/home/index.html`: unificados todos los valores de margin, padding y gap a `-2` (0.5rem)
   - `mb-0/1/3/4` → `mb-2`, `mt-1/4` → `mt-2`, `me-1` → `me-2`
   - `p-3/4/5` → `p-2`, `py-0/1/5` → `py-2`, `px-4` → `px-2`
   - `gap-1/3` → `gap-2`, `g-0/3/4` → `g-2`
   - Total ~70 ocurrencias actualizadas
 - `templates/home/products.html`: intento similar revertido a estado original
+- **Franja de ofertas**: eliminado `@keyframes scroll-offers` muerto, eliminado `gap: 1rem` del CSS `.offer-track` (usaba `gap-2` de Bootstrap), corregido offset JS de 12→16px para coincidir con gap real
+- **Marcas**: logos aumentados de 32×32 a 48×48; padding horizontal de cards reducido (`p-2` → `py-2 px-1`)
 
 ### 20/06/2026 — Registro solo admin, app notifications (creada y revertida)
 - `UserRegisterView` restringido solo a admin vía `AdministradorPermisoMixin`; `success_url` cambiado a `app_users:user-list`

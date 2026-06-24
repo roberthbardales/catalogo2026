@@ -1,64 +1,72 @@
-<div class="announcement-bar bg-dark text-white py-1" style="font-size:.8rem">
+<div class="announcement-bar text-white py-1" style="font-size:.8rem;background:linear-gradient(135deg,#0f172a 0%,#134e4a 50%,#0f766e 100%);">
     <div class="container text-center">
         <i class="fa-solid fa-location-dot me-1"></i>Av. Esperanza Nro. 616 Int. EL09 – ATE – Lima
     </div>
 </div>
-</div>
-<header class="bg-white border-bottom shadow-sm">
-    <nav class="navbar navbar-expand-lg navbar-light py-1">
+<header class="sticky-top" style="backdrop-filter:blur(8px);background:rgba(255,255,255,0.92);transition:box-shadow 0.3s;">
+    <nav class="navbar navbar-expand-lg navbar-light py-2" style="background:radial-gradient(circle at top left, rgba(15,118,110,0.04), transparent 60%);">
         <div class="container">
-            <div class="d-flex align-items-center w-100 position-relative">
-                {% load static %}
-                <a class="navbar-brand d-flex align-items-center flex-shrink-0 py-0" href="{% url 'app_home:index' %}">
-                    <img src="{% static 'img/logo.png' %}" alt="Solutions Mech Perú" height="38">
-                </a>
-                <div class="dropdown d-none d-md-block mx-1">
-                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Categorías
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'app_home:products' %}">Todas las categorías</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        {% for cat in nav_categories %}
-                        <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="{% url 'app_home:products' %}?category={{ cat.id }}">
-                            {{ cat.name }}
-                            <span class="badge bg-secondary rounded-pill">{{ cat.product_count }}</span>
-                        </a></li>
-                        {% endfor %}
-                    </ul>
+            {% load static %}
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div class="d-flex align-items-center flex-shrink-0">
+                    <a class="navbar-brand d-flex align-items-center flex-shrink-0 py-1" href="{% url 'app_home:index' %}">
+                        <img src="{% static 'img/logo.png' %}" alt="Solutions Mech Perú" height="38">
+                    </a>
+                    <div class="dropdown d-none d-md-block ms-2 me-3">
+                        <button class="btn btn-sm btn-outline-teal dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categorías
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'app_home:products' %}">Todas las categorías</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            {% for cat in nav_categories %}
+                            <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="{% url 'app_home:products' %}?categories={{ cat.id }}">
+                                {{ cat.name }}
+                            </a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
-                <div class="position-absolute start-50 translate-middle-x d-none d-md-block" style="max-width:400px;width:100%;">
+                <div class="d-none d-md-block mx-auto" style="max-width:600px;width:100%;">
                     <div class="position-relative">
                         <div class="input-group">
                             <input type="text" id="product-search" class="form-control border-end-0" placeholder="Buscar productos..." autocomplete="off">
                             <span class="input-group-text bg-white"><i class="fas fa-search text-muted"></i></span>
                         </div>
-                        <div id="search-results" class="position-absolute w-100 mt-1 d-none" style="z-index: 1050;"></div>
+                        <div id="search-results" class="position-absolute w-100 mt-1 d-none" style="z-index:1050;"></div>
                     </div>
                 </div>
-                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler border-0 flex-shrink-0 ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-1 py-lg-1{% if request.resolver_match.url_name == 'index' %} active{% endif %}" href="{% url 'app_home:index' %}">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-1 py-lg-1{% if request.resolver_match.url_name == 'products' %} active{% endif %}" href="{% url 'app_home:products' %}">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-1 py-lg-1{% if request.resolver_match.url_name == 'quotation-build' %} active{% endif %}" href="{% url 'app_quotations:quotation-build' %}">Cotización</a></li>
-                    <!-- <li class="nav-item"><a class="nav-link px-lg-1 py-lg-1{% if request.resolver_match.url_name == 'about' %} active{% endif %}" href="{% url 'app_home:about' %}">Nosotros</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-1 py-lg-1{% if request.resolver_match.url_name == 'warranty' %} active{% endif %}" href="{% url 'app_home:warranty' %}">Garantía</a></li> -->
-                    <li class="nav-item"><a class="nav-link px-lg-1 py-lg-1{% if request.resolver_match.url_name == 'contact' %} active{% endif %}" href="{% url 'app_home:contact' %}">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-2 py-lg-2{% if request.resolver_match.url_name == 'index' %} active{% endif %}" href="{% url 'app_home:index' %}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-2 py-lg-2{% if request.resolver_match.url_name == 'products' %} active{% endif %}" href="{% url 'app_home:products' %}">Productos</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link px-lg-2 py-lg-2{% if request.resolver_match.url_name == 'about' %} active{% endif %}" href="{% url 'app_home:about' %}">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-2 py-lg-2{% if request.resolver_match.url_name == 'warranty' %} active{% endif %}" href="{% url 'app_home:warranty' %}">Garantía</a></li> -->
+                    <li class="nav-item"><a class="nav-link px-lg-2 py-lg-2{% if request.resolver_match.url_name == 'contact' %} active{% endif %}" href="{% url 'app_home:contact' %}">Nosotros</a></li>
+
+                    <li class="nav-item position-relative me-1">
+                        <a class="nav-link px-lg-2 py-lg-2" href="{% url 'app_quotations:quotation-build' %}" id="cart-link">
+                            Cotizar
+                            <span id="cart-badge" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;top:8px;{% if header_cart_count == 0 %}display:none;{% endif %}">
+                                {{ header_cart_count }}
+                            </span>
+                        </a>
+                    </li>
 
                     {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="btn btn-outline-primary btn-sm ms-lg-1" href="{% url 'app_users:perfil' %}">Perfil</a>
+                        <a class="btn btn-outline-primary btn-sm ms-lg-2" href="{% url 'app_users:perfil' %}"><i class="fas fa-user me-1"></i>Perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-danger btn-sm ms-lg-1" href="{% url 'app_users:logout' %}">Salir</a>
+                        <a class="btn btn-danger btn-sm ms-lg-1" href="{% url 'app_users:logout' %}"><i class="fas fa-sign-out-alt me-1"></i>Salir</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-outline-primary btn-sm ms-lg-1" href="{% url 'app_users:login' %}">Ingresar</a>
+                        <a class="btn btn-primary btn-sm ms-lg-2" href="{% url 'app_users:login' %}">Ingresar</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -66,6 +74,22 @@
         </div>
     </nav>
 </header>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:1080;">
+    <div id="add-toast" class="toast align-items-center border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="4000">
+        <div class="d-flex align-items-center p-2">
+            <div class="toast-body d-flex align-items-center gap-2 flex-grow-1">
+                <i class="fas fa-check-circle text-success"></i>
+                <span class="fw-semibold small">Producto agregado a cotización</span>
+            </div>
+            <div class="d-flex gap-1 me-2">
+                <button type="button" class="btn btn-sm btn-outline-teal" id="toast-keep-shopping">Seguir</button>
+                <a href="{% url 'app_quotations:quotation-build' %}" class="btn btn-sm btn-teal text-white text-decoration-none">Ir al carrito</a>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
 
 <style>
     #search-results .result-item:hover {
@@ -75,13 +99,95 @@
     #search-results .result-item:not(:last-child) {
         border-bottom: 1px solid rgba(15, 23, 42, 0.08);
     }
+
+    .navbar-nav .nav-link {
+        position: relative;
+        transition: color 0.2s;
+    }
+    .navbar-nav .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 4px;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+        width: 60%;
+        height: 2px;
+        background: var(--web-primary, #0f766e);
+        border-radius: 1px;
+        transition: transform 0.2s ease;
+    }
+    .navbar-nav .nav-link.active::after,
+    .navbar-nav .nav-link:hover::after {
+        transform: translateX(-50%) scaleX(1);
+    }
+    .navbar-nav .nav-link.active {
+        color: var(--web-primary, #0f766e) !important;
+        font-weight: 600;
+    }
+    .navbar-nav .nav-link:hover {
+        color: var(--web-primary, #0f766e) !important;
+    }
+
+    .btn-outline-teal {
+        border-color: #0f766e;
+        color: #0f766e;
+    }
+    .btn-outline-teal:hover,
+    .btn-outline-teal:active,
+    .btn-outline-teal:focus,
+    .btn-outline-teal.show {
+        background: #0f766e;
+        border-color: #0f766e;
+        color: #fff;
+    }
+    .btn-teal {
+        background: #0f766e;
+        border-color: #0f766e;
+        color: #fff;
+    }
+    .btn-teal:hover {
+        background: #0d5e56;
+        border-color: #0d5e56;
+        color: #fff;
+    }
+    #add-toast {
+        min-width: 380px;
+    }
+    .dropdown-menu .dropdown-item:hover,
+    .dropdown-menu .dropdown-item:focus {
+        background-color: rgba(15, 118, 110, 0.1);
+        color: #0f766e;
+    }
+
+    #cart-link {
+        font-size: 1.15rem;
+        transition: color 0.2s;
+    }
+    #cart-link:hover {
+        color: #0f766e !important;
+    }
+
+    @keyframes cart-badge-shake {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        20% { transform: translate(-50%, -50%) rotate(-15deg); }
+        40% { transform: translate(-50%, -50%) rotate(15deg); }
+        60% { transform: translate(-50%, -50%) rotate(-10deg); }
+        80% { transform: translate(-50%, -50%) rotate(5deg); }
+        100% { transform: translate(-50%, -50%) rotate(0deg); }
+    }
+    #cart-badge.shake {
+        animation: cart-badge-shake 0.4s ease;
+    }
+
+    header.scrolled {
+        box-shadow: 0 4px 16px rgba(15,23,42,0.1);
+    }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('product-search');
     const container = document.getElementById('search-results');
-
     let searchTimeout;
     input.addEventListener('input', function () {
         clearTimeout(searchTimeout);
@@ -100,12 +206,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     var html = '<div class="card shadow-sm border-0">';
                     data.results.forEach(function (p) {
-                        html += '<a href="/cotizacion/' + p.slug + '/" class="result-item p-3 d-flex align-items-center gap-3 text-decoration-none text-reset">'
+                        html += '<a href="/cotizacion/' + p.slug + '/" class="result-item p-0 d-flex align-items-center gap-0 text-decoration-none text-reset">'
                              + '<img src="' + p.image_main + '" alt="" style="width:50px;height:50px;object-fit:cover;border-radius:8px;" onerror="this.style.display=\'none\'">'
-                             + '<div class="flex-grow-1"><div class="fw-semibold">' + p.name + '</div>'
-                             + '<div class="small text-muted">' + p.category + ' — ' + p.brand + '</div></div>'
-                             + '<div class="text-end"><div class="fw-bold">S/ ' + Math.round(parseFloat(p.price)) + '</div>'
-                             + '<div class="small ' + (p.stock > 0 ? 'text-success' : 'text-danger') + '">' + (p.stock > 0 ? 'Stock: ' + p.stock : 'Sin stock') + '</div></div>'
+                             + '<div class="flex-grow-1"><div class="fw-semibold">' + p.name + '</div></div>'
+                             + '<div class="fw-bold text-end">S/ ' + Math.round(parseFloat(p.price)) + '</div>'
                              + '</a>';
                     });
                     html += '</div>';
@@ -121,6 +225,31 @@ document.addEventListener('DOMContentLoaded', function () {
             container.classList.add('d-none');
         }
     });
-});
 
+    window.showAddToast = function() {
+        var el = document.getElementById('add-toast');
+        if (el) bootstrap.Toast.getOrCreateInstance(el).show();
+    };
+    document.getElementById('toast-keep-shopping')?.addEventListener('click', function() {
+        var t = bootstrap.Toast.getInstance(document.getElementById('add-toast'));
+        if (t) t.hide();
+    });
+
+    window.updateCartBadge = function(count) {
+        var badge = document.getElementById('cart-badge');
+        if (!badge) return;
+        badge.textContent = count;
+        badge.style.display = count > 0 ? '' : 'none';
+        badge.classList.remove('shake');
+        void badge.offsetWidth;
+        badge.classList.add('shake');
+    };
+
+    var header = document.querySelector('header');
+    if (header) {
+        window.addEventListener('scroll', function () {
+            header.classList.toggle('scrolled', window.scrollY > 10);
+        });
+    }
+});
 </script>
