@@ -22,7 +22,7 @@ class IndexView(TemplateView):
         ).order_by('name')[:6]
         ctx['on_sale_products'] = Product.objects.filter(
             is_active=True, sale_price__isnull=False
-        ).select_related('brand')[:10]
+        ).select_related('brand')[:15]  # Cambiar de 10 a 15
         ctx['testimonials'] = [
             {'name': 'Carlos Mendoza', 'role': 'Gerente de TI — Corporación Nova', 'text': 'El proceso de cotización fue rápido y el equipo nos ayudó a elegir los equipos adecuados para nuestra empresa.'},
             {'name': 'María Fernanda López', 'role': 'Administradora — Centro Educativo San José', 'text': 'Comprar 30 laptops para nuestro laboratorio nunca fue tan sencillo. Excelente atención postventa.'},
@@ -34,6 +34,13 @@ class IndexView(TemplateView):
 
 class AboutView(TemplateView):
     template_name = 'home/about.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['brands'] = Brand.objects.filter(is_active=True).annotate(
+            product_count=Count('products', filter=Q(products__is_active=True))
+        ).order_by('name')
+        return ctx
 
 
 def _parse_id_list(raw):
@@ -143,7 +150,9 @@ class CategoriesView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['categories'] = Category.objects.filter(is_active=True).annotate(
+        ctx['total_products'] = Product.objects.filter(is_active=True).count()
+        ctx['total_brands'] = Brand.objects.filter(is_active=True).count()
+        ctx['brands'] = Brand.objects.filter(is_active=True).annotate(
             product_count=Count('products', filter=Q(products__is_active=True))
         ).order_by('name')
         return ctx

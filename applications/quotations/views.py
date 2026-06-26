@@ -177,7 +177,9 @@ class PublicProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['form'] = PublicQuotationForm(initial={'product_id': self.object.pk, 'quantity': 1})
-        ctx['show_modal'] = self.request.GET.get('sent') == '1'
+        sent_email = self.request.session.pop('quotation_sent', None)
+        ctx['show_modal'] = sent_email is not None
+        ctx['sent_email'] = sent_email or ''
         ctx['gallery'] = list(self.object.images.all())
         ctx['related_products'] = Product.objects.filter(
             is_active=True, category=self.object.category
@@ -238,8 +240,9 @@ class CreateQuotationView(FormView):
             fail_silently=False,
         )
 
+        self.request.session['quotation_sent'] = form.cleaned_data['customer_email']
         return HttpResponseRedirect(
-            reverse('app_quotations:public-product-detail', kwargs={'slug': product.slug}) + '?sent=1'
+            reverse('app_quotations:public-product-detail', kwargs={'slug': product.slug})
         )
 
     def form_invalid(self, form):

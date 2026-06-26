@@ -98,6 +98,20 @@ El ítem activo se detecta automáticamente vía `request.resolver_match.url_nam
 
 ## Últimos cambios
 
+### 26/06/2026 — Marquee JS, buscador header navega, accordion marcas, layout cotización, modal cotización por sesión
+- **Franja de ofertas** (`templates/home/index.html`): reemplazada animación CSS por `requestAnimationFrame` con clonado dinámico hasta llenar viewport, reseteo invisible sin saltos
+- **Buscador header** (`templates/include/header.html`): la lupa (`#search-btn`) ahora redirige a `/productos/?q=...` con el término ingresado; mismo comportamiento con Enter
+- **Sidebar productos** (`templates/home/products.html`): accordion de Marcas expandido por defecto (antes colapsado), Categorías se colapsa
+- **Cotización** (`templates/quotations/quotation_build.html`):
+  - Eliminado `sticky-lg-top` del formulario (scroll normal)
+  - Row con `min-height: 700px` y `align-items: flex-start`
+  - Estado vacío con `min-height: 620px` y centrado vertical
+- **Modal cotización pública** (`templates/quotations/public_product_detail.html`):
+  - Fix: JS no se rompe por falta de `totalDisplay` (`if` guard)
+  - Modal de confirmación ahora lee `sent_email` desde sesión (no desde GET) para evitar que F5 lo muestre de nuevo
+- **Views** (`applications/quotations/views.py`): `CreateQuotationView.form_valid` guarda email en sesión; `PublicProductDetailView.get_context_data` lo lee con `.pop()`
+- **Detalle producto admin** (`templates/products/product_detail.html`): eliminada fila Categoría de la card de detalle
+
 ### 24/06/2026 — Header: btn-outline-teal, carrito con badge, toast notificación
 - **Header** (`templates/include/header.html`):
   - Botón "Categorías" cambiado de `btn-outline-primary` a `btn-outline-teal` (clase CSS personalizada con `#0f766e`)

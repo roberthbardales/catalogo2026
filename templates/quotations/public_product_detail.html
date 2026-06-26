@@ -106,8 +106,7 @@
         <div class="card shadow-sm border-0 sticky-lg-top" style="top: 1rem;">
             <div class="card-header bg-white border-bottom-0 pt-2 px-3">
                 <div class="d-flex align-items-center gap-2 mb-1">
-                    <span class="section-kicker">{{ product.category.name }}</span>
-                    <span class="badge bg-secondary ms-auto">{{ product.brand.name }}</span>
+
                     {% if product.on_sale %}
                     <span class="badge bg-danger">Oferta</span>
                     {% endif %}
@@ -154,7 +153,7 @@
                     <input type="hidden" name="product_id" value="{{ product.pk }}">
 
                     <div class="d-flex align-items-center gap-1 mb-2">
-                        <label class="fw-semibold small mb-0 flex-shrink-0">Cant:</label>
+                        <label class="fw-semibold small mb-0 flex-shrink-0">Cantidad:</label>
                         <div class="input-group input-group-sm" style="width:140px">
                             <button type="button" class="btn btn-outline-secondary" onclick="var i=this.parentNode.querySelector('input');if(parseInt(i.value)>1){i.stepDown();i.dispatchEvent(new Event('change'))}">−</button>
                             <input type="number" name="quantity" class="form-control text-center fw-bold" min="1" value="1" id="qtyInput" required>
@@ -166,23 +165,23 @@
 
                     <div class="mb-1">
                         <label class="form-label fw-semibold small mb-1">Nombre completo</label>
-                        <input type="text" name="customer_name" class="form-control form-control-sm" required placeholder="Ej: Juan Pérez">
+                        <input type="text" name="customer_name" class="form-control form-control-sm" required placeholder="">
                     </div>
 
                     <div class="row g-1 mb-1">
                         <div class="col-6">
                             <label class="form-label fw-semibold small mb-1">Correo</label>
-                            <input type="email" name="customer_email" class="form-control form-control-sm" required placeholder="correo@ejemplo.com">
+                            <input type="email" name="customer_email" class="form-control form-control-sm" required placeholder="">
                         </div>
                         <div class="col-6">
                             <label class="form-label fw-semibold small mb-1">Teléfono</label>
-                            <input type="text" name="customer_phone" class="form-control form-control-sm" required placeholder="999 888 777">
+                            <input type="text" name="customer_phone" class="form-control form-control-sm" required placeholder="">
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label class="form-label fw-semibold small mb-1">Notas <span class="text-muted">(opcional)</span></label>
-                        <textarea name="notes" class="form-control form-control-sm" rows="2" placeholder="Comentarios adicionales..."></textarea>
+                        <textarea name="notes" class="form-control form-control-sm" rows="2" placeholder=""></textarea>
                     </div>
 
                     <div class="d-flex gap-2">
@@ -265,12 +264,12 @@
             <div class="modal-body text-center pt-0 pb-3">
                 <div class="mb-2 text-success" style="font-size:3.5rem;line-height:1;"><i class="fas fa-check-circle"></i></div>
                 <h4 class="fw-bold mb-1">Cotización enviada</h4>
-                <p class="text-muted mb-0">Los datos se han enviado correctamente.<br>Nos pondremos en contacto pronto.</p>
+                <p class="text-muted mb-0">Se ha enviado la cotización a <strong>{{ sent_email }}</strong>.<br>Nos pondremos en contacto pronto.</p>
             </div>
             <div class="modal-footer justify-content-center border-0 pt-0 pb-3">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <a href="{% url 'app_home:index' %}" class="btn btn-primary">Volver al inicio</a>
-                <a href="{% url 'app_home:products' %}" class="btn btn-outline-primary">Seguir viendo productos</a>
+
+
             </div>
         </div>
     </div>
@@ -287,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateTotal() {
         var qty = parseInt(qtyInput.value) || 1;
-        totalDisplay.textContent = Math.round(qty * unitPrice);
+        if (totalDisplay) totalDisplay.textContent = Math.round(qty * unitPrice);
     }
 
     qtyInput.addEventListener('change', updateTotal);

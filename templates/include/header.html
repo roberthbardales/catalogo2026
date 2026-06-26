@@ -31,7 +31,7 @@
                     <div class="position-relative">
                         <div class="input-group">
                             <input type="text" id="product-search" class="form-control border-end-0" placeholder="Buscar productos..." autocomplete="off">
-                            <span class="input-group-text bg-white"><i class="fas fa-search text-muted"></i></span>
+                            <span class="input-group-text bg-white" id="search-btn" role="button"><i class="fas fa-search text-muted"></i></span>
                         </div>
                         <div id="search-results" class="position-absolute w-100 mt-1 d-none" style="z-index:1050;"></div>
                     </div>
@@ -218,6 +218,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 container.classList.remove('d-none');
             });
         }, 300);
+    });
+
+    function goToSearchResults() {
+        var q = input.value.trim();
+        if (q.length > 0) {
+            window.location.href = '/productos/?q=' + encodeURIComponent(q);
+        }
+    }
+    document.getElementById('search-btn').addEventListener('click', goToSearchResults);
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') goToSearchResults();
     });
 
     document.addEventListener('click', function (e) {

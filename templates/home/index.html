@@ -1,7 +1,7 @@
-{% extends 'home/base_home.html' %}
+﻿{% extends 'home/base_home.html' %}
 {% load static %}
 
-{% block title %}Catálogo 2026 — Tecnología para ti{% endblock %}
+{% block title %}Catálogo 2026 – Tecnología para ti{% endblock %}
 {% block meta_description %}Catálogo de productos tecnológicos: laptops, audífonos, periféricos, accesorios y más. Cotiza en línea y recibe atención personalizada.{% endblock %}
 
 {% block extra_css %}
@@ -9,14 +9,29 @@
 <style>
 .offer-track {
     display: flex;
-    white-space: nowrap;
+    will-change: transform;
 }
+.offer-track-inner {
+    display: flex;
+    gap: 15px;
+    flex-shrink: 0;
+}
+.offer-track a {
+    flex-shrink: 0;
+    min-width: 160px;
+}
+
 .card-hover {
     transition: transform .2s, box-shadow .2s;
 }
+
 .card-hover:hover {
     transform: translateY(-3px);
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.12);
+}
+
+.offer-strip {
+    --bs-bg-opacity: 0.3;
 }
 </style>
 {% endblock %}
@@ -25,26 +40,25 @@
 {% csrf_token %}
 
 {% if on_sale_products %}
-<div class="bg-danger bg-opacity-10 border-bottom border-danger border-opacity-25 py-2 mb-2 rounded-3 overflow-hidden">
+<div class="offer-strip bg-danger bg-opacity-10 border-bottom border-danger border-opacity-25 py-2 mb-2 rounded-3 overflow-hidden">
     <div class="d-flex align-items-center">
         <div class="d-flex align-items-center gap-2 flex-shrink-0 px-2 z-1">
             <span class="badge bg-danger" style="font-size:.7rem">🔥 Ofertas</span>
         </div>
-        <div class="overflow-hidden flex-grow-1" style="mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%)">
-            <div class="d-flex gap-4 py-1 offer-track" id="offerTrack" style="width:max-content">
+        <div class="overflow-hidden flex-grow-1" style="mask-image:linear-gradient(to right,transparent 0,#000 1.5%,#000 98.5%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0,#000 1.5%,#000 98.5%,transparent 100%)">
+            <div class="d-flex py-1 offer-track" id="offerTrack" style="width:max-content">
+                <div class="offer-track-inner">
                 {% for p in on_sale_products %}
-                <a href="{% url 'app_quotations:public-product-detail' p.slug %}" class="d-flex align-items-center gap-2 text-decoration-none text-reset flex-shrink-0">
+                <a href="{% url 'app_quotations:public-product-detail' p.slug %}" class="d-flex align-items-center gap-2 text-decoration-none text-reset border-end border-danger border-opacity-25" style="padding-right:15px;">
                     {% if p.image_main %}
                     <img src="{{ p.image_main.url }}" alt="" width="40" height="40" style="object-fit:cover;border-radius:6px;">
                     {% endif %}
-                    <div class="small" style="line-height:1.3;max-width:100px">
-                        <div class="fw-semibold" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">{{ p.name }}</div>
+                    <div class="small" style="line-height:1.3;max-width:100px;white-space:normal">
+                        <div class="fw-semibold" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ p.name }}</div>
                     </div>
                 </a>
-                {% if not forloop.last %}
-                <div class="border-end border-danger border-opacity-25" style="height:30px;align-self:center;"></div>
-                {% endif %}
                 {% endfor %}
+                </div>
             </div>
         </div>
     </div>
@@ -90,6 +104,7 @@
         <span class="visually-hidden">Siguiente</span>
     </button>
 </div>
+
 
 {% if featured_products %}
 <section class="mb-2">
@@ -261,6 +276,46 @@
 
 {% block extra_js %}
 <script>
+/* --- Marquee infinito con requestAnimationFrame --- */
+(function() {
+    var track = document.getElementById('offerTrack');
+    if (!track) return;
+    var inner = track.querySelector('.offer-track-inner');
+    if (!inner || inner.children.length === 0) return;
+
+    var viewportW = window.innerWidth;
+    while (track.scrollWidth < viewportW + inner.offsetWidth) {
+        track.appendChild(inner.cloneNode(true));
+    }
+
+    var copyCount = track.children.length;
+    var copyWidth = track.scrollWidth / copyCount;
+
+    var pxPerMs = copyWidth / (35 * 1000);
+    var pos = 0, running = true, lastTime = performance.now();
+
+    var strip = track.closest('.offer-strip');
+    if (strip) {
+        strip.addEventListener('mouseenter', function() { running = false; });
+        strip.addEventListener('mouseleave', function() {
+            running = true;
+            lastTime = performance.now();
+            requestAnimationFrame(step);
+        });
+    }
+
+    function step(now) {
+        if (!running) return;
+        var dt = Math.min(now - lastTime, 100);
+        lastTime = now;
+        pos -= pxPerMs * dt;
+        if (Math.abs(pos) >= copyWidth) pos += copyWidth;
+        track.style.transform = 'translateX(' + pos + 'px)';
+        requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+})();
+
 (function() {
     var csrf = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
@@ -301,26 +356,6 @@
             });
         });
     });
-})();
-</script>
-<script>
-(function() {
-    var track = document.getElementById('offerTrack');
-    if (!track || !track.children.length) return;
-    var items = Array.from(track.children);
-    var setWidth = 0;
-    items.forEach(function(el) { setWidth += el.offsetWidth + 16; });
-    var clones = items.map(function(el) { return el.cloneNode(true); });
-    clones.forEach(function(cl) { track.appendChild(cl); });
-    var pos = 0;
-    var speed = 0.4;
-    function step() {
-        pos -= speed;
-        if (Math.abs(pos) >= setWidth) pos = 0;
-        track.style.transform = 'translateX(' + pos + 'px)';
-        requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
 })();
 </script>
 {% endblock %}
