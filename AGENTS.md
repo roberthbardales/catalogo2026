@@ -137,6 +137,12 @@ El ítem activo se detecta automáticamente vía `request.resolver_match.url_nam
   - Buscador AJAX simplificado: solo imagen, nombre y precio (sin descripción ni stock)
   - Input de búsqueda más ancho: 400px → 600px
 
+### 26/06/2026 — Seed movido a fixtures/seed_data.py
+- Eliminado `applications/products/management/commands/seed_products.py`
+- Creado `fixtures/seed_data.py` — script independiente (usa `django.setup()`)
+- Ahora incluye seed de usuarios (admin, ventas, cliente) además de productos
+- Uso: `python fixtures/seed_data.py`
+
 ### 22/06/2026 — Plan: Filtro productos con accordion Marcas→Categorías / Categorías→Marcas
 
 - Sidebar de productos (`home/products.html`) actualmente: dos pestañas (Marcas / Categorías) con flat lists de checkboxes que hacen fetch AJAX a `/api/productos/filtrar/`

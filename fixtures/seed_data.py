@@ -1,6 +1,28 @@
+#!/usr/bin/env python
+"""Script independiente para sembrar datos en la BD.
+
+Uso en VPS:
+  cd /ruta/del/proyecto
+  python fixtures/seed_data.py
+
+Crea:
+  - 10 categorías
+  - 10 marcas
+  - 100 productos (electrónica)
+  - 3 usuarios: admin, ventas, cliente
+"""
+
+import os
+import sys
 import random
-from django.core.management.base import BaseCommand
+import django
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'catalogo2026.settings')
+django.setup()
+
 from applications.products.models import Category, Brand, Product
+from applications.users.models import User
 
 
 CATEGORIES = [
@@ -95,66 +117,116 @@ PRODUCT_NAMES = {
 }
 
 
-class Command(BaseCommand):
-    help = 'Crea 10 categorías, 10 marcas y 100 productos de electrónica'
+USERS = [
+    {
+        'email': 'admin@admin.com',
+        'password': 'admin123',
+        'first_name': 'Admin',
+        'last_name': 'Principal',
+        'occupation': '0',
+        'is_staff': True,
+        'is_superuser': True,
+    },
+    {
+        'email': 'ventas@ventas.com',
+        'password': 'ventas123',
+        'first_name': 'Ventas',
+        'last_name': 'User',
+        'occupation': '1',
+        'is_staff': True,
+    },
+    {
+        'email': 'cliente@cliente.com',
+        'password': 'cliente123',
+        'first_name': 'Cliente',
+        'last_name': 'Test',
+        'occupation': '2',
+    },
+]
 
-    def handle(self, *args, **options):
-        created_cats = 0
-        created_brands = 0
-        created_products = 0
-        skipped_products = 0
 
-        categories = {}
-        for cat_data in CATEGORIES:
-            cat, was_created = Category.objects.get_or_create(
-                name=cat_data['name'],
-                defaults={'description': cat_data['desc']},
+def seed_products():
+    created_cats = 0
+    created_brands = 0
+    created_products = 0
+    skipped_products = 0
+
+    categories = {}
+    for cat_data in CATEGORIES:
+        cat, was_created = Category.objects.get_or_create(
+            name=cat_data['name'],
+            defaults={'description': cat_data['desc']},
+        )
+        if was_created:
+            created_cats += 1
+        categories[cat_data['name']] = cat
+
+    brand_objs = []
+    for brand_name in BRANDS:
+        brand, was_created = Brand.objects.get_or_create(
+            name=brand_name,
+            defaults={'description': f'Marca {brand_name}'},
+        )
+        if was_created:
+            created_brands += 1
+        brand_objs.append(brand)
+
+    for cat_data in CATEGORIES:
+        cat_name = cat_data['name']
+        prefix = cat_data['prefix']
+        cat = categories[cat_name]
+        names = PRODUCT_NAMES[cat_name]
+
+        for i in range(10):
+            brand = random.choice(brand_objs)
+            model_num = random.randint(100, 999)
+            name = random.choice(names).format(brand=brand.name, n=model_num)
+            sku = f'{prefix}-{i + 1:03d}'
+
+            if Product.objects.filter(sku=sku).exists():
+                skipped_products += 1
+                continue
+
+            Product.objects.create(
+                name=name,
+                sku=sku,
+                price=random.randint(1000, 50000),
+                stock=random.randint(0, 100),
+                category=cat,
+                brand=brand,
+                description=f'{name} — Producto de alta calidad ideal para tus necesidades diarias.',
+                short_description=f'{brand.name} {cat_name.lower()} modelo {model_num}.',
+                is_active=True,
             )
-            if was_created:
-                created_cats += 1
-            categories[cat_data['name']] = cat
+            created_products += 1
 
-        brand_objs = []
-        for brand_name in BRANDS:
-            brand, was_created = Brand.objects.get_or_create(
-                name=brand_name,
-                defaults={'description': f'Marca {brand_name}'},
-            )
-            if was_created:
-                created_brands += 1
-            brand_objs.append(brand)
+    print(f'Categorías: {created_cats} creadas')
+    print(f'Marcas: {created_brands} creadas')
+    print(f'Productos: {created_products} creados ({skipped_products} omitidos por SKU duplicado)')
 
-        for cat_data in CATEGORIES:
-            cat_name = cat_data['name']
-            prefix = cat_data['prefix']
-            cat = categories[cat_name]
-            names = PRODUCT_NAMES[cat_name]
 
-            for i in range(10):
-                brand = random.choice(brand_objs)
-                model_num = random.randint(100, 999)
-                name = random.choice(names).format(brand=brand.name, n=model_num)
-                sku = f'{prefix}-{i + 1:03d}'
+def seed_users():
+    created = 0
+    skipped = 0
+    for data in USERS:
+        email = data['email']
+        if User.objects.filter(email=email).exists():
+            skipped += 1
+            continue
+        password = data.pop('password')
+        user = User(**data)
+        user.set_password(password)
+        user.save()
+        created += 1
+    print(f'Usuarios: {created} creados ({skipped} omitidos por existir)')
 
-                if Product.objects.filter(sku=sku).exists():
-                    skipped_products += 1
-                    continue
 
-                Product.objects.create(
-                    name=name,
-                    sku=sku,
-                    price=random.randint(1000, 50000),
-                    stock=random.randint(0, 100),
-                    category=cat,
-                    brand=brand,
-                    description=f'{name} — Producto de alta calidad ideal para tus necesidades diarias.',
-                    short_description=f'{brand.name} {cat_name.lower()} modelo {model_num}.',
-                    is_active=True,
-                )
-                created_products += 1
+def main():
+    print('=== Sembrando datos ===')
+    seed_products()
+    seed_users()
+    print('=== ¡Listo! ===')
 
-        self.stdout.write(self.style.SUCCESS(
-            f'Creadas {created_cats} categorías, {created_brands} marcas, '
-            f'{created_products} productos '
-            f'({skipped_products} omitidos por SKU duplicado)'
-        ))
+
+if __name__ == '__main__':
+    main()
