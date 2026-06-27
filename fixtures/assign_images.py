@@ -22,6 +22,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'catalogo2026.settings')
 django.setup()
 
+from django.db.models import Q
+
 from applications.products.models import Product
 
 
@@ -57,14 +59,15 @@ def assign_images():
         print('No hay imágenes para asignar.')
         return
 
+    no_img_q = Q(image_main__isnull=True) | Q(image_main__exact='')
+
     products = list(
-        Product.objects.filter(is_active=True, image_main__isnull=True)
+        Product.objects.filter(is_active=True)
+        .filter(no_img_q)
         .order_by('id')
     )
 
-    with_img = Product.objects.filter(is_active=True).exclude(
-        image_main__isnull=True
-    ).exclude(image_main__exact='').count()
+    with_img = Product.objects.filter(is_active=True).exclude(no_img_q).count()
 
     print(f'Productos activos sin imagen: {len(products)}')
     print(f'Productos activos con imagen: {with_img}')
