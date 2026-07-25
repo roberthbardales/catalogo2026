@@ -98,6 +98,12 @@ El ítem activo se detecta automáticamente vía `request.resolver_match.url_nam
 
 ## Últimos cambios
 
+### 27/06/2026 — Scripts fixtures: assign_images + deactivate_no_image
+- Creado `fixtures/assign_images.py` — script independiente que asigna archivos .jpg de `media/products/` (excluye duplicados con sufijo auto-rename de Django) al `image_main` de los primeros productos activos sin imagen (`NULL` o `''`)
+- Creado `fixtures/deactivate_no_image.py` — desactiva (`is_active=False`) todos los productos activos que no tienen imagen
+- Ambos usan `django.setup()`, corren con `python fixtures/<script>.py` desde la raíz del proyecto
+- Orden recomendado en VPS con BD nueva: `seed_data.py` → `assign_images.py` → `deactivate_no_image.py`
+
 ### 26/06/2026 — Marquee JS, buscador header navega, accordion marcas, layout cotización, modal cotización por sesión
 - **Franja de ofertas** (`templates/home/index.html`): reemplazada animación CSS por `requestAnimationFrame` con clonado dinámico hasta llenar viewport, reseteo invisible sin saltos
 - **Buscador header** (`templates/include/header.html`): la lupa (`#search-btn`) ahora redirige a `/productos/?q=...` con el término ingresado; mismo comportamiento con Enter
